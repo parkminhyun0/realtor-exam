@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
+import LawTextViewer from './LawTextViewer'
 import { publicLawChapters } from './data/publicLaw'
+import './law-viewer.css'
 import './public-law-integrated.css'
+
+const LAW_ARTICLE_PATTERN = /^제\s*\d+\s*조(?:의\s*\d+)?$/
 
 export default function PublicLawPage({ onBack }) {
   const [selectedId, setSelectedId] = useState('c1s1')
   const [frameHeight, setFrameHeight] = useState(900)
+  const [lawTarget, setLawTarget] = useState(null)
 
   const selected = useMemo(() => {
     for (const chapter of publicLawChapters) {
@@ -17,10 +22,25 @@ export default function PublicLawPage({ onBack }) {
   useEffect(() => {
     const onMessage = (event) => {
       if (event.origin !== window.location.origin) return
-      if (event.data?.type !== 'public-law:height') return
-      const nextHeight = Number(event.data.height)
-      if (!Number.isFinite(nextHeight)) return
-      setFrameHeight(Math.max(620, Math.ceil(nextHeight) + 4))
+
+      if (event.data?.type === 'public-law:height') {
+        const nextHeight = Number(event.data.height)
+        if (!Number.isFinite(nextHeight)) return
+        setFrameHeight(Math.max(620, Math.ceil(nextHeight) + 4))
+        return
+      }
+
+      if (event.data?.type !== 'public-law:open-law-reference') return
+
+      const detail = event.data?.detail
+      const isKnownLaw = publicLawChapters.some((chapter) => chapter.title === detail?.lawName)
+      if (!isKnownLaw || !LAW_ARTICLE_PATTERN.test(String(detail?.article || ''))) return
+
+      setLawTarget({
+        subjectId: 'public-law',
+        lawName: detail.lawName,
+        article: detail.article,
+      })
     }
 
     window.addEventListener('message', onMessage)
@@ -30,84 +50,99 @@ export default function PublicLawPage({ onBack }) {
   const frameSrc = `${import.meta.env.BASE_URL}public-law.html?embed=1&law=${encodeURIComponent(selected.chapter.title)}#${selectedId}`
 
   return (
-    <main className="public-law-page" id="main-content">
-      <div className="public-law-topline">
-        <button className="back-button" type="button" onClick={onBack}>← 전체 과목</button>
-        <span>공인중개사 2차 · 부동산공법</span>
-      </div>
-
-      <section className="public-law-hero">
-        <div>
-          <span className="eyebrow">PUBLIC LAW · 2026</span>
-          <h1>부동산공법 핵심정리</h1>
-          <p>국토계획법 · 도시개발법 · 도시정비법 · 건축법 · 주택법 · 농지법을 공시법과 동일한 학습 페이지 구조로 정리합니다.</p>
+    <>
+      <main className="public-law-page" id="main-content">
+        <div className="public-law-topline">
+          <button className="back-button" type="button" onClick={onBack}>← 전체 과목</button>
+          <span>공인중개사 2차 · 부동산공법</span>
         </div>
-        <div className="public-law-hero__badges">
-          <span>6개 법률</span>
-          <span>33개 세부 절</span>
-          <span>절차·비교·함정 중심</span>
-        </div>
-      </section>
 
-      <div className="public-law-layout">
-        <aside className="public-law-nav" aria-label="부동산공법 목차">
-          <div className="public-law-nav__title">
-            <strong>부동산공법</strong>
-            <span>전체 목차 · 제1장~제6장</span>
+        <section className="public-law-hero">
+          <div>
+            <span className="eyebrow">PUBLIC LAW · 2026</span>
+            <h1>부동산공법 핵심정리</h1>
+            <p>국토계획법 · 도시개발법 · 도시정비법 · 건축법 · 주택법 · 농지법을 공시법과 동일한 학습 페이지 구조로 정리합니다.</p>
           </div>
-          {publicLawChapters.map((chapter) => (
-            <details key={chapter.id} open={chapter.sections.some((item) => item.id === selectedId)}>
-              <summary>
-                <i style={{ background: chapter.color }} />
-                <span>제{chapter.number}장 {chapter.shortTitle}</span>
-              </summary>
-              <ul>
-                {chapter.sections.map((section) => (
-                  <li key={section.id}>
-                    <button
-                      type="button"
-                      className={selectedId === section.id ? 'active' : ''}
-                      onClick={() => {
-                        setFrameHeight(900)
-                        setSelectedId(section.id)
-                      }}
-                    >
-                      <span>{section.title}</span>
-                      <b>공개</b>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          ))}
-        </aside>
-
-        <article className="public-law-content public-law-content--source">
-          <div className="public-law-breadcrumb">
-            제{selected.chapter.number}장 {selected.chapter.shortTitle} <span>›</span> {selected.section.title}
+          <div className="public-law-hero__badges">
+            <span>6개 법률</span>
+            <span>33개 세부 절</span>
+            <span>법령명·조문 바로보기</span>
+            <span>절차·비교·함정 중심</span>
           </div>
+        </section>
 
-          <header className="study-section-heading" style={{ '--chapter-color': selected.chapter.color }}>
-            <div>
-              <span className="study-section-heading__number">{String(selected.chapter.number).padStart(2, '0')}</span>
-              <div>
-                <span className="study-section-heading__chapter">제{selected.chapter.number}장 · {selected.chapter.shortTitle}</span>
-                <h2>{selected.section.title}</h2>
-              </div>
+        <div className="public-law-layout">
+          <aside className="public-law-nav" aria-label="부동산공법 목차">
+            <div className="public-law-nav__title">
+              <strong>부동산공법</strong>
+              <span>전체 목차 · 제1장~제6장</span>
             </div>
-            <span className="law-reference">{selected.chapter.title}</span>
-          </header>
+            {publicLawChapters.map((chapter) => (
+              <details key={chapter.id} open={chapter.sections.some((item) => item.id === selectedId)}>
+                <summary>
+                  <i style={{ background: chapter.color }} />
+                  <span>제{chapter.number}장 {chapter.shortTitle}</span>
+                </summary>
+                <ul>
+                  {chapter.sections.map((section) => (
+                    <li key={section.id}>
+                      <button
+                        type="button"
+                        className={selectedId === section.id ? 'active' : ''}
+                        onClick={() => {
+                          setLawTarget(null)
+                          setFrameHeight(900)
+                          setSelectedId(section.id)
+                        }}
+                      >
+                        <span>{section.title}</span>
+                        <b>공개</b>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
+          </aside>
 
-          <iframe
-            key={selectedId}
-            className="public-law-frame"
-            src={frameSrc}
-            title={`부동산공법 ${selected.chapter.shortTitle} ${selected.section.title}`}
-            style={{ height: `${frameHeight}px` }}
-            scrolling="no"
-          />
-        </article>
-      </div>
-    </main>
+          <article className="public-law-content public-law-content--source">
+            <div className="public-law-breadcrumb">
+              제{selected.chapter.number}장 {selected.chapter.shortTitle} <span>›</span> {selected.section.title}
+            </div>
+
+            <header className="study-section-heading" style={{ '--chapter-color': selected.chapter.color }}>
+              <div>
+                <span className="study-section-heading__number">{String(selected.chapter.number).padStart(2, '0')}</span>
+                <div>
+                  <span className="study-section-heading__chapter">제{selected.chapter.number}장 · {selected.chapter.shortTitle}</span>
+                  <h2>{selected.section.title}</h2>
+                </div>
+              </div>
+              <span
+                className="law-reference public-law-source-label"
+                title="아래 본문의 빨간 밑줄 법조문을 누르면 해당 조문만 팝업으로 확인할 수 있습니다."
+              >
+                근거법령 · {selected.chapter.title}
+              </span>
+            </header>
+
+            <iframe
+              key={selectedId}
+              className="public-law-frame"
+              src={frameSrc}
+              title={`부동산공법 ${selected.chapter.shortTitle} ${selected.section.title}`}
+              style={{ height: `${frameHeight}px` }}
+              scrolling="no"
+            />
+          </article>
+        </div>
+      </main>
+
+      <LawTextViewer
+        open={Boolean(lawTarget)}
+        target={lawTarget}
+        onClose={() => setLawTarget(null)}
+      />
+    </>
   )
 }
