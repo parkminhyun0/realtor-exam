@@ -6,6 +6,7 @@ import { realEstateTheoryHandoutSupplements } from './data/realEstateTheoryHando
 import { realEstateTheoryCalculations } from './data/realEstateTheoryCalculations'
 import { realEstateTheoryRelations } from './data/realEstateTheoryRelations'
 import { realEstateTheoryExtraChapters, realEstateTheoryExtraContent, realEstateTheoryExtraRelations } from './data/realEstateTheoryExtra'
+import TheoryPastQuestion from './TheoryPastQuestion'
 import './real-estate-theory.css'
 
 const NUMBER_PATTERN = /([①②③④⑤⑥⑦⑧⑨⑩]|\d+(?:[.,]\d+)*(?:\s*(?:개|종|일|년|월|㎡|m²|%|호|조|항|세대|층))?)/g
@@ -370,6 +371,8 @@ function TheoryCalculationSection({ calculations }) {
                 {item.result && <strong>→ <HighlightNumbers>{item.result}</HighlightNumbers></strong>}
               </div>
             )}
+
+            <TheoryPastQuestion cardTitle={item.title} />
 
             <div className="theory-calc-trap">
               <b>⚠️ 계산 함정</b>
