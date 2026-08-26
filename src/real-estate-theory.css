@@ -12,9 +12,23 @@
   text-decoration-skip-ink: auto;
 }
 
+.real-estate-theory-page .theory-exam-number:is([data-law-reference]),
+.real-estate-theory-page .theory-exam-number {
+  cursor: pointer;
+}
+
+.real-estate-theory-page .theory-exam-number:hover {
+  border-radius: 4px;
+  background: rgba(198, 40, 40, .08);
+}
+
 .real-estate-theory-page .study-tldr .theory-exam-number {
   color: #ff7979 !important;
   text-decoration-color: #ff7979;
+}
+
+.real-estate-theory-page .study-tldr .theory-exam-number:hover {
+  background: rgba(255, 121, 121, .14);
 }
 
 .theory-nav__ready {
