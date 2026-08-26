@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { allSubjects, subjectGroups } from './data/subjects'
 import PublicLawPage from './PublicLawPage'
+import RegistrationLawPage from './RegistrationLawPage'
 import './public-law.css'
 
 function getRoute() {
@@ -53,8 +54,8 @@ function Dashboard() {
 
       <section className="study-guide" aria-label="학습 안내">
         <span className="study-guide__label">현재 구축 순서</span>
-        <strong>메인 대시보드 → 부동산공법 → 나머지 과목</strong>
-        <span>부동산공법부터 실제 콘텐츠를 공개하고 동일한 UI 규격을 다른 과목에 확장합니다.</span>
+        <strong>메인 대시보드 → 부동산공법 → 부동산공시법 → 나머지 과목</strong>
+        <span>부동산공법의 UI 규격을 유지하면서 공시법 목차와 첫 POINT부터 순차 공개합니다.</span>
       </section>
 
       {subjectGroups.map((group) => (
@@ -125,6 +126,7 @@ export default function App() {
 
   let content = <Dashboard />
   if (route === 'public-law') content = <PublicLawPage onBack={() => navigate('')} />
+  else if (route === 'registration-law') content = <RegistrationLawPage onBack={() => navigate('')} />
   else if (activeSubject) content = <SubjectPlaceholder subject={activeSubject} />
 
   return (

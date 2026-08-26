@@ -50,7 +50,7 @@ export const subjectGroups = [
         shortTitle: '공시법',
         icon: '▤',
         description: '공간정보법과 부동산등기법을 비교표·절차·기출 포인트 중심으로 정리합니다.',
-        status: '준비 중',
+        status: '공개 시작',
       },
       {
         id: 'tax-law',
