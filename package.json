@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "verify:theory": "node scripts/verify-theory-past-questions.mjs",
+    "build": "npm run verify:theory && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
