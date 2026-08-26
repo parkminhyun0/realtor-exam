@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import { landCategories, registrationLawContent, registrationLawParts } from './data/registrationLaw'
+import { registrationLawDeepDive } from './data/registrationLawDeepDive'
+import './registration-law.css'
 
 export default function RegistrationLawPage({ onBack }) {
   const [selectedId, setSelectedId] = useState('p1s1')
@@ -28,7 +30,7 @@ export default function RegistrationLawPage({ onBack }) {
         <div className="public-law-hero__badges">
           <span>2개 PART</span>
           <span>9개 POINT</span>
-          <span>선택한 POINT만 표시</span>
+          <span>법령 세부 해설 강화</span>
         </div>
       </section>
 
@@ -67,7 +69,14 @@ export default function RegistrationLawPage({ onBack }) {
             PART {selected.part.number} {selected.part.title} <span>›</span> POINT {selected.point.number} · {selected.point.title}
           </div>
           {selected.point.ready
-            ? <StudyPoint part={selected.part} point={selected.point} content={registrationLawContent[selected.point.id]} />
+            ? (
+              <StudyPoint
+                part={selected.part}
+                point={selected.point}
+                content={registrationLawContent[selected.point.id]}
+                deepDive={registrationLawDeepDive[selected.point.id]}
+              />
+            )
             : <ImportingSection part={selected.part} point={selected.point} />}
         </article>
       </div>
@@ -75,7 +84,7 @@ export default function RegistrationLawPage({ onBack }) {
   )
 }
 
-function StudyPoint({ part, point, content }) {
+function StudyPoint({ part, point, content, deepDive }) {
   return (
     <>
       <header className="study-section-heading" style={{ '--chapter-color': part.color }}>
@@ -128,13 +137,15 @@ function StudyPoint({ part, point, content }) {
         </div>
       </section>
 
+      {deepDive && <DeepDiveSection deepDive={deepDive} part={part} />}
+
       {content.extra === 'landCategories' && (
         <section className="study-block">
-          <div className="study-block__title"><span>04</span><h3>지목 28종</h3></div>
+          <div className="study-block__title"><span>지목</span><h3>지목 28종</h3></div>
           <div className="system-note__items" aria-label="법정 지목 28종">
             {landCategories.map((category) => <span key={category}>{category}</span>)}
           </div>
-          <div className="study-note">📍 법정 지목은 총 <b>28종</b>입니다.</div>
+          <div className="study-note">📍 법정 지목은 총 <b>28종</b>입니다. 지목은 토지의 주된 용도에 따라 하나를 설정하는 것이 기본입니다.</div>
         </section>
       )}
 
@@ -151,7 +162,7 @@ function StudyPoint({ part, point, content }) {
       </section>
 
       <section className="study-block">
-        <div className="study-block__title"><span>05</span><h3>확인문제</h3></div>
+        <div className="study-block__title"><span>Q</span><h3>확인문제</h3></div>
         <div className="understanding-grid">
           {content.quiz.map(([question, answer]) => <div key={question}><b>{question}</b><p>{answer}</p></div>)}
         </div>
@@ -159,9 +170,33 @@ function StudyPoint({ part, point, content }) {
 
       <section className="source-note">
         <b>법령 대조 기준</b>
-        <p>{part.lawVersion} · {content.source}. 국가법령정보센터 법령 원문을 기준으로 정리했습니다.</p>
+        <p>{part.lawVersion} · {content.source}. PART 1은 2026.7.1 시행 공간정보관리법 체계, PART 2는 업로드된 국가법령정보센터 부동산등기법 [시행 2025.1.31.] [법률 제20435호] 원문을 기준으로 확장했습니다.</p>
       </section>
     </>
+  )
+}
+
+function DeepDiveSection({ deepDive, part }) {
+  return (
+    <section className="study-block law-deep-dive" style={{ '--chapter-color': part.color }}>
+      <div className="study-block__title"><span>법령</span><h3>{deepDive.title}</h3></div>
+      <p className="law-deep-dive__intro">{deepDive.intro}</p>
+      <div className="law-deep-dive__list">
+        {deepDive.sections.map((section) => (
+          <details className="law-detail-card" key={section.title} open>
+            <summary>
+              <span>{section.title}</span>
+              <small>{section.articles}</small>
+            </summary>
+            <div className="law-detail-card__body">
+              <p>{section.body}</p>
+              <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+              <div className="law-detail-card__exam"><b>시험 포인트</b><span>{section.exam}</span></div>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
   )
 }
 
