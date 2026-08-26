@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>부동산공법 핵심정리</title>
+<style>
+  body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:24px;font-size:12pt;line-height:1.6}
+  strong{font-size:14pt}
+</style>
+</head>
+<body>
+<strong>부동산공법 전체 내용을 불러오는 중입니다…</strong>
+<script>
+(async()=>{
+  try{
+    const files=Array.from({length:11},(_,i)=>`public-law-p${String(i+1).padStart(2,'0')}.dat`)
+    const parts=await Promise.all(files.map(async(file)=>{
+      const response=await fetch(file,{cache:'no-store'})
+      if(!response.ok) throw new Error(`${file}: ${response.status}`)
+      return response.text()
+    }))
+    const base64=parts.join('').replace(/\s+/g,'')
+    const binary=atob(base64)
+    const bytes=Uint8Array.from(binary,char=>char.charCodeAt(0))
+    if(typeof DecompressionStream==='undefined') throw new Error('이 브라우저는 압축 해제를 지원하지 않습니다.')
+    const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))
+    let html=await new Response(stream).text()
+
+    const override=`<style id="realtor-typography-override">
+:root{--app-font-base:12pt;--app-font-important:14pt}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body,body *{font-size:var(--app-font-base)!important}
+body h1,body h2,body h3,body h4,body h5,body h6,
+body button,body summary,body .brand,body .brand strong,
+body .t,body .deep-title,body .tldr b,body .view-indicator,
+body .view-indicator b,body .ch-head .num,body .app-back-link{
+  font-size:var(--app-font-important)!important
+}
+button,summary,[role="button"],.app-back-link{min-height:44px}
+img,svg,video,canvas{max-width:100%;height:auto}
+.app-back-link{display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;margin:0 0 12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;border-radius:7px;padding:8px 10px;font-weight:700}
+.app-back-link:hover,.app-back-link:focus-visible{background:#fff;color:var(--ink)}
+.card,.inline-proc,.proc-table{max-width:100%}
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr!important}
+  nav.toc{position:static!important;height:auto!important;max-height:none!important}
+  main{max-width:none!important;width:100%!important;padding:22px 16px 80px!important}
+  .card,.inline-proc,.proc-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{min-width:700px}
+  .two,.section-deep .deep-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:560px){
+  nav.toc{padding:14px 12px!important}
+  main{padding:16px 10px 64px!important}
+  .card,.section-deep,.inline-proc{padding:12px!important}
+  .proc-flow{flex-direction:column!important}
+  .inline-proc .step{min-width:100%!important;flex-basis:auto!important}
+  .inline-proc .arr{transform:rotate(90deg);align-self:center!important}
+}
+@media print{.app-back-link{display:none!important}}
+</style>`
+
+    html=html.replace(/<span>글자크기 11pt 통일<\/span>/,'<span>글자크기: 본문 12pt · 중요 텍스트 14pt</span>')
+    html=html.replace('</head>',`${override}</head>`)
+    html=html.replace('<nav class="toc">','<nav class="toc"><a class="app-back-link" href="./#/">← 전체 과목</a>')
+    document.open()
+    document.write(html)
+    document.close()
+  }catch(error){
+    document.body.innerHTML=`<strong>공법 내용을 불러오지 못했습니다.</strong><p>${String(error)}</p><p><a href="./#/">전체 과목으로 돌아가기</a></p>`
+  }
+})()
+</script>
+</body>
+</html>
