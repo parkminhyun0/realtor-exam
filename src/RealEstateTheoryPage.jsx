@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { realEstateTheoryParts } from './data/realEstateTheory'
 import { realEstateTheoryContent } from './data/realEstateTheoryContent'
 import { realEstateTheoryHandoutContent } from './data/realEstateTheoryHandoutContent'
+import { realEstateTheoryHandoutSupplements } from './data/realEstateTheoryHandoutSupplement'
 import { realEstateTheoryRelations } from './data/realEstateTheoryRelations'
 import { realEstateTheoryExtraChapters, realEstateTheoryExtraContent, realEstateTheoryExtraRelations } from './data/realEstateTheoryExtra'
 import './real-estate-theory.css'
@@ -22,10 +23,28 @@ const chapterMeta = Object.fromEntries(
   )),
 )
 
+function mergeTheoryContent(base, supplement) {
+  if (!base) return supplement
+  if (!supplement) return base
+
+  return {
+    ...base,
+    statusLabel: supplement.statusLabel || base.statusLabel,
+    summary: [base.summary, supplement.summary].filter(Boolean).join(' '),
+    verification: [...(base.verification || []), ...(supplement.verification || [])],
+    sections: [...(base.sections || []), ...(supplement.sections || [])],
+    tables: [...(base.tables || []), ...(supplement.tables || [])],
+    traps: [...(base.traps || []), ...(supplement.traps || [])],
+    sources: [...(base.sources || []), ...(supplement.sources || [])],
+  }
+}
+
 function getTheoryContent(chapterId) {
-  return realEstateTheoryExtraContent[chapterId]
+  const base = realEstateTheoryExtraContent[chapterId]
     || realEstateTheoryHandoutContent[chapterId]
     || realEstateTheoryContent[chapterId]
+
+  return mergeTheoryContent(base, realEstateTheoryHandoutSupplements[chapterId])
 }
 
 function getTheoryRelations(chapterId) {
