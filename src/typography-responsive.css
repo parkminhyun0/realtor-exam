@@ -1,0 +1,214 @@
+:root {
+  --font-base: 12pt;
+  --font-important: 14pt;
+}
+
+html {
+  font-size: var(--font-base);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body,
+body * {
+  font-size: var(--font-base) !important;
+}
+
+body {
+  line-height: 1.65;
+  overflow-x: clip;
+}
+
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6,
+body button,
+body summary,
+body .brand strong,
+body .brand__mark,
+body .subject-card__title,
+body .subject-card__action,
+body .section-heading h2,
+body .system-note h2,
+body .subject-hero__icon,
+body .public-law-nav__title strong,
+body .study-section-heading__number,
+body .study-tldr strong,
+body .memory-card strong,
+body .importing-section h2,
+body .hero__summary strong {
+  font-size: var(--font-important) !important;
+}
+
+button,
+summary,
+[role="button"] {
+  min-height: 44px;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hero h1,
+.subject-hero h1,
+.public-law-hero h1,
+.study-section-heading h2,
+.study-block__title h3,
+.placeholder-card h2,
+.importing-section h2 {
+  line-height: 1.35;
+}
+
+@media (max-width: 1024px) {
+  .dashboard,
+  .subject-shell,
+  .public-law-page {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .public-law-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .public-law-nav {
+    position: static;
+    top: auto;
+    max-height: none;
+  }
+
+  .public-law-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .public-law-hero__badges {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    height: auto;
+    min-height: 66px;
+    padding: 8px 16px;
+    gap: 12px;
+  }
+
+  .dashboard,
+  .subject-shell,
+  .public-law-page {
+    width: calc(100% - 24px);
+    padding-top: 22px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 28px 22px;
+    border-radius: 22px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .hero__summary {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .hero__summary div {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+
+  .hero__summary div:last-child {
+    border-bottom: 0;
+  }
+
+  .study-guide {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .section-heading,
+  .system-note,
+  .subject-hero,
+  .study-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .subject-grid--first,
+  .subject-grid--second {
+    grid-template-columns: 1fr;
+  }
+
+  .subject-card {
+    min-height: 0;
+  }
+
+  .public-law-content {
+    padding: 18px 14px 26px;
+  }
+
+  .understanding-grid,
+  .study-block--split {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    width: calc(100% - 24px);
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar__meta {
+    display: none;
+  }
+
+  .dashboard,
+  .subject-shell,
+  .public-law-page {
+    width: calc(100% - 16px);
+  }
+
+  .hero,
+  .subject-hero,
+  .public-law-hero {
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+
+  .subject-card,
+  .placeholder-card,
+  .study-block {
+    padding: 16px;
+  }
+
+  .public-law-nav {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .public-law-nav li button {
+    min-height: 44px;
+  }
+
+  .hierarchy-flow__step {
+    min-width: 130px;
+  }
+}
