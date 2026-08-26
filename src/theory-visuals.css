@@ -1,0 +1,93 @@
+.theory-visual-section {
+  border-top: 4px solid #315f8f;
+  background: linear-gradient(180deg, #f7fbff 0%, #fff 135px);
+}
+
+.theory-visual-frame {
+  margin-top: 10px;
+  overflow-x: auto;
+  border: 1px solid #dbe5ee;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(34, 54, 75, .045);
+}
+
+.theory-visual-frame svg {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.theory-visual-note {
+  margin: 8px 2px 0;
+  color: #7b8795;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.theory-visual-frame .viz-axis,
+.theory-visual-frame .viz-arrow-line {
+  stroke: #27384b;
+  stroke-width: 2;
+  fill: none;
+}
+
+.theory-visual-frame .viz-axis { marker-end: url(#none); }
+.theory-visual-frame .viz-demand { stroke: #315f8f; stroke-width: 3; fill: none; }
+.theory-visual-frame .viz-supply { stroke: #9a7431; stroke-width: 3; fill: none; }
+.theory-visual-frame .viz-dashed { stroke-dasharray: 7 6; opacity: .8; }
+.theory-visual-frame .viz-dot { fill: #28394d; }
+.theory-visual-frame .viz-dot-accent { fill: #c26a2b; }
+.theory-visual-frame .viz-divider { stroke: #e0e6ed; stroke-width: 1; }
+.theory-visual-frame .viz-guide { stroke: #98a6b5; stroke-width: 1.5; stroke-dasharray: 5 5; fill: none; }
+.theory-visual-frame .viz-ceiling { stroke: #b63f3f; stroke-width: 3; stroke-dasharray: 8 5; }
+.theory-visual-frame .viz-shortage { stroke: #b63f3f; stroke-width: 3; }
+.theory-visual-frame .viz-curve,
+.theory-visual-frame .viz-frontier { stroke: #315f8f; stroke-width: 4; fill: none; }
+.theory-visual-frame .viz-frontier { stroke: #267460; }
+.theory-visual-frame .viz-cobweb { stroke: #c26a2b; stroke-width: 2.2; fill: none; }
+.theory-visual-frame .viz-road { stroke: #7a8794; stroke-width: 4; fill: none; }
+.theory-visual-frame .viz-city { fill: #315f8f; }
+.theory-visual-frame .viz-city-alt { fill: #28786c; }
+.theory-visual-frame .viz-city-text { fill: #fff; font-weight: 900; font-size: 16px; }
+.theory-visual-frame .viz-person { fill: #7b8793; }
+.theory-visual-frame .viz-shop { fill: #e7f0fb; stroke: #315f8f; stroke-width: 2; }
+.theory-visual-frame .viz-shop-alt { fill: #e4f4ef; stroke: #28786c; stroke-width: 2; }
+.theory-visual-frame .viz-arrow { stroke: #315f8f; stroke-width: 3; fill: none; }
+.theory-visual-frame .viz-arrow.reverse { stroke: #3f7b58; }
+.theory-visual-frame .viz-flow-box { fill: #f8fafc; stroke: #b8c6d4; stroke-width: 1.5; }
+.theory-visual-frame .viz-interest { fill: #d7e2ee; }
+.theory-visual-frame .viz-principal { fill: #7596b5; }
+.theory-visual-frame .viz-appraisal { stroke-width: 1.5; }
+.theory-visual-frame .viz-appraisal-0 { fill: #edf4fb; stroke: #6d8fad; }
+.theory-visual-frame .viz-appraisal-1 { fill: #eef8f6; stroke: #5d9a8b; }
+.theory-visual-frame .viz-appraisal-2 { fill: #f4f8ea; stroke: #849a4f; }
+.theory-visual-frame .viz-appraisal-3 { fill: #fff5e6; stroke: #c48a3f; }
+
+.theory-visual-frame text { font-family: inherit; }
+.theory-visual-frame .viz-label { fill: #5a6878; font-size: 11px; font-weight: 800; }
+.theory-visual-frame .viz-line-label { fill: #32475d; font-size: 12px; font-weight: 900; }
+.theory-visual-frame .viz-title-small { fill: #263b54; font-size: 15px; font-weight: 900; }
+.theory-visual-frame .viz-body { fill: #52657a; font-size: 12px; font-weight: 700; }
+.theory-visual-frame .viz-caption { fill: #6d7c8e; font-size: 11px; font-weight: 800; }
+.theory-visual-frame .viz-flow-title { fill: #263b54; font-size: 14px; font-weight: 900; }
+.theory-visual-frame .viz-flow-sub { fill: #728195; font-size: 10px; font-weight: 700; }
+.theory-visual-frame .viz-appraisal-formula { fill: #3d5066; font-size: 11px; font-weight: 900; }
+.theory-visual-frame .viz-interest-text { fill: #6f8195; font-size: 13px; font-weight: 900; }
+.theory-visual-frame .viz-principal-text { fill: #315f8f; font-size: 13px; font-weight: 900; }
+
+@media (max-width: 700px) {
+  .theory-visual-frame svg {
+    min-width: 560px;
+    padding: 8px;
+  }
+
+  .theory-visual-note { font-size: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theory-visual-frame { scroll-behavior: auto; }
+}
