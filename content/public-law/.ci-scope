@@ -1,0 +1,7 @@
+Validation scope:
+- reconstruct exact uploaded HTML
+- verify SHA-256 and byte length
+- verify first and last section markers
+- preserve 12pt/14pt typography rules
+- preserve responsive mobile/tablet/desktop layout
+- build Vite production bundle
