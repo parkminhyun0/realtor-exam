@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { landCategories, registrationLawContent, registrationLawParts } from './data/registrationLaw'
 import { registrationLawDeepDive } from './data/registrationLawDeepDive'
+import './registration-law.css'
 
 export default function RegistrationLawPage({ onBack }) {
   const [selectedId, setSelectedId] = useState('p1s1')
