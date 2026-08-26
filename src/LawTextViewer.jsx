@@ -132,7 +132,6 @@ function getOfficialUrl(target) {
 export default function LawTextViewer({ open, onClose, target }) {
   const [status, setStatus] = useState('idle')
   const [articleData, setArticleData] = useState(null)
-  const [errorMessage, setErrorMessage] = useState('')
   const officialUrl = useMemo(() => getOfficialUrl(target), [target])
 
   useEffect(() => {
@@ -141,7 +140,6 @@ export default function LawTextViewer({ open, onClose, target }) {
     const controller = new AbortController()
     setStatus('loading')
     setArticleData(null)
-    setErrorMessage('')
 
     fetchLawArticle(target.lawName, target.article, controller.signal)
       .then((result) => {
@@ -150,8 +148,7 @@ export default function LawTextViewer({ open, onClose, target }) {
       })
       .catch((error) => {
         if (error?.name === 'AbortError') return
-        setErrorMessage(error instanceof Error ? error.message : '법령 조문을 불러오지 못했습니다.')
-        setStatus('error')
+        setStatus('fallback')
       })
 
     return () => controller.abort()
@@ -206,11 +203,15 @@ export default function LawTextViewer({ open, onClose, target }) {
             </article>
           )}
 
-          {status === 'error' && (
-            <div className="law-article-popup__status law-article-popup__status--error">
-              <strong>조문 원문을 바로 불러오지 못했습니다.</strong>
-              <span>{errorMessage}</span>
-              <a href={officialUrl} target="_blank" rel="noreferrer">국가법령정보센터에서 이 조문 열기 ↗</a>
+          {status === 'fallback' && (
+            <div className="law-article-popup__frame-wrap">
+              <iframe
+                className="law-article-popup__frame"
+                src={officialUrl}
+                title={`${target.lawName} ${target.article} 법령 조문`}
+                loading="eager"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           )}
         </div>
