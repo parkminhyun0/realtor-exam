@@ -12,14 +12,17 @@
   text-decoration-skip-ink: auto;
 }
 
-.real-estate-theory-page .theory-exam-number:is([data-law-reference]),
-.real-estate-theory-page .theory-exam-number {
+.real-estate-theory-page .theory-exam-number[data-law-reference] {
   cursor: pointer;
+  border-radius: 4px;
+  transition: background .14s ease, box-shadow .14s ease;
 }
 
-.real-estate-theory-page .theory-exam-number:hover {
-  border-radius: 4px;
+.real-estate-theory-page .theory-exam-number[data-law-reference]:hover,
+.real-estate-theory-page .theory-exam-number[data-law-reference]:focus-visible {
   background: rgba(198, 40, 40, .08);
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, .10);
+  outline: none;
 }
 
 .real-estate-theory-page .study-tldr .theory-exam-number {
@@ -27,8 +30,10 @@
   text-decoration-color: #ff7979;
 }
 
-.real-estate-theory-page .study-tldr .theory-exam-number:hover {
+.real-estate-theory-page .study-tldr .theory-exam-number[data-law-reference]:hover,
+.real-estate-theory-page .study-tldr .theory-exam-number[data-law-reference]:focus-visible {
   background: rgba(255, 121, 121, .14);
+  box-shadow: 0 0 0 2px rgba(255, 121, 121, .10);
 }
 
 .theory-nav__ready {
@@ -229,7 +234,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theory-relation-card {
+  .theory-relation-card,
+  .real-estate-theory-page .theory-exam-number[data-law-reference] {
     transition: none;
   }
 }
