@@ -3,91 +3,53 @@
   background: linear-gradient(180deg, #f7fbff 0%, #fff 135px);
 }
 
-.theory-visual-frame {
-  margin-top: 10px;
-  overflow-x: auto;
-  border: 1px solid #dbe5ee;
-  border-radius: 14px;
+.theory-visual-figure {
+  margin: 12px 0 0;
+  overflow: hidden;
+  border: 1px solid #d8e3ee;
+  border-radius: 16px;
   background: #fff;
-  box-shadow: 0 6px 18px rgba(34, 54, 75, .045);
+  box-shadow: 0 8px 24px rgba(28, 53, 82, .07);
 }
 
-.theory-visual-frame svg {
+.theory-visual-figure img {
   display: block;
   width: 100%;
-  min-width: 620px;
   height: auto;
-  padding: 12px;
-  box-sizing: border-box;
+  background: #f8fafc;
 }
 
-.theory-visual-note {
-  margin: 8px 2px 0;
-  color: #7b8795;
+.theory-visual-figure figcaption {
+  padding: 9px 12px 10px;
+  border-top: 1px solid #e4ebf2;
+  background: #f9fbfd;
+  color: #6e7e90;
   font-size: 10px;
-  line-height: 1.6;
+  line-height: 1.55;
 }
-
-.theory-visual-frame .viz-axis,
-.theory-visual-frame .viz-arrow-line {
-  stroke: #27384b;
-  stroke-width: 2;
-  fill: none;
-}
-
-.theory-visual-frame .viz-axis { marker-end: url(#none); }
-.theory-visual-frame .viz-demand { stroke: #315f8f; stroke-width: 3; fill: none; }
-.theory-visual-frame .viz-supply { stroke: #9a7431; stroke-width: 3; fill: none; }
-.theory-visual-frame .viz-dashed { stroke-dasharray: 7 6; opacity: .8; }
-.theory-visual-frame .viz-dot { fill: #28394d; }
-.theory-visual-frame .viz-dot-accent { fill: #c26a2b; }
-.theory-visual-frame .viz-divider { stroke: #e0e6ed; stroke-width: 1; }
-.theory-visual-frame .viz-guide { stroke: #98a6b5; stroke-width: 1.5; stroke-dasharray: 5 5; fill: none; }
-.theory-visual-frame .viz-ceiling { stroke: #b63f3f; stroke-width: 3; stroke-dasharray: 8 5; }
-.theory-visual-frame .viz-shortage { stroke: #b63f3f; stroke-width: 3; }
-.theory-visual-frame .viz-curve,
-.theory-visual-frame .viz-frontier { stroke: #315f8f; stroke-width: 4; fill: none; }
-.theory-visual-frame .viz-frontier { stroke: #267460; }
-.theory-visual-frame .viz-cobweb { stroke: #c26a2b; stroke-width: 2.2; fill: none; }
-.theory-visual-frame .viz-road { stroke: #7a8794; stroke-width: 4; fill: none; }
-.theory-visual-frame .viz-city { fill: #315f8f; }
-.theory-visual-frame .viz-city-alt { fill: #28786c; }
-.theory-visual-frame .viz-city-text { fill: #fff; font-weight: 900; font-size: 16px; }
-.theory-visual-frame .viz-person { fill: #7b8793; }
-.theory-visual-frame .viz-shop { fill: #e7f0fb; stroke: #315f8f; stroke-width: 2; }
-.theory-visual-frame .viz-shop-alt { fill: #e4f4ef; stroke: #28786c; stroke-width: 2; }
-.theory-visual-frame .viz-arrow { stroke: #315f8f; stroke-width: 3; fill: none; }
-.theory-visual-frame .viz-arrow.reverse { stroke: #3f7b58; }
-.theory-visual-frame .viz-flow-box { fill: #f8fafc; stroke: #b8c6d4; stroke-width: 1.5; }
-.theory-visual-frame .viz-interest { fill: #d7e2ee; }
-.theory-visual-frame .viz-principal { fill: #7596b5; }
-.theory-visual-frame .viz-appraisal { stroke-width: 1.5; }
-.theory-visual-frame .viz-appraisal-0 { fill: #edf4fb; stroke: #6d8fad; }
-.theory-visual-frame .viz-appraisal-1 { fill: #eef8f6; stroke: #5d9a8b; }
-.theory-visual-frame .viz-appraisal-2 { fill: #f4f8ea; stroke: #849a4f; }
-.theory-visual-frame .viz-appraisal-3 { fill: #fff5e6; stroke: #c48a3f; }
-
-.theory-visual-frame text { font-family: inherit; }
-.theory-visual-frame .viz-label { fill: #5a6878; font-size: 11px; font-weight: 800; }
-.theory-visual-frame .viz-line-label { fill: #32475d; font-size: 12px; font-weight: 900; }
-.theory-visual-frame .viz-title-small { fill: #263b54; font-size: 15px; font-weight: 900; }
-.theory-visual-frame .viz-body { fill: #52657a; font-size: 12px; font-weight: 700; }
-.theory-visual-frame .viz-caption { fill: #6d7c8e; font-size: 11px; font-weight: 800; }
-.theory-visual-frame .viz-flow-title { fill: #263b54; font-size: 14px; font-weight: 900; }
-.theory-visual-frame .viz-flow-sub { fill: #728195; font-size: 10px; font-weight: 700; }
-.theory-visual-frame .viz-appraisal-formula { fill: #3d5066; font-size: 11px; font-weight: 900; }
-.theory-visual-frame .viz-interest-text { fill: #6f8195; font-size: 13px; font-weight: 900; }
-.theory-visual-frame .viz-principal-text { fill: #315f8f; font-size: 13px; font-weight: 900; }
 
 @media (max-width: 700px) {
-  .theory-visual-frame svg {
-    min-width: 560px;
-    padding: 8px;
+  .theory-visual-figure {
+    margin-left: -2px;
+    margin-right: -2px;
+    border-radius: 12px;
+    overflow-x: auto;
   }
 
-  .theory-visual-note { font-size: 9px; }
+  .theory-visual-figure img {
+    width: 820px;
+    max-width: none;
+  }
+
+  .theory-visual-figure figcaption {
+    position: sticky;
+    left: 0;
+    width: min(100vw - 44px, 100%);
+    box-sizing: border-box;
+    font-size: 9px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .theory-visual-frame { scroll-behavior: auto; }
+  .theory-visual-figure { scroll-behavior: auto; }
 }
