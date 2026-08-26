@@ -1,0 +1,100 @@
+import { useEffect, useRef, useState } from 'react'
+import { searchSite } from './siteSearch'
+
+export default function GlobalSearch({ onNavigate }) {
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
+  const [submittedQuery, setSubmittedQuery] = useState('')
+  const [open, setOpen] = useState(false)
+  const rootRef = useRef(null)
+
+  useEffect(() => {
+    const onPointerDown = (event) => {
+      if (rootRef.current && !rootRef.current.contains(event.target)) setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
+  }, [])
+
+  const runSearch = () => {
+    const trimmed = query.trim()
+    if (!trimmed) {
+      setResults([])
+      setSubmittedQuery('')
+      setOpen(false)
+      return
+    }
+    setSubmittedQuery(trimmed)
+    setResults(searchSite(trimmed))
+    setOpen(true)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    runSearch()
+  }
+
+  const handleResultClick = (result) => {
+    setOpen(false)
+    onNavigate(result.subjectId)
+    window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0)
+  }
+
+  return (
+    <div className="global-search" ref={rootRef}>
+      <form className="global-search__form" role="search" onSubmit={handleSubmit}>
+        <span className="global-search__icon" aria-hidden="true">⌕</span>
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => {
+            setQuery(event.target.value)
+            if (!event.target.value.trim()) setOpen(false)
+          }}
+          onFocus={() => submittedQuery && setOpen(true)}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') setOpen(false)
+          }}
+          placeholder="전체 과목 내용 검색 · 예: 용적률, 취득세, 지상권"
+          aria-label="전체 과목 내용 검색"
+          autoComplete="off"
+        />
+        <button type="submit">검색</button>
+      </form>
+
+      {open && (
+        <div className="global-search__results" role="region" aria-label="검색 결과">
+          <div className="global-search__results-head">
+            <strong>“{submittedQuery}” 검색 결과</strong>
+            <span>{results.length}건</span>
+          </div>
+
+          {results.length > 0 ? (
+            <div className="global-search__result-list">
+              {results.map((result, index) => (
+                <button
+                  type="button"
+                  className="global-search__result"
+                  key={`${result.subjectId}-${result.path}-${index}`}
+                  onClick={() => handleResultClick(result)}
+                >
+                  <span className="global-search__result-meta">
+                    <b>{result.subjectTitle}</b>
+                    <span>{result.context}</span>
+                  </span>
+                  <span className="global-search__result-snippet">{result.snippet}</span>
+                  <span className="global-search__result-action">과목 열기 →</span>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="global-search__empty">
+              <strong>일치하는 내용을 찾지 못했습니다.</strong>
+              <span>띄어쓰기를 줄이거나 핵심 단어 하나로 다시 검색해 보세요.</span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
