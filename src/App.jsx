@@ -11,12 +11,20 @@ function navigate(path = '') {
   window.location.hash = path ? `/${path}` : '/'
 }
 
+function openSubject(subject) {
+  if (subject.id === 'public-law') {
+    window.location.href = `${import.meta.env.BASE_URL}public-law.html`
+    return
+  }
+  navigate(subject.id)
+}
+
 function SubjectCard({ subject }) {
   return (
     <button
       className={`subject-card${subject.featured ? ' subject-card--featured' : ''}`}
       type="button"
-      onClick={() => navigate(subject.id)}
+      onClick={() => openSubject(subject)}
       aria-label={`${subject.title} 열기`}
     >
       <span className="subject-card__topline">
