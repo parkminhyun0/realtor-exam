@@ -1,5 +1,6 @@
 {
   "project": "realtor-exam",
   "contentVersion": "civil-law-complete-2026",
-  "sourceCommit": "16ae5629b59334d6d5739b1867d34bf508e09634"
+  "sourceCommit": "local-build",
+  "note": "sourceCommit·deployedAt·runId 은 배포 워크플로가 빌드 때 dist/version.json 에 찍는다. 손으로 고치지 마라 — 예전에 손으로 적힌 값이 16커밋 뒤처진 채 남아 배포본을 확인할 수 없었다."
 }
