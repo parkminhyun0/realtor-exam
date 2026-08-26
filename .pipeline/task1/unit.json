@@ -1,0 +1,9 @@
+{
+  "prio": 1,
+  "subject": "civil-law",
+  "unitId": "p1s1",
+  "parent": "PART 1 민법총칙",
+  "title": "POINT 01 · 권리의 변동",
+  "taskId": "task1",
+  "branch": "pipeline/civil-law-p1s1"
+}

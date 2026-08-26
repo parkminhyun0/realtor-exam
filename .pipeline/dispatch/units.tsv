@@ -1,0 +1,142 @@
+# 규격 통일 대상 단원 원장 — **지워지지 않는 목록이다.**
+#
+# 이 파일에서 줄을 빼지 마라. 끝난 일은 .pipeline/taskN/ 산출 파일의 존재로
+# 판정한다. 앞 파이프라인은 큐에서 꺼내 버리는 방식이었고, 절전으로 죽은
+# 작업 8건을 아무도 모르게 잃었다.
+#
+# 열: prio ⇥ subject ⇥ unitId ⇥ parent ⇥ title
+#
+# prio 1  본문이 이미 차 있는 과목 — 먼저 한다 (박 목사님 지시 2026-08-27)
+# prio 2  공법 — 형식의 기준이지만 iframe·gz 구조라 통일 대상이다
+# prio 3  세법 — 목차 4단계 분류는 이미 기준감이고 본문이 비어 있다
+#
+# 중개사법(brokerage-law)은 목차조차 없어 여기 없다. 목차를 세우는 일
+# 자체가 한 과제이고, 그것이 끝나야 단원이 생긴다.
+#
+# 생성 2026-08-27 · 126단원
+1	civil-law	p1s1	PART 1 민법총칙	POINT 01 · 권리의 변동
+1	civil-law	p1s2	PART 1 민법총칙	POINT 02 · 법률행위
+1	civil-law	p1s3	PART 1 민법총칙	POINT 03 · 의사표시
+1	civil-law	p1s4	PART 1 민법총칙	POINT 04 · 법률행위의 대리
+1	civil-law	p1s5	PART 1 민법총칙	POINT 05 · 무효와 취소
+1	civil-law	p1s6	PART 1 민법총칙	POINT 06 · 조건과 기한
+1	civil-law	p2s1	PART 2 물권법	POINT 01 · 물권의 의의
+1	civil-law	p2s2	PART 2 물권법	POINT 02 · 물권의 변동
+1	civil-law	p2s3	PART 2 물권법	POINT 03 · 점유권
+1	civil-law	p2s4	PART 2 물권법	POINT 04 · 소유권
+1	civil-law	p2s5	PART 2 물권법	POINT 05 · 용익물권
+1	civil-law	p2s6	PART 2 물권법	POINT 06 · 담보물권
+1	civil-law	p3s1	PART 3 계약법	POINT 01 · 계약의 성립
+1	civil-law	p3s2	PART 3 계약법	POINT 02 · 계약의 효력
+1	civil-law	p3s3	PART 3 계약법	POINT 03 · 계약의 해제·해지
+1	civil-law	p3s4	PART 3 계약법	POINT 04 · 매매
+1	civil-law	p3s5	PART 3 계약법	POINT 05 · 교환
+1	civil-law	p3s6	PART 3 계약법	POINT 06 · 임대차
+1	civil-law	p4s1	PART 4 민사특별법	POINT 01 · 주택임대차보호법
+1	civil-law	p4s2	PART 4 민사특별법	POINT 02 · 상가건물 임대차보호법
+1	civil-law	p4s3	PART 4 민사특별법	POINT 03 · 집합건물의 소유 및 관리에 관한 법률
+1	civil-law	p4s4	PART 4 민사특별법	POINT 04 · 가등기담보 등에 관한 법률
+1	civil-law	p4s5	PART 4 민사특별법	POINT 05 · 부동산 실권리자명의 등기에 관한 법률
+1	real-estate-theory	p1c1	부동산학 총론	부동산학의 기초
+1	real-estate-theory	p1c2	부동산학 총론	부동산의 개념
+1	real-estate-theory	p1c3	부동산학 총론	부동산의 분류
+1	real-estate-theory	p1c4	부동산학 총론	부동산의 특성
+1	real-estate-theory	p2c1	부동산경제론	부동산 수요이론
+1	real-estate-theory	p2c2	부동산경제론	부동산 공급이론
+1	real-estate-theory	p2c3	부동산경제론	시장균형
+1	real-estate-theory	p2c4	부동산경제론	탄력성
+1	real-estate-theory	p2c5	부동산경제론	부동산 경기변동
+1	real-estate-theory	p2c6	부동산경제론	거미집이론
+1	real-estate-theory	p3c1	부동산시장론	부동산시장의 기초
+1	real-estate-theory	p3c2	부동산시장론	효율적 시장이론
+1	real-estate-theory	p3c3	부동산시장론	부동산의 정보
+1	real-estate-theory	p3c4	부동산시장론	지대이론
+1	real-estate-theory	p3c5	부동산시장론	도시공간구조론
+1	real-estate-theory	p3c6	부동산시장론	상권분석
+1	real-estate-theory	p4c1	부동산정책론	부동산문제
+1	real-estate-theory	p4c2	부동산정책론	정부의 시장개입
+1	real-estate-theory	p4c3	부동산정책론	토지정책
+1	real-estate-theory	p4c4	부동산정책론	주택정책
+1	real-estate-theory	p4c5	부동산정책론	가격규제정책
+1	real-estate-theory	p4c6	부동산정책론	조세정책
+1	real-estate-theory	p5c1	부동산투자론	부동산투자의 기초
+1	real-estate-theory	p5c2	부동산투자론	수익과 위험
+1	real-estate-theory	p5c3	부동산투자론	위험분석
+1	real-estate-theory	p5c4	부동산투자론	화폐의 시간가치
+1	real-estate-theory	p5c5	부동산투자론	부동산투자 현금수지
+1	real-estate-theory	p5c6	부동산투자론	투자타당성 분석
+1	real-estate-theory	p5c7	부동산투자론	비율분석
+1	real-estate-theory	p5c8	부동산투자론	포트폴리오이론
+1	real-estate-theory	p6c1	부동산금융론	부동산금융의 기초
+1	real-estate-theory	p6c2	부동산금융론	저당대출
+1	real-estate-theory	p6c3	부동산금융론	저당시장
+1	real-estate-theory	p6c4	부동산금융론	주택저당증권
+1	real-estate-theory	p6c5	부동산금융론	프로젝트 파이낸싱
+1	real-estate-theory	p6c6	부동산금융론	부동산투자회사
+1	real-estate-theory	p7c1	부동산개발·관리·마케팅론	부동산개발의 기초
+1	real-estate-theory	p7c2	부동산개발·관리·마케팅론	부동산개발 과정
+1	real-estate-theory	p7c3	부동산개발·관리·마케팅론	부동산개발 위험
+1	real-estate-theory	p7c4	부동산개발·관리·마케팅론	개발방식
+1	real-estate-theory	p7c5	부동산개발·관리·마케팅론	부동산관리
+1	real-estate-theory	p7c6	부동산개발·관리·마케팅론	임대관리
+1	real-estate-theory	p7c7	부동산개발·관리·마케팅론	부동산마케팅
+1	real-estate-theory	p8c1	감정평가론	감정평가의 기초
+1	real-estate-theory	p8c2	감정평가론	부동산가치
+1	real-estate-theory	p8c3	감정평가론	가치발생요인
+1	real-estate-theory	p8c4	감정평가론	가치형성요인
+1	real-estate-theory	p8c5	감정평가론	부동산가격의 제원칙
+1	real-estate-theory	p8c6	감정평가론	지역분석
+1	real-estate-theory	p8c7	감정평가론	개별분석
+1	real-estate-theory	p8c8	감정평가론	감정평가 3방식
+1	real-estate-theory	p8c9	감정평가론	감정평가 계산문제
+1	registration-law	p1s1	공간정보의 구축 및 관리 등에 관한 법률	POINT 01 · 토지의 등록
+1	registration-law	p1s2	공간정보의 구축 및 관리 등에 관한 법률	POINT 02 · 지적공부 및 부동산종합공부
+1	registration-law	p1s3	공간정보의 구축 및 관리 등에 관한 법률	POINT 03 · 토지의 이동 및 지적정리
+1	registration-law	p1s4	공간정보의 구축 및 관리 등에 관한 법률	POINT 04 · 지적측량
+1	registration-law	p2s1	부동산등기법	POINT 01 · 등기제도 총칙
+1	registration-law	p2s2	부동산등기법	POINT 02 · 등기소와 등기부
+1	registration-law	p2s3	부동산등기법	POINT 03 · 등기절차 총론
+1	registration-law	p2s4	부동산등기법	POINT 04 · 각종 권리의 등기절차
+1	registration-law	p2s5	부동산등기법	POINT 05 · 각종의 등기절차
+2	public-law	c1s1	국토의 계획 및 이용에 관한 법률	제1절 총칙
+2	public-law	c1s2	국토의 계획 및 이용에 관한 법률	제2절 광역도시계획
+2	public-law	c1s3	국토의 계획 및 이용에 관한 법률	제3절 도시·군기본계획
+2	public-law	c1s4	국토의 계획 및 이용에 관한 법률	제4절 도시·군관리계획
+2	public-law	c1s5	국토의 계획 및 이용에 관한 법률	제5절 공간재구조화계획
+2	public-law	c1s6	국토의 계획 및 이용에 관한 법률	제6절 용도지역·지구·구역
+2	public-law	c1s7	국토의 계획 및 이용에 관한 법률	제7절 도시·군계획시설사업
+2	public-law	c1s8	국토의 계획 및 이용에 관한 법률	제8절 지구단위계획구역
+2	public-law	c1s9	국토의 계획 및 이용에 관한 법률	제9절 개발행위허가
+2	public-law	c1s10	국토의 계획 및 이용에 관한 법률	제10절 개발밀도관리·기반시설부담구역
+2	public-law	c2s0	도시개발법	▣ 시행절차
+2	public-law	c2s1	도시개발법	제1절 개발계획·구역 지정
+2	public-law	c2s2	도시개발법	제2절 시행자·조합
+2	public-law	c2s3	도시개발법	제3절 실시계획
+2	public-law	c2s4	도시개발법	제4절 사업의 시행
+2	public-law	c2s5	도시개발법	제5절 비용부담·채권
+2	public-law	c3s1	도시 및 주거환경정비법	제1절 총칙
+2	public-law	c3s2	도시 및 주거환경정비법	제2절 기본계획·정비구역
+2	public-law	c3s3	도시 및 주거환경정비법	제3절 정비사업의 시행
+2	public-law	c4s1	건축법	제1절 총칙
+2	public-law	c4s2	건축법	제2절 건축물의 건축
+2	public-law	c4s3	건축법	제3절 대지와 도로
+2	public-law	c4s4	건축법	제4절 지역·지구의 건축물
+2	public-law	c4s5	건축법	제5절 특별건축구역
+2	public-law	c4s6	건축법	제6절 건축협정·결합건축
+2	public-law	c5s1	주택법	제1절 총칙
+2	public-law	c5s2	주택법	제2절 주택의 건설
+2	public-law	c5s3	주택법	제3절 주택의 공급
+2	public-law	c5s4	주택법	제4절 리모델링
+2	public-law	c6s1	농지법	제1절 총칙
+2	public-law	c6s2	농지법	제2절 농지의 소유
+2	public-law	c6s3	농지법	제3절 농지의 이용
+2	public-law	c6s4	농지법	제4절 농지의 보전
+3	tax-law	p1s1	PART 1 조세총론	POINT 01 · 조세의 개념과 분류
+3	tax-law	p1s2	PART 1 조세총론	POINT 02 · 납세의무의 성립·확정·소멸·확장
+3	tax-law	p1s3	PART 1 조세총론	POINT 03 · 조세우선권 및 배당순서·조세불복절차
+3	tax-law	p2s1	PART 2 지방세	POINT 01 · 취득세
+3	tax-law	p2s2	PART 2 지방세	POINT 02 · 등록면허세
+3	tax-law	p2s3	PART 2 지방세	POINT 03 · 재산세
+3	tax-law	p3s1	PART 3 국세	POINT 01 · 종합부동산세
+3	tax-law	p3s2	PART 3 국세	POINT 02 · 종합소득세
+3	tax-law	p3s3	PART 3 국세	POINT 03 · 양도소득세
