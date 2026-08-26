@@ -27,7 +27,7 @@ export default function PublicLawPage({ onBack }) {
     return () => window.removeEventListener('message', onMessage)
   }, [])
 
-  const frameSrc = `${import.meta.env.BASE_URL}public-law.html?embed=1#${selectedId}`
+  const frameSrc = `${import.meta.env.BASE_URL}public-law.html?embed=1&law=${encodeURIComponent(selected.chapter.title)}#${selectedId}`
 
   return (
     <main className="public-law-page" id="main-content">
