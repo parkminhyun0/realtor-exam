@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { subjectLawOrder, subjectLawSources } from './data/lawSources'
 
 export default function LawTextViewer({ open, onClose, activeSubjectId }) {
@@ -8,7 +9,7 @@ export default function LawTextViewer({ open, onClose, activeSubjectId }) {
 
   useEffect(() => {
     if (!open) return
-    const nextSubject = subjectLawSources[activeSubjectId] ? activeSubjectId : subjectId
+    const nextSubject = subjectLawSources[activeSubjectId] ? activeSubjectId : 'real-estate-theory'
     setSubjectId(nextSubject)
     setLawIndex(0)
   }, [open, activeSubjectId])
@@ -44,7 +45,7 @@ export default function LawTextViewer({ open, onClose, activeSubjectId }) {
     if (event.target === event.currentTarget) onClose()
   }
 
-  return (
+  return createPortal(
     <div className="law-viewer-backdrop" onMouseDown={onBackdropClick} role="presentation">
       <section className="law-viewer" role="dialog" aria-modal="true" aria-labelledby="law-viewer-title">
         <header className="law-viewer__header">
@@ -111,6 +112,7 @@ export default function LawTextViewer({ open, onClose, activeSubjectId }) {
           </div>
         </div>
       </section>
-    </div>
+    </div>,
+    document.body,
   )
 }
