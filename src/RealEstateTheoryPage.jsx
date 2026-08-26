@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { realEstateTheoryChapterCount, realEstateTheoryParts } from './data/realEstateTheory'
 import { realEstateTheoryContent } from './data/realEstateTheoryContent'
+import { realEstateTheoryHandoutContent } from './data/realEstateTheoryHandoutContent'
 import { realEstateTheoryRelations } from './data/realEstateTheoryRelations'
 import './real-estate-theory.css'
 
@@ -11,6 +12,10 @@ const chapterMeta = Object.fromEntries(
     part.chapters.map((chapter) => [chapter.id, { part, chapter }])
   )),
 )
+
+function getTheoryContent(chapterId) {
+  return realEstateTheoryHandoutContent[chapterId] || realEstateTheoryContent[chapterId]
+}
 
 function HighlightNumbers({ children }) {
   if (typeof children !== 'string') return children
@@ -41,10 +46,10 @@ export default function RealEstateTheoryPage({ onBack }) {
   const [selectedId, setSelectedId] = useState('p1c1')
 
   const selected = useMemo(() => chapterMeta[selectedId] || chapterMeta.p1c1, [selectedId])
-  const chapterContent = realEstateTheoryContent[selected.chapter.id]
+  const chapterContent = getTheoryContent(selected.chapter.id)
   const relations = realEstateTheoryRelations[selected.chapter.id] || []
 
-  const openRelatedChapter = (chapterId) => {
+  const openChapter = (chapterId) => {
     setSelectedId(chapterId)
     scrollToTheoryContentOnMobile()
   }
@@ -58,14 +63,14 @@ export default function RealEstateTheoryPage({ onBack }) {
 
       <section className="public-law-hero">
         <div>
-          <span className="eyebrow">REAL ESTATE PRINCIPLES · 2026</span>
+          <span className="eyebrow">REAL ESTATE PRINCIPLES · 제37회 대비</span>
           <h1>부동산학개론 핵심정리</h1>
-          <p>부동산공법·부동산공시법과 동일한 학습 UI에서 핵심개념·전체 흐름·비교표·함정·암기·연결 학습을 한 구조로 정리합니다.</p>
+          <p>첨부 교안의 기본이론을 공법·공시법과 동일한 학습 UI로 재구성하고, 핵심개념·전체 흐름·비교표·함정·암기·연결 학습을 한 구조로 정리합니다.</p>
         </div>
         <div className="public-law-hero__badges" aria-label="부동산학개론 학습 구성">
           <span>8개 대단원</span>
           <span>{realEstateTheoryChapterCount}개 장</span>
-          <span>선택한 장만 표시</span>
+          <span>교안 기반 본문 확장</span>
           <span>연결 학습 적용</span>
         </div>
       </section>
@@ -89,10 +94,10 @@ export default function RealEstateTheoryPage({ onBack }) {
                     <button
                       type="button"
                       className={selectedId === chapter.id ? 'active' : ''}
-                      onClick={() => setSelectedId(chapter.id)}
+                      onClick={() => openChapter(chapter.id)}
                     >
                       <span>제{Number(chapter.number)}장 · {chapter.title}</span>
-                      {realEstateTheoryContent[chapter.id]
+                      {getTheoryContent(chapter.id)
                         ? <b className="theory-nav__ready">본문</b>
                         : <small>목차</small>}
                     </button>
@@ -117,7 +122,9 @@ export default function RealEstateTheoryPage({ onBack }) {
               </div>
             </div>
             <span className="law-reference">
-              {chapterContent ? '검증 본문 반영 · 2026 기준' : '목차 확정 · 본문 검증 진행 중'}
+              {chapterContent
+                ? (chapterContent.statusLabel || '검증 본문 반영 · 2026 기준')
+                : '목차 확정 · 본문 검증 진행 중'}
             </span>
           </header>
 
@@ -127,14 +134,14 @@ export default function RealEstateTheoryPage({ onBack }) {
                 content={chapterContent}
                 chapter={selected.chapter}
                 relations={relations}
-                onOpenRelation={openRelatedChapter}
+                onOpenRelation={openChapter}
               />
             )
             : (
               <TheoryTocOnly
                 chapter={selected.chapter}
                 relations={relations}
-                onOpenRelation={openRelatedChapter}
+                onOpenRelation={openChapter}
               />
             )}
         </article>
@@ -144,6 +151,8 @@ export default function RealEstateTheoryPage({ onBack }) {
 }
 
 function TheoryStudyContent({ content, chapter, relations, onOpenRelation }) {
+  const isHandoutContent = content.statusLabel?.includes('교안')
+
   return (
     <>
       <div className="study-tldr">
@@ -247,20 +256,40 @@ function TheoryStudyContent({ content, chapter, relations, onOpenRelation }) {
 
       <section className="source-note theory-source-note">
         <b>확인 가능한 근거</b>
-        <p>법령은 국가법령정보센터, 시험범위·기출은 Q-Net을 우선하고, 비법령 이론은 별도로 구분합니다.</p>
+        <p>
+          {isHandoutContent
+            ? '첨부 교안의 핵심을 현재 목차에 맞게 재구성했습니다. 법령형 숫자·요건은 교안의 이론 설명과 분리하고, 현행 법령을 확인한 경우에만 별도 표시합니다.'
+            : '법령은 국가법령정보센터, 시험범위·기출은 Q-Net을 우선하고, 비법령 이론은 별도로 구분합니다.'}
+        </p>
         <div className="theory-source-links">
           {content.sources.map((source) => (
-            <a key={`${source.label}-${source.detail}`} href={source.url} target="_blank" rel="noreferrer">
-              <span>{source.type}</span>
-              <strong>{source.label}</strong>
-              <small><HighlightNumbers>{source.detail}</HighlightNumbers></small>
-              <b aria-hidden="true">↗</b>
-            </a>
+            <TheorySourceItem source={source} key={`${source.label}-${source.detail}`} />
           ))}
         </div>
       </section>
     </>
   )
+}
+
+function TheorySourceItem({ source }) {
+  const body = (
+    <>
+      <span>{source.type}</span>
+      <strong>{source.label}</strong>
+      <small><HighlightNumbers>{source.detail}</HighlightNumbers></small>
+      <b aria-hidden="true">{source.url ? '↗' : '자료'}</b>
+    </>
+  )
+
+  if (source.url) {
+    return (
+      <a className="theory-source-item" href={source.url} target="_blank" rel="noreferrer">
+        {body}
+      </a>
+    )
+  }
+
+  return <div className="theory-source-item theory-source-item--static">{body}</div>
 }
 
 function TheoryTocOnly({ chapter, relations, onOpenRelation }) {
