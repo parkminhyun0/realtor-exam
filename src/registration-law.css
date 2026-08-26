@@ -235,19 +235,234 @@
   white-space: nowrap;
 }
 
+.registration-exam-detail {
+  border-top: 5px solid var(--chapter-color, #2e5e8c);
+  background: linear-gradient(180deg, #f5f8fc 0%, #ffffff 210px);
+  box-shadow: 0 10px 30px rgba(27, 42, 65, .06);
+}
+
+.registration-exam-detail__heading {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.registration-exam-detail__heading > span {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--chapter-color, #2e5e8c);
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
+.registration-exam-detail__heading h3 {
+  margin: 0;
+  color: #263b57;
+  font-size: 14pt !important;
+  letter-spacing: -.03em;
+}
+
+.registration-exam-detail__heading p {
+  margin: 5px 0 0;
+  color: #56667a;
+  line-height: 1.8;
+}
+
+.registration-exam-detail__topics {
+  display: grid;
+  gap: 12px;
+}
+
+.registration-exam-topic {
+  padding: 16px;
+  border: 1px solid #dce4ed;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.registration-exam-topic__head {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.registration-exam-topic__head > span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #eaf1f8;
+  color: #264767;
+  font-weight: 900;
+}
+
+.registration-exam-topic h4 {
+  margin: 2px 0 8px;
+  color: #203650;
+  font-size: 14pt !important;
+}
+
+.registration-exam-topic > ul {
+  margin: 13px 0 0;
+  padding-left: 20px;
+  color: #45566b;
+  line-height: 1.85;
+}
+
+.registration-exam-topic > ul li + li {
+  margin-top: 5px;
+}
+
+.registration-exam-topic__trap {
+  margin-top: 12px;
+  padding: 11px 13px;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 9px;
+  border: 1px solid #efcccc;
+  border-left: 4px solid #c62828;
+  border-radius: 10px;
+  background: #fff6f6;
+  color: #6d3d3d;
+  line-height: 1.75;
+}
+
+.registration-exam-topic__trap b {
+  color: #a21f1f;
+  white-space: nowrap;
+}
+
+.registration-law-articles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 5px 0 10px;
+}
+
+.registration-law-articles--compact {
+  margin: 7px 0 0;
+}
+
+.registration-law-articles__label {
+  color: #66768a;
+  font-size: 11pt;
+  font-weight: 800;
+}
+
+.registration-law-articles button {
+  min-height: 30px;
+  padding: 4px 9px;
+  border: 1px solid #cbd7e5;
+  border-radius: 999px;
+  background: #f6f9fc;
+  color: #264d75;
+  cursor: pointer;
+  font-size: 11pt;
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.registration-law-articles button:hover {
+  border-color: #8ba7c3;
+  background: #eaf2fa;
+}
+
+.registration-law-articles button:focus-visible {
+  outline: 3px solid rgba(46, 94, 140, .22);
+  outline-offset: 2px;
+}
+
+.registration-ox {
+  margin-top: 16px;
+  padding: 15px;
+  border: 1px solid #e5d7b1;
+  border-radius: 14px;
+  background: #fffaf0;
+}
+
+.registration-ox__title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+
+.registration-ox__title strong {
+  color: #765612;
+  font-size: 14pt !important;
+}
+
+.registration-ox__title span {
+  color: #826f42;
+}
+
+.registration-ox__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.registration-ox__item {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 9px;
+  padding: 12px;
+  border: 1px solid #eadfbe;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.registration-ox__number {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f7e9bd;
+  color: #765612;
+  font-weight: 900;
+}
+
+.registration-ox__item b {
+  color: #38485c;
+  line-height: 1.65;
+}
+
+.registration-ox__item p {
+  margin: 5px 0 0;
+  color: #765612;
+  font-weight: 800;
+  line-height: 1.65;
+}
+
 @media (max-width: 900px) {
-  .exam-core-panel__grid {
+  .exam-core-panel__grid,
+  .registration-ox__grid {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 700px) {
-  .exam-core-panel__heading {
+  .exam-core-panel__heading,
+  .registration-exam-detail__heading {
     grid-template-columns: 1fr;
     gap: 8px;
   }
 
-  .exam-core-panel__badge {
+  .exam-core-panel__badge,
+  .registration-exam-detail__heading > span {
     width: max-content;
   }
 
@@ -259,6 +474,40 @@
   .exam-core-item__index {
     width: 30px;
     height: 30px;
+  }
+
+  .registration-exam-topic {
+    padding: 13px 12px;
+  }
+
+  .registration-exam-topic__head {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .registration-exam-topic__head > span {
+    width: 30px;
+    height: 30px;
+  }
+
+  .registration-exam-topic__trap,
+  .law-detail-card__exam {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .registration-ox {
+    padding: 12px;
+  }
+
+  .registration-ox__title {
+    display: grid;
+    gap: 4px;
+  }
+
+  .registration-law-articles button {
+    min-height: 36px;
+    padding: 6px 10px;
   }
 
   .law-deep-dive__intro {
@@ -285,11 +534,6 @@
   .law-detail-card__body {
     padding: 13px 12px 15px;
   }
-
-  .law-detail-card__exam {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
 }
 
 @media print {
@@ -300,7 +544,14 @@
 
   .exam-core-panel,
   .exam-core-item,
+  .registration-exam-topic,
   .law-detail-card {
     break-inside: avoid;
+  }
+
+  .registration-law-articles button {
+    border: 0;
+    padding: 0;
+    background: transparent;
   }
 }
