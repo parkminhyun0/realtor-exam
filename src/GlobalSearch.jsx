@@ -13,6 +13,7 @@ export default function GlobalSearch({ onNavigate }) {
   const [submittedQuery, setSubmittedQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [lawViewerOpen, setLawViewerOpen] = useState(false)
+  const [lawViewerTarget, setLawViewerTarget] = useState(null)
   const rootRef = useRef(null)
 
   useEffect(() => {
@@ -21,6 +22,17 @@ export default function GlobalSearch({ onNavigate }) {
     }
     document.addEventListener('pointerdown', onPointerDown)
     return () => document.removeEventListener('pointerdown', onPointerDown)
+  }, [])
+
+  useEffect(() => {
+    const onOpenLawReference = (event) => {
+      setOpen(false)
+      setLawViewerTarget(event.detail || null)
+      setLawViewerOpen(true)
+    }
+
+    window.addEventListener('realtor:open-law-viewer', onOpenLawReference)
+    return () => window.removeEventListener('realtor:open-law-viewer', onOpenLawReference)
   }, [])
 
   const runSearch = () => {
@@ -110,6 +122,7 @@ export default function GlobalSearch({ onNavigate }) {
         type="button"
         onClick={() => {
           setOpen(false)
+          setLawViewerTarget(null)
           setLawViewerOpen(true)
         }}
         aria-haspopup="dialog"
@@ -124,6 +137,7 @@ export default function GlobalSearch({ onNavigate }) {
         open={lawViewerOpen}
         onClose={() => setLawViewerOpen(false)}
         activeSubjectId={getActiveSubjectId()}
+        target={lawViewerTarget}
       />
     </>
   )
