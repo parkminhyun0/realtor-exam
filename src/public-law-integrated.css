@@ -1,117 +1,30 @@
-.public-law-page--embedded {
-  width: min(1180px, calc(100% - 48px));
-  margin: 0 auto;
-  padding: 42px 0 84px;
-}
-
-.public-law-page--embedded .public-law-topline {
-  margin-bottom: 18px;
-}
-
-.public-law-page--embedded .public-law-hero {
-  min-height: 250px;
-  padding: 38px 42px;
-  border-radius: 28px;
-  background:
-    radial-gradient(circle at 86% 22%, rgba(255,255,255,.14), transparent 22%),
-    linear-gradient(135deg, #101d32 0%, #1c3354 58%, #315475 100%);
-  box-shadow: 0 24px 70px rgba(24, 38, 63, .14);
-}
-
-.public-law-page--embedded .public-law-hero h1 {
-  margin: 12px 0 10px;
-}
-
-.public-law-integrated-shell {
-  margin-top: 28px;
-}
-
-.public-law-integrated-shell__heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 28px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--line);
-}
-
-.public-law-integrated-shell__heading > div {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-}
-
-.public-law-integrated-shell__heading h2 {
-  margin: 0;
-  font-size: 14pt;
-  letter-spacing: -.035em;
-}
-
-.public-law-integrated-shell__heading p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 12pt;
+.public-law-content--source {
+  overflow: hidden;
 }
 
 .public-law-frame {
   display: block;
   width: 100%;
-  height: min(1120px, calc(100vh - 190px));
-  min-height: 760px;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background: var(--soft);
-  box-shadow: 0 14px 38px rgba(23, 32, 51, .06);
+  min-height: 620px;
+  border: 0;
+  background: transparent;
+  transition: height .16s ease;
 }
 
-@media (max-width: 900px) {
-  .public-law-page--embedded {
-    width: calc(100% - 28px);
-    padding-top: 28px;
-  }
-
-  .public-law-page--embedded .public-law-hero {
-    min-height: 0;
-    padding: 30px 26px;
-    border-radius: 22px;
-  }
-
-  .public-law-integrated-shell__heading {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .public-law-frame {
-    min-height: 820px;
-    height: calc(100vh - 150px);
-    border-radius: 16px;
+@media (max-width: 980px) {
+  .public-law-content--source {
+    overflow: visible;
   }
 }
 
-@media (max-width: 560px) {
-  .public-law-page--embedded {
-    width: calc(100% - 20px);
-    padding: 20px 0 64px;
-  }
-
-  .public-law-page--embedded .public-law-hero {
-    padding: 24px 18px;
-    border-radius: 18px;
-  }
-
-  .public-law-page--embedded .public-law-hero__badges {
-    gap: 6px;
-  }
-
-  .public-law-integrated-shell {
-    margin-top: 22px;
-  }
-
+@media (max-width: 700px) {
   .public-law-frame {
-    min-height: 760px;
-    height: calc(100vh - 130px);
-    border-radius: 14px;
+    min-height: 560px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-law-frame {
+    transition: none;
   }
 }
