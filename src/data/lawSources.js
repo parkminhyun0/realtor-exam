@@ -5,6 +5,7 @@ export const subjectLawSources = {
     title: '부동산학개론',
     shortTitle: '학개론',
     laws: [
+      { name: '민법', url: lawUrl('민법') },
       { name: '감정평가 및 감정평가사에 관한 법률', url: lawUrl('감정평가및감정평가사에관한법률') },
       { name: '부동산 가격공시에 관한 법률', url: lawUrl('부동산가격공시에관한법률') },
       { name: '부동산투자회사법', url: lawUrl('부동산투자회사법') },
