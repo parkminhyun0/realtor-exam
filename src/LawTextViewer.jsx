@@ -2,17 +2,28 @@ import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { subjectLawOrder, subjectLawSources } from './data/lawSources'
 
-export default function LawTextViewer({ open, onClose, activeSubjectId }) {
+export default function LawTextViewer({ open, onClose, activeSubjectId, target }) {
   const initialSubject = subjectLawSources[activeSubjectId] ? activeSubjectId : 'real-estate-theory'
   const [subjectId, setSubjectId] = useState(initialSubject)
   const [lawIndex, setLawIndex] = useState(0)
+  const [article, setArticle] = useState(null)
 
   useEffect(() => {
     if (!open) return
-    const nextSubject = subjectLawSources[activeSubjectId] ? activeSubjectId : 'real-estate-theory'
-    setSubjectId(nextSubject)
-    setLawIndex(0)
-  }, [open, activeSubjectId])
+
+    const requestedSubjectId = target?.subjectId
+    const nextSubjectId = subjectLawSources[requestedSubjectId]
+      ? requestedSubjectId
+      : (subjectLawSources[activeSubjectId] ? activeSubjectId : 'real-estate-theory')
+    const nextSubject = subjectLawSources[nextSubjectId]
+    const requestedLawIndex = target?.lawName
+      ? nextSubject.laws.findIndex((law) => law.name === target.lawName)
+      : -1
+
+    setSubjectId(nextSubjectId)
+    setLawIndex(requestedLawIndex >= 0 ? requestedLawIndex : 0)
+    setArticle(requestedLawIndex >= 0 && target?.article ? target.article : null)
+  }, [open, activeSubjectId, target])
 
   useEffect(() => {
     if (!open) return undefined
@@ -33,12 +44,22 @@ export default function LawTextViewer({ open, onClose, activeSubjectId }) {
 
   const subject = subjectLawSources[subjectId]
   const activeLaw = useMemo(() => subject?.laws?.[lawIndex] ?? subject?.laws?.[0], [subject, lawIndex])
+  const activeUrl = useMemo(() => {
+    if (!activeLaw) return ''
+    return article ? `${activeLaw.url}/${article}` : activeLaw.url
+  }, [activeLaw, article])
 
   if (!open || !subject || !activeLaw) return null
 
   const changeSubject = (nextSubjectId) => {
     setSubjectId(nextSubjectId)
     setLawIndex(0)
+    setArticle(null)
+  }
+
+  const changeLaw = (index) => {
+    setLawIndex(index)
+    setArticle(null)
   }
 
   const onBackdropClick = (event) => {
@@ -82,7 +103,7 @@ export default function LawTextViewer({ open, onClose, activeSubjectId }) {
                 key={law.name}
                 type="button"
                 className={`law-viewer__law-item${lawIndex === index ? ' is-active' : ''}`}
-                onClick={() => setLawIndex(index)}
+                onClick={() => changeLaw(index)}
                 aria-current={lawIndex === index ? 'true' : undefined}
               >
                 <span>{law.name}</span>
@@ -94,15 +115,15 @@ export default function LawTextViewer({ open, onClose, activeSubjectId }) {
           <div className="law-viewer__content">
             <div className="law-viewer__content-bar">
               <div>
-                <strong>{activeLaw.name}</strong>
-                <span>법제처 국가법령정보센터 원문</span>
+                <strong>{activeLaw.name}{article ? ` ${article}` : ''}</strong>
+                <span>{article ? '선택한 조문 · 법제처 국가법령정보센터 원문' : '법제처 국가법령정보센터 원문'}</span>
               </div>
-              <a href={activeLaw.url} target="_blank" rel="noreferrer">새 창에서 열기 ↗</a>
+              <a href={activeUrl} target="_blank" rel="noreferrer">새 창에서 열기 ↗</a>
             </div>
             <iframe
               className="law-viewer__frame"
-              src={activeLaw.url}
-              title={`${activeLaw.name} 법령 본문`}
+              src={activeUrl}
+              title={`${activeLaw.name}${article ? ` ${article}` : ''} 법령 본문`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
