@@ -136,6 +136,163 @@
   border-top: 3px solid #d9e4ef;
 }
 
+.civil-precedent-section {
+  border-top: 4px solid #6d5b92;
+  background: linear-gradient(180deg, #faf7ff 0, #fff 130px);
+}
+
+.civil-precedent-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.civil-precedent-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 13px 14px;
+  border: 1px solid #dfd7eb;
+  border-left: 4px solid #76588f;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.civil-precedent-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+
+.civil-precedent-card__meta span {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #eee8f7;
+  color: #674c82;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.civil-precedent-card__meta b {
+  color: #7b688d;
+  font-size: 10px;
+}
+
+.civil-precedent-card > strong {
+  color: #2d2440;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.civil-precedent-card > p {
+  margin: 0;
+  color: #586274;
+  font-size: 11px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+.civil-precedent-card > a {
+  margin-top: auto;
+  color: #674c82;
+  font-size: 10px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.civil-precedent-card > a:hover,
+.civil-precedent-card > a:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.civil-exam-checks {
+  border-top: 4px solid #355f7c;
+  background: linear-gradient(180deg, #f5f9fc 0, #fff 120px);
+}
+
+.civil-exam-check-list {
+  display: grid;
+  gap: 8px;
+}
+
+.civil-exam-check-list details {
+  overflow: hidden;
+  border: 1px solid #dbe4ec;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.civil-exam-check-list summary {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.civil-exam-check-list summary::-webkit-details-marker { display: none; }
+
+.civil-exam-check-list summary > span {
+  flex: 0 0 auto;
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #eaf1f6;
+  color: #315f8f;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.civil-exam-check-list summary > strong {
+  color: #2c4058;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.civil-exam-check-list details > div {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 9px;
+  align-items: start;
+  padding: 11px 12px;
+  border-top: 1px solid #e7ecf1;
+  background: #f9fbfd;
+}
+
+.civil-exam-check-list details > div > b {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.civil-exam-check-list .is-correct {
+  background: #e6f5ed;
+  color: #176849;
+}
+
+.civil-exam-check-list .is-wrong {
+  background: #fdeaea;
+  color: #b42323;
+}
+
+.civil-exam-check-list details > div > p {
+  margin: 0;
+  color: #566779;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
 .civil-source-note {
   margin-top: 18px;
 }
@@ -303,7 +460,8 @@
 }
 
 @media (max-width: 980px) {
-  .civil-statute-grid {
+  .civil-statute-grid,
+  .civil-precedent-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -332,6 +490,10 @@
 
   .civil-source-note .theory-source-item > small {
     grid-column: 2 / 3;
+  }
+
+  .civil-precedent-card {
+    padding: 12px;
   }
 }
 
