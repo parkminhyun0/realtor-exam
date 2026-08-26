@@ -14,10 +14,6 @@ function navigate(path = '') {
 }
 
 function openSubject(subject) {
-  if (subject.id === 'public-law') {
-    window.location.href = `${import.meta.env.BASE_URL}public-law.html`
-    return
-  }
   navigate(subject.id)
 }
 
@@ -64,7 +60,7 @@ function Dashboard() {
       <section className="study-guide" aria-label="학습 안내">
         <span className="study-guide__label">현재 구축 순서</span>
         <strong>메인 대시보드 → 부동산공법 → 부동산공시법 → 나머지 과목</strong>
-        <span>부동산공법의 UI 규격을 유지하면서 공시법 목차와 첫 POINT부터 순차 공개합니다.</span>
+        <span>모든 과목을 동일한 공통 헤더·카드·목차·본문 디자인 시스템으로 확장합니다.</span>
       </section>
 
       {subjectGroups.map((group) => (
