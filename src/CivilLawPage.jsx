@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react'
 import LawTextViewer from './LawTextViewer'
 import { civilLawParts, civilLawPointCount } from './data/civilLaw'
 import { civilLawContent } from './data/civilLawContent'
+import { civilLawPart2Content } from './data/civilLawPart2Content'
 import './law-viewer.css'
 import './civil-law.css'
 
+const civilLawStudyContent = { ...civilLawContent, ...civilLawPart2Content }
 const INLINE_ARTICLE_PATTERN = /(?:(민법)\s*)?(제\s*\d+\s*조(?:의\s*\d+)?)/g
 const NUMBER_PATTERN = /(\d+(?:[.,]\d+)*(?:\s*(?:년|개월|일|명|개|회|%))?)/g
 
@@ -74,7 +76,7 @@ export default function CivilLawPage({ onBack }) {
     return { part: civilLawParts[0], point: civilLawParts[0].points[0] }
   }, [selectedId])
 
-  const content = civilLawContent[selected.point.id]
+  const content = civilLawStudyContent[selected.point.id]
 
   const openLawArticle = (lawName, article) => {
     setLawTarget({
@@ -101,13 +103,13 @@ export default function CivilLawPage({ onBack }) {
           <div>
             <span className="eyebrow">CIVIL LAW · 2026</span>
             <h1>민법 및 민사특별법 핵심정리</h1>
-            <p>관련 법조문을 먼저 읽고, 핵심원칙·요건·효과·제3자·시험함정을 같은 흐름에서 정리합니다. 본문 속 조문 번호를 누르면 해당 조문만 바로 확인할 수 있습니다.</p>
+            <p>관련 법조문을 먼저 읽고, 핵심원칙·요건·효과·제3자·핵심 판례·시험함정을 같은 흐름에서 정리합니다. 본문 속 조문 번호를 누르면 해당 조문만 바로 확인할 수 있습니다.</p>
           </div>
           <div className="public-law-hero__badges">
             <span>4개 PART</span>
             <span>{civilLawPointCount}개 POINT</span>
             <span>법조문 우선 학습</span>
-            <span>조문 번호 팝업</span>
+            <span>판례 · O/X 강화</span>
           </div>
         </section>
 
@@ -132,7 +134,7 @@ export default function CivilLawPage({ onBack }) {
                         onClick={() => selectPoint(point.id)}
                       >
                         <span>POINT {point.number} · {point.title}</span>
-                        {civilLawContent[point.id]
+                        {civilLawStudyContent[point.id]
                           ? <b className="civil-nav__ready">본문</b>
                           : <small>목차</small>}
                       </button>
@@ -266,6 +268,9 @@ function CivilStudyContent({ content, point, onOpenLaw }) {
         </section>
       ))}
 
+      <CivilPrecedents precedents={content.precedents} onOpenLaw={onOpenLaw} />
+      <CivilExamChecks checks={content.examChecks} onOpenLaw={onOpenLaw} />
+
       <section className="study-block study-block--split">
         <div className="trap-card">
           <span>⚠️ 함정 선지</span>
@@ -283,8 +288,8 @@ function CivilStudyContent({ content, point, onOpenLaw }) {
       </section>
 
       <section className="source-note civil-source-note">
-        <b>법령 원문 기준</b>
-        <p>본문 맨 위의 법조문 카드는 첨부된 현행 민법 원문을 기준으로 정리했습니다. 본문에서 조문이 언급될 때는 조문 번호만 클릭할 수 있으며, 팝업에는 해당 조문 하나만 표시됩니다.</p>
+        <b>법령·판례 근거</b>
+        <p>법조문 카드는 첨부된 현행 민법 원문을 기준으로 정리하고, 판례 카드는 국가법령정보센터에서 확인 가능한 대법원 판례를 별도로 표시합니다. 조문·판례·시험정리를 같은 근거로 섞지 않고 구분합니다.</p>
         <div className="theory-source-links">
           {content.sources.map((source) => (
             <a className="theory-source-item" key={`${source.label}-${source.detail}`} href={source.url} target="_blank" rel="noreferrer">
@@ -297,6 +302,54 @@ function CivilStudyContent({ content, point, onOpenLaw }) {
         </div>
       </section>
     </>
+  )
+}
+
+function CivilPrecedents({ precedents, onOpenLaw }) {
+  if (!precedents?.length) return null
+
+  return (
+    <section className="study-block civil-precedent-section" aria-label="핵심 판례">
+      <div className="study-block__title"><span>⚖</span><h3>시험에 연결되는 핵심 판례</h3></div>
+      <p className="study-note">조문만으로 풀리지 않는 제3자 관계·성립요건·견련성은 판례의 결론과 판단기준을 함께 봅니다.</p>
+      <div className="civil-precedent-grid">
+        {precedents.map((item) => (
+          <article className="civil-precedent-card" key={item.caseNo}>
+            <div className="civil-precedent-card__meta">
+              <span>{item.court}</span>
+              <b>{item.caseNo}</b>
+            </div>
+            <strong>{item.title}</strong>
+            <p><CivilLawText onOpenLaw={onOpenLaw}>{item.holding}</CivilLawText></p>
+            <a href={item.url} target="_blank" rel="noreferrer">판례 원문 확인 ↗</a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function CivilExamChecks({ checks, onOpenLaw }) {
+  if (!checks?.length) return null
+
+  return (
+    <section className="study-block civil-exam-checks" aria-label="민법 OX 확인문제">
+      <div className="study-block__title"><span>✓</span><h3>바로 확인하는 O/X</h3></div>
+      <div className="civil-exam-check-list">
+        {checks.map(([question, answer, explanation], index) => (
+          <details key={question}>
+            <summary>
+              <span>Q{index + 1}</span>
+              <strong><CivilLawText onOpenLaw={onOpenLaw}>{question}</CivilLawText></strong>
+            </summary>
+            <div>
+              <b className={answer === '○' ? 'is-correct' : 'is-wrong'}>{answer}</b>
+              <p><CivilLawText onOpenLaw={onOpenLaw}>{explanation}</CivilLawText></p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
   )
 }
 
@@ -336,7 +389,7 @@ function CivilOutlineContent({ point, part, selectedId, onSelectPoint }) {
       <section className="civil-outline-intro">
         <span>다음 본문 확장 대상</span>
         <strong>{point.title}의 세부 학습 항목</strong>
-        <p>목차는 확정되어 있습니다. 이 POINT도 동일하게 관련 법조문을 본문 첫 카드로 배치한 뒤 핵심원칙·요건·효과·제3자·시험함정을 채웁니다.</p>
+        <p>목차는 확정되어 있습니다. 이 POINT도 동일하게 관련 법조문을 본문 첫 카드로 배치한 뒤 핵심원칙·요건·효과·제3자·판례·시험함정을 채웁니다.</p>
       </section>
 
       <section className="study-block civil-outline-block">
@@ -370,7 +423,7 @@ function CivilPartMap({ part, selectedId, onSelectPoint }) {
           >
             <small>POINT {point.number}</small>
             <strong>{point.title}</strong>
-            {civilLawContent[point.id] && <span>본문 공개</span>}
+            {civilLawStudyContent[point.id] && <span>본문 공개</span>}
           </button>
         ))}
       </div>
