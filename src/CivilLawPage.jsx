@@ -3,11 +3,27 @@ import LawTextViewer from './LawTextViewer'
 import { civilLawParts, civilLawPointCount } from './data/civilLaw'
 import { civilLawContent } from './data/civilLawContent'
 import { civilLawPart2Content } from './data/civilLawPart2Content'
+import { civilLawPart3Content } from './data/civilLawPart3Content'
+import { civilLawPart4Content } from './data/civilLawPart4Content'
 import './law-viewer.css'
 import './civil-law.css'
 
-const civilLawStudyContent = { ...civilLawContent, ...civilLawPart2Content }
-const INLINE_ARTICLE_PATTERN = /(?:(민법)\s*)?(제\s*\d+\s*조(?:의\s*\d+)?)/g
+const civilLawStudyContent = {
+  ...civilLawContent,
+  ...civilLawPart2Content,
+  ...civilLawPart3Content,
+  ...civilLawPart4Content,
+}
+
+const CIVIL_LAW_NAMES = [
+  '부동산 실권리자명의 등기에 관한 법률',
+  '집합건물의 소유 및 관리에 관한 법률',
+  '상가건물 임대차보호법',
+  '주택임대차보호법',
+  '가등기담보 등에 관한 법률',
+  '민법',
+]
+const INLINE_ARTICLE_PATTERN = new RegExp(`(?:(${CIVIL_LAW_NAMES.join('|')})\\s*)?(제\\s*\\d+\\s*조(?:의\\s*\\d+)?)`, 'g')
 const NUMBER_PATTERN = /(\d+(?:[.,]\d+)*(?:\s*(?:년|개월|일|명|개|회|%))?)/g
 
 function normalizeArticle(value = '') {
@@ -108,8 +124,8 @@ export default function CivilLawPage({ onBack }) {
           <div className="public-law-hero__badges">
             <span>4개 PART</span>
             <span>{civilLawPointCount}개 POINT</span>
-            <span>법조문 우선 학습</span>
-            <span>판례 · O/X 강화</span>
+            <span>전체 POINT 본문 공개</span>
+            <span>법조문 · 비교 · O/X</span>
           </div>
         </section>
 
@@ -289,7 +305,7 @@ function CivilStudyContent({ content, point, onOpenLaw }) {
 
       <section className="source-note civil-source-note">
         <b>법령·판례 근거</b>
-        <p>법조문 카드는 첨부된 현행 민법 원문을 기준으로 정리하고, 판례 카드는 국가법령정보센터에서 확인 가능한 대법원 판례를 별도로 표시합니다. 조문·판례·시험정리를 같은 근거로 섞지 않고 구분합니다.</p>
+        <p>각 POINT의 법조문 카드는 해당 현행 법령을 기준으로 정리했습니다. 본문에서 법령명과 조문이 함께 표시되면 해당 법령의 조문만 팝업으로 확인할 수 있고, 판례가 있는 항목은 국가법령정보센터 원문 링크를 별도로 표시합니다.</p>
         <div className="theory-source-links">
           {content.sources.map((source) => (
             <a className="theory-source-item" key={`${source.label}-${source.detail}`} href={source.url} target="_blank" rel="noreferrer">
