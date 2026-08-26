@@ -10,7 +10,7 @@ export const subjectGroups = [
         shortTitle: '학개론',
         icon: '◫',
         description: '총론 · 경제론 · 시장론 · 정책론 · 투자론 · 금융론 · 개발·관리·마케팅론 · 감정평가론',
-        status: '목차 공개',
+        status: '공개',
       },
       {
         id: 'civil-law',
