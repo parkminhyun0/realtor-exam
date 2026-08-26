@@ -37,18 +37,16 @@ export default function GlobalSearch({ onNavigate }) {
   }, [])
 
   useEffect(() => {
-    const theoryLawNames = subjectLawSources['real-estate-theory'].laws.map((law) => law.name)
+    const theoryLawNames = subjectLawSources['real-estate-theory'].laws
+      .map((law) => law.name)
+      .sort((a, b) => b.length - a.length)
 
     const getTheoryLawTarget = (element) => {
       const articleMatch = element.textContent?.trim().match(/^(\d+(?:의\d+)?)조$/)
       if (!articleMatch) return null
 
       const context = element.parentElement?.textContent || ''
-      const lawName = theoryLawNames
-        .slice()
-        .sort((a, b) => b.length - a.length)
-        .find((name) => context.includes(name))
-
+      const lawName = theoryLawNames.find((name) => context.includes(name))
       if (!lawName) return null
 
       return {
@@ -58,11 +56,25 @@ export default function GlobalSearch({ onNavigate }) {
       }
     }
 
-    const onTheoryLawNumberClick = (event) => {
-      if (!(event.target instanceof Element)) return
-      const number = event.target.closest('.real-estate-theory-page .theory-exam-number')
-      if (!number) return
+    const decorateLawNumbers = () => {
+      document.querySelectorAll('.real-estate-theory-page .theory-exam-number').forEach((number) => {
+        const target = getTheoryLawTarget(number)
+        if (!target) {
+          number.removeAttribute('data-law-reference')
+          number.removeAttribute('role')
+          number.removeAttribute('tabindex')
+          number.removeAttribute('title')
+          return
+        }
 
+        number.setAttribute('data-law-reference', 'true')
+        number.setAttribute('role', 'button')
+        number.setAttribute('tabindex', '0')
+        number.setAttribute('title', `${target.lawName} ${target.article} 본문 열기`)
+      })
+    }
+
+    const openFromNumber = (number, event) => {
       const target = getTheoryLawTarget(number)
       if (!target) return
 
@@ -71,8 +83,31 @@ export default function GlobalSearch({ onNavigate }) {
       window.dispatchEvent(new CustomEvent('realtor:open-law-viewer', { detail: target }))
     }
 
+    const onTheoryLawNumberClick = (event) => {
+      if (!(event.target instanceof Element)) return
+      const number = event.target.closest('.real-estate-theory-page .theory-exam-number[data-law-reference]')
+      if (!number) return
+      openFromNumber(number, event)
+    }
+
+    const onTheoryLawNumberKeyDown = (event) => {
+      if (!(event.target instanceof Element)) return
+      const number = event.target.closest('.real-estate-theory-page .theory-exam-number[data-law-reference]')
+      if (!number || !['Enter', ' '].includes(event.key)) return
+      openFromNumber(number, event)
+    }
+
+    decorateLawNumbers()
+    const observer = new MutationObserver(decorateLawNumbers)
+    observer.observe(document.body, { childList: true, subtree: true })
     document.addEventListener('click', onTheoryLawNumberClick)
-    return () => document.removeEventListener('click', onTheoryLawNumberClick)
+    document.addEventListener('keydown', onTheoryLawNumberKeyDown)
+
+    return () => {
+      observer.disconnect()
+      document.removeEventListener('click', onTheoryLawNumberClick)
+      document.removeEventListener('keydown', onTheoryLawNumberKeyDown)
+    }
   }, [])
 
   const runSearch = () => {
