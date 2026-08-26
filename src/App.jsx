@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { allSubjects, subjectGroups } from './data/subjects'
 import GlobalSearch from './GlobalSearch'
+import CivilLawPage from './CivilLawPage'
 import PublicLawPage from './PublicLawPage'
 import RealEstateTheoryPage from './RealEstateTheoryPage'
 import RegistrationLawPage from './RegistrationLawPage'
@@ -181,6 +182,7 @@ export default function App() {
 
   let content = <Dashboard />
   if (route === 'real-estate-theory') content = <RealEstateTheoryPage onBack={() => navigate('')} />
+  else if (route === 'civil-law') content = <CivilLawPage onBack={() => navigate('')} />
   else if (route === 'public-law') content = <PublicLawPage onBack={() => navigate('')} />
   else if (route === 'registration-law') content = <RegistrationLawPage onBack={() => navigate('')} />
   else if (activeSubject) content = <SubjectPlaceholder subject={activeSubject} />
