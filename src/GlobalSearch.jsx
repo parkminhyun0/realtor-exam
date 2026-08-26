@@ -15,24 +15,136 @@ function getArticleFromNumber(element) {
   return `제${match[1]}조${match[2] ? `의${match[2]}` : ''}`
 }
 
+function getLawTokens(subjectId) {
+  const subject = subjectLawSources[subjectId]
+  if (!subject) return []
+
+  return subject.laws
+    .flatMap((law) => [law.name, ...(law.aliases || [])].map((token) => ({ law, token })))
+    .sort((a, b) => b.token.length - a.token.length)
+}
+
+function findLawMentions(text, subjectId) {
+  const mentions = []
+  getLawTokens(subjectId).forEach(({ law, token }) => {
+    let from = 0
+    while (from < text.length) {
+      const index = text.indexOf(token, from)
+      if (index < 0) break
+      mentions.push({ index, end: index + token.length, law, token })
+      from = index + token.length
+    }
+  })
+
+  mentions.sort((a, b) => a.index - b.index || b.token.length - a.token.length)
+  const filtered = []
+  mentions.forEach((mention) => {
+    const overlaps = filtered.some((item) => mention.index < item.end && mention.end > item.index)
+    if (!overlaps) filtered.push(mention)
+  })
+  return filtered.sort((a, b) => a.index - b.index)
+}
+
+function parseArticles(text = '') {
+  const entries = []
+  const rangeSpans = []
+  const add = (article, position) => {
+    if (!entries.some((item) => item.article === article)) entries.push({ article, position })
+  }
+
+  const rangePattern = /제\s*(\d+)\s*조(?:의\s*(\d+))?\s*(?:~|～|−|–|—|-)\s*제?\s*(\d+)\s*조(?:의\s*(\d+))?/g
+  let rangeMatch
+  while ((rangeMatch = rangePattern.exec(text))) {
+    rangeSpans.push([rangeMatch.index, rangePattern.lastIndex])
+    const start = Number(rangeMatch[1])
+    const startSub = rangeMatch[2]
+    const end = Number(rangeMatch[3])
+    const endSub = rangeMatch[4]
+
+    if (!startSub && !endSub && end >= start && end - start <= 30) {
+      for (let number = start; number <= end; number += 1) {
+        add(`제${number}조`, rangeMatch.index + ((number - start) / 100))
+      }
+    } else {
+      add(`제${start}조${startSub ? `의${startSub}` : ''}`, rangeMatch.index)
+      add(`제${end}조${endSub ? `의${endSub}` : ''}`, rangeMatch.index + 0.01)
+    }
+  }
+
+  const articlePattern = /제\s*(\d+)\s*조(?:의\s*(\d+))?/g
+  let articleMatch
+  while ((articleMatch = articlePattern.exec(text))) {
+    const insideRange = rangeSpans.some(([start, end]) => articleMatch.index >= start && articleMatch.index < end)
+    if (insideRange) continue
+    add(`제${articleMatch[1]}조${articleMatch[2] ? `의${articleMatch[2]}` : ''}`, articleMatch.index)
+  }
+
+  return entries.sort((a, b) => a.position - b.position).map((item) => item.article)
+}
+
+function parseNamedReference(text = '') {
+  const match = text.match(/별표\s*(\d+(?:\s*의\s*\d+)?)/)
+  return match ? `별표 ${match[1].replace(/\s+/g, '')}` : null
+}
+
+function mergeLawReferences(references) {
+  const merged = []
+  references.forEach((reference) => {
+    if (!reference?.lawName) return
+    const key = `${reference.lawName}::${reference.reference || 'law'}`
+    const existing = merged.find((item) => item.key === key)
+    if (!existing) {
+      merged.push({
+        ...reference,
+        key,
+        articles: [...new Set(reference.articles || [])],
+      })
+      return
+    }
+
+    existing.articles = [...new Set([...(existing.articles || []), ...(reference.articles || [])])]
+    if (!existing.officialUrl && reference.officialUrl) existing.officialUrl = reference.officialUrl
+  })
+  return merged.map(({ key, ...reference }) => reference)
+}
+
+function resolveLawReferencesFromText(text = '', subjectId, officialUrl = null) {
+  const mentions = findLawMentions(text, subjectId)
+  if (!mentions.length) return []
+
+  const references = mentions.map((mention, index) => {
+    const next = mentions[index + 1]
+    const segment = text.slice(mention.index, next?.index ?? text.length)
+    return {
+      subjectId,
+      lawName: mention.law.name,
+      articles: parseArticles(segment),
+      reference: parseNamedReference(segment),
+      officialUrl,
+    }
+  })
+
+  return mergeLawReferences(references)
+}
+
 function getLawNameFromContext(element, subjectId) {
   const subject = subjectLawSources[subjectId]
   if (!subject) return null
 
-  const laws = [...subject.laws].sort((a, b) => b.name.length - a.name.length)
   const containers = [
     element.closest('tr'),
     element.closest('li'),
     element.closest('p'),
     element.closest('.law-detail-card'),
+    element.closest('.theory-source-item'),
+    element.closest('.theory-basis-card'),
     element.closest('.study-block'),
     element.closest('.public-law-content'),
   ].filter(Boolean)
 
   for (const container of containers) {
-    const text = container.textContent || ''
-    const matchedLaw = laws.find((law) => text.includes(law.name))
-    if (matchedLaw) return matchedLaw.name
+    const reference = resolveLawReferencesFromText(container.textContent || '', subjectId)[0]
+    if (reference?.lawName) return reference.lawName
   }
 
   if (subjectId === 'registration-law') {
@@ -43,6 +155,45 @@ function getLawNameFromContext(element, subjectId) {
 
   if (subject.laws.length === 1) return subject.laws[0].name
   return null
+}
+
+function isTheoryLawSource(element) {
+  if (!element.matches('.theory-source-item')) return false
+  const badge = element.querySelector('span')?.textContent?.trim()
+  return badge === '법령'
+}
+
+function getLawCardReferences(element, subjectId) {
+  if (element.matches('.theory-source-item') && !isTheoryLawSource(element)) return []
+
+  const direct = resolveLawReferencesFromText(
+    element.textContent || '',
+    subjectId,
+    element instanceof HTMLAnchorElement ? element.href : null,
+  )
+  if (direct.length) return direct
+
+  if (!element.matches('.theory-basis-card--law')) return []
+  const content = element.closest('.public-law-content')
+  if (!content) return []
+
+  const related = []
+  content.querySelectorAll('.theory-source-item').forEach((source) => {
+    if (!isTheoryLawSource(source)) return
+    related.push(...resolveLawReferencesFromText(
+      source.textContent || '',
+      subjectId,
+      source instanceof HTMLAnchorElement ? source.href : null,
+    ))
+  })
+  return mergeLawReferences(related)
+}
+
+function hasViewerTarget(target) {
+  return Boolean(
+    (target?.lawName && (target?.article || target?.articles?.length || target?.reference || target?.wholeLaw))
+    || target?.references?.length,
+  )
 }
 
 export default function GlobalSearch({ onNavigate }) {
@@ -64,7 +215,7 @@ export default function GlobalSearch({ onNavigate }) {
 
   useEffect(() => {
     const openLawViewer = (target) => {
-      if (!target?.lawName || !target?.article) return
+      if (!hasViewerTarget(target)) return
       setOpen(false)
       setLawViewerTarget(target)
       setLawViewerOpen(true)
@@ -87,7 +238,13 @@ export default function GlobalSearch({ onNavigate }) {
 
   useEffect(() => {
     const numberSelector = '.theory-exam-number, .exam-number'
-    const clickableSelector = '.theory-exam-number[data-law-reference], .exam-number[data-law-reference]'
+    const lawCardSelector = '.theory-source-item, .theory-basis-card--law'
+    const clickableSelector = [
+      '.theory-exam-number[data-law-reference]',
+      '.exam-number[data-law-reference]',
+      '.theory-source-item[data-law-reference]',
+      '.theory-basis-card--law[data-law-reference]',
+    ].join(', ')
 
     const getLawTarget = (element) => {
       const article = getArticleFromNumber(element)
@@ -102,57 +259,82 @@ export default function GlobalSearch({ onNavigate }) {
       return { subjectId, lawName, article }
     }
 
-    const decorateLawNumbers = () => {
+    const clearDecoration = (element) => {
+      element.removeAttribute('data-law-reference')
+      element.removeAttribute('role')
+      element.removeAttribute('tabindex')
+      element.removeAttribute('title')
+    }
+
+    const decorateLawReferences = () => {
+      const subjectId = getActiveSubjectId()
+
       document.querySelectorAll(numberSelector).forEach((number) => {
         const target = getLawTarget(number)
         if (!target) {
-          number.removeAttribute('data-law-reference')
-          number.removeAttribute('role')
-          number.removeAttribute('tabindex')
-          number.removeAttribute('title')
+          clearDecoration(number)
           return
         }
-
         number.setAttribute('data-law-reference', 'true')
         number.setAttribute('role', 'button')
         number.setAttribute('tabindex', '0')
         number.setAttribute('title', `${target.lawName} ${target.article} 조문 보기`)
       })
+
+      document.querySelectorAll(lawCardSelector).forEach((card) => {
+        const references = subjectLawSources[subjectId] ? getLawCardReferences(card, subjectId) : []
+        if (!references.length) {
+          if (card.matches('.theory-basis-card--law') || isTheoryLawSource(card)) clearDecoration(card)
+          return
+        }
+        card.setAttribute('data-law-reference', 'true')
+        card.setAttribute('role', 'button')
+        card.setAttribute('tabindex', '0')
+        card.setAttribute('title', '관련 법령을 텍스트 팝업으로 보기')
+      })
     }
 
-    const openFromNumber = (number, event) => {
-      const target = getLawTarget(number)
-      if (!target) return
+    const openFromElement = (element, event) => {
+      const subjectId = getActiveSubjectId()
+      let target = null
+
+      if (element.matches('.theory-exam-number, .exam-number')) {
+        target = getLawTarget(element)
+      } else {
+        const references = getLawCardReferences(element, subjectId)
+        if (references.length) target = { subjectId, references }
+      }
+      if (!hasViewerTarget(target)) return
 
       event.preventDefault()
       event.stopPropagation()
       window.dispatchEvent(new CustomEvent('realtor:open-law-viewer', { detail: target }))
     }
 
-    const onLawNumberClick = (event) => {
+    const onLawReferenceClick = (event) => {
       if (!(event.target instanceof Element)) return
-      const number = event.target.closest(clickableSelector)
-      if (!number) return
-      openFromNumber(number, event)
+      const element = event.target.closest(clickableSelector)
+      if (!element) return
+      openFromElement(element, event)
     }
 
-    const onLawNumberKeyDown = (event) => {
+    const onLawReferenceKeyDown = (event) => {
       if (!(event.target instanceof Element)) return
-      const number = event.target.closest(clickableSelector)
-      if (!number || !['Enter', ' '].includes(event.key)) return
-      openFromNumber(number, event)
+      const element = event.target.closest(clickableSelector)
+      if (!element || !['Enter', ' '].includes(event.key)) return
+      openFromElement(element, event)
     }
 
-    decorateLawNumbers()
-    const observer = new MutationObserver(decorateLawNumbers)
+    decorateLawReferences()
+    const observer = new MutationObserver(decorateLawReferences)
     observer.observe(document.body, { childList: true, subtree: true, characterData: true })
-    document.addEventListener('click', onLawNumberClick)
-    document.addEventListener('keydown', onLawNumberKeyDown)
+    document.addEventListener('click', onLawReferenceClick)
+    document.addEventListener('keydown', onLawReferenceKeyDown)
 
     return () => {
       observer.disconnect()
-      document.removeEventListener('click', onLawNumberClick)
-      document.removeEventListener('keydown', onLawNumberKeyDown)
+      document.removeEventListener('click', onLawReferenceClick)
+      document.removeEventListener('keydown', onLawReferenceKeyDown)
     }
   }, [])
 
