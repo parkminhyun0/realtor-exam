@@ -21,6 +21,8 @@ function openSubject(subject) {
 }
 
 function SubjectCard({ subject }) {
+  const isPublished = subject.status.includes('공개')
+
   return (
     <button
       className={`subject-card${subject.featured ? ' subject-card--featured' : ''}`}
@@ -30,7 +32,7 @@ function SubjectCard({ subject }) {
     >
       <span className="subject-card__topline">
         <span className="subject-card__icon" aria-hidden="true">{subject.icon}</span>
-        <span className={`status-pill${subject.featured ? ' status-pill--active' : ''}`}>{subject.status}</span>
+        <span className={`status-pill${isPublished ? ' status-pill--active' : ''}`}>{subject.status}</span>
       </span>
       <span className="subject-card__title">{subject.title}</span>
       <span className="subject-card__description">{subject.description}</span>
