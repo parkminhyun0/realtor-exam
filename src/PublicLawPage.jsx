@@ -1,3 +1,5 @@
+import './public-law-integrated.css'
+
 export default function PublicLawPage({ onBack }) {
   return (
     <main className="public-law-page public-law-page--embedded" id="main-content">
