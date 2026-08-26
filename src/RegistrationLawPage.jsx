@@ -2,9 +2,23 @@ import { useMemo, useState } from 'react'
 import { landCategories, registrationLawContent, registrationLawParts } from './data/registrationLaw'
 import { registrationLawDeepDive } from './data/registrationLawDeepDive'
 import { registrationLawExamCore } from './data/registrationLawExamCore'
+import { registrationLawExamDetail } from './data/registrationLawExamDetail'
 import './registration-law.css'
 
 const NUMBER_PATTERN = /([①②③④⑤⑥⑦⑧⑨⑩]|\d+(?:[.,]\d+)*(?:\s*(?:개|종|일|년|월|㎡|m²|%|호|조|항|권리|사유|필지|개소))?)/g
+const ARTICLE_PATTERN = /제\s*(\d+)\s*조(?:의\s*(\d+))?/g
+
+function extractArticleReferences(value = '') {
+  const articles = []
+  let match
+  ARTICLE_PATTERN.lastIndex = 0
+  while ((match = ARTICLE_PATTERN.exec(String(value)))) {
+    const article = `제${match[1]}조${match[2] ? `의${match[2]}` : ''}`
+    if (!articles.includes(article)) articles.push(article)
+  }
+  ARTICLE_PATTERN.lastIndex = 0
+  return articles
+}
 
 export default function RegistrationLawPage({ onBack }) {
   const [selectedId, setSelectedId] = useState('p1s1')
@@ -28,13 +42,13 @@ export default function RegistrationLawPage({ onBack }) {
         <div>
           <span className="eyebrow">REGISTRATION & CADASTRE · 2026</span>
           <h1>부동산공시법 핵심정리</h1>
-          <p>앞서 제작한 부동산공법의 학습 구조를 그대로 적용하고, 시험 핵심과 숫자 포인트를 한눈에 보이도록 강조합니다.</p>
+          <p>공간정보법과 부동산등기법을 시험형 판단순서·비교표·함정 OX까지 확장하고, 관련 조문은 본문에서 바로 텍스트 팝업으로 확인합니다.</p>
         </div>
         <div className="public-law-hero__badges">
           <span>2개 PART</span>
           <span>9개 POINT</span>
-          <span>시험 핵심 우선</span>
-          <span>숫자 RED · BOLD · UNDERLINE</span>
+          <span>시험형 상세정리</span>
+          <span>조문 TEXT POPUP</span>
         </div>
       </section>
 
@@ -42,7 +56,7 @@ export default function RegistrationLawPage({ onBack }) {
         <aside className="public-law-nav" aria-label="부동산공시법 목차">
           <div className="public-law-nav__title">
             <strong>부동산공시법</strong>
-            <span>교재 목차 그대로 · PART 1~2</span>
+            <span>시험 목차 · PART 1~2</span>
           </div>
           {registrationLawParts.map((part) => (
             <details key={part.id} open={part.points.some((item) => item.id === selectedId)}>
@@ -80,6 +94,7 @@ export default function RegistrationLawPage({ onBack }) {
                 content={registrationLawContent[selected.point.id]}
                 deepDive={registrationLawDeepDive[selected.point.id]}
                 examCore={registrationLawExamCore[selected.point.id]}
+                examDetail={registrationLawExamDetail[selected.point.id]}
               />
             )
             : <ImportingSection part={selected.part} point={selected.point} />}
@@ -99,7 +114,38 @@ function HighlightNumbers({ children }) {
   ))
 }
 
-function StudyPoint({ part, point, content, deepDive, examCore }) {
+function LawArticleButtons({ part, articles = [], compact = false }) {
+  const uniqueArticles = [...new Set(articles.filter(Boolean))]
+  if (!uniqueArticles.length) return null
+
+  const openArticle = (article) => {
+    window.dispatchEvent(new CustomEvent('realtor:open-law-viewer', {
+      detail: {
+        subjectId: 'registration-law',
+        lawName: part.title,
+        article,
+      },
+    }))
+  }
+
+  return (
+    <div className={`registration-law-articles${compact ? ' registration-law-articles--compact' : ''}`} aria-label="관련 법령 조문">
+      {!compact && <span className="registration-law-articles__label">법령 원문</span>}
+      {uniqueArticles.map((article) => (
+        <button
+          type="button"
+          key={article}
+          onClick={() => openArticle(article)}
+          title={`${part.title} ${article} 조문 보기`}
+        >
+          {article}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function StudyPoint({ part, point, content, deepDive, examCore, examDetail }) {
   return (
     <>
       <header className="study-section-heading" style={{ '--chapter-color': part.color }}>
@@ -120,6 +166,7 @@ function StudyPoint({ part, point, content, deepDive, examCore }) {
       </div>
 
       {examCore && <ExamCoreSection examCore={examCore} />}
+      {examDetail && <ExamDetailSection detail={examDetail} part={part} />}
 
       <section className="study-block">
         <div className="study-block__title"><span>01</span><h3>이 POINT를 먼저 이해하기</h3></div>
@@ -158,7 +205,10 @@ function StudyPoint({ part, point, content, deepDive, examCore }) {
                 <tr key={term}>
                   <th><HighlightNumbers>{term}</HighlightNumbers></th>
                   <td><HighlightNumbers>{definition}</HighlightNumbers></td>
-                  <td><HighlightNumbers>{pointText}</HighlightNumbers></td>
+                  <td>
+                    <HighlightNumbers>{pointText}</HighlightNumbers>
+                    <LawArticleButtons part={part} articles={extractArticleReferences(pointText)} compact />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -205,6 +255,7 @@ function StudyPoint({ part, point, content, deepDive, examCore }) {
       <section className="source-note">
         <b>법령 대조 기준</b>
         <p><HighlightNumbers>{`${part.lawVersion} · ${content.source}. PART 1은 2026.7.1 시행 공간정보관리법 체계, PART 2는 업로드된 국가법령정보센터 부동산등기법 [시행 2025.1.31.] [법률 제20435호] 원문을 기준으로 확장했습니다.`}</HighlightNumbers></p>
+        <LawArticleButtons part={part} articles={extractArticleReferences(content.source)} />
       </section>
     </>
   )
@@ -239,6 +290,59 @@ function ExamCoreSection({ examCore }) {
   )
 }
 
+function ExamDetailSection({ detail, part }) {
+  return (
+    <section className="study-block registration-exam-detail" style={{ '--chapter-color': part.color }} aria-label="시험대비 상세정리">
+      <div className="registration-exam-detail__heading">
+        <span>EXAM DETAIL</span>
+        <div>
+          <h3>{detail.title}</h3>
+          <p>{detail.intro}</p>
+        </div>
+      </div>
+
+      <div className="registration-exam-detail__topics">
+        {detail.topics.map((topic, index) => (
+          <article className="registration-exam-topic" key={topic.title}>
+            <div className="registration-exam-topic__head">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h4>{topic.title}</h4>
+                <LawArticleButtons part={part} articles={topic.articles} />
+              </div>
+            </div>
+            <ul>
+              {topic.points.map((point) => <li key={point}><HighlightNumbers>{point}</HighlightNumbers></li>)}
+            </ul>
+            <div className="registration-exam-topic__trap">
+              <b>⚠ 오답유도</b>
+              <span><HighlightNumbers>{topic.trap}</HighlightNumbers></span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="registration-ox">
+        <div className="registration-ox__title">
+          <strong>시험형 OX 체크</strong>
+          <span>문장을 읽고 주체·기한·절차·효과 중 무엇이 바뀌었는지 확인합니다.</span>
+        </div>
+        <div className="registration-ox__grid">
+          {detail.ox.map(([question, answer], index) => (
+            <div className="registration-ox__item" key={question}>
+              <span className="registration-ox__number">{index + 1}</span>
+              <div>
+                <b><HighlightNumbers>{question}</HighlightNumbers></b>
+                <p><HighlightNumbers>{answer}</HighlightNumbers></p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function DeepDiveSection({ deepDive, part }) {
   return (
     <section className="study-block law-deep-dive" style={{ '--chapter-color': part.color }}>
@@ -252,6 +356,7 @@ function DeepDiveSection({ deepDive, part }) {
               <small><HighlightNumbers>{section.articles}</HighlightNumbers></small>
             </summary>
             <div className="law-detail-card__body">
+              <LawArticleButtons part={part} articles={extractArticleReferences(section.articles)} />
               <p><HighlightNumbers>{section.body}</HighlightNumbers></p>
               <ul>{section.bullets.map((bullet) => <li key={bullet}><HighlightNumbers>{bullet}</HighlightNumbers></li>)}</ul>
               <div className="law-detail-card__exam">
