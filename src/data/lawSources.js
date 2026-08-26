@@ -6,8 +6,32 @@ export const subjectLawSources = {
     shortTitle: '학개론',
     laws: [
       { name: '민법', url: lawUrl('민법') },
-      { name: '감정평가 및 감정평가사에 관한 법률', url: lawUrl('감정평가및감정평가사에관한법률') },
-      { name: '부동산 가격공시에 관한 법률', url: lawUrl('부동산가격공시에관한법률') },
+      {
+        name: '공간정보의 구축 및 관리 등에 관한 법률',
+        aliases: ['공간정보관리법', '공간정보법'],
+        url: lawUrl('공간정보의구축및관리등에관한법률'),
+      },
+      { name: '건축법 시행령', url: lawUrl('건축법시행령') },
+      { name: '건축법', url: lawUrl('건축법') },
+      { name: '주택법 시행령', url: lawUrl('주택법시행령') },
+      { name: '주택법', url: lawUrl('주택법') },
+      { name: '택지개발촉진법', url: lawUrl('택지개발촉진법') },
+      {
+        name: '감정평가 및 감정평가사에 관한 법률',
+        aliases: ['감정평가법'],
+        url: lawUrl('감정평가및감정평가사에관한법률'),
+      },
+      { name: '감정평가에 관한 규칙', url: lawUrl('감정평가에관한규칙') },
+      {
+        name: '부동산 가격공시에 관한 법률 시행령',
+        aliases: ['부동산공시법 시행령'],
+        url: lawUrl('부동산가격공시에관한법률시행령'),
+      },
+      {
+        name: '부동산 가격공시에 관한 법률',
+        aliases: ['부동산공시법'],
+        url: lawUrl('부동산가격공시에관한법률'),
+      },
       { name: '부동산투자회사법', url: lawUrl('부동산투자회사법') },
     ],
   },
@@ -48,7 +72,11 @@ export const subjectLawSources = {
     title: '부동산공시법',
     shortTitle: '공시법',
     laws: [
-      { name: '공간정보의 구축 및 관리 등에 관한 법률', url: lawUrl('공간정보의구축및관리등에관한법률') },
+      {
+        name: '공간정보의 구축 및 관리 등에 관한 법률',
+        aliases: ['공간정보관리법', '공간정보법'],
+        url: lawUrl('공간정보의구축및관리등에관한법률'),
+      },
       { name: '부동산등기법', url: lawUrl('부동산등기법') },
     ],
   },
