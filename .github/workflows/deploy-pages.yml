@@ -11,15 +11,44 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-production
   cancel-in-progress: true
 
 jobs:
-  build:
+  latest-main:
     runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.check.outputs.deploy }}
+      latest_sha: ${{ steps.check.outputs.latest_sha }}
+    steps:
+      - name: Check latest main SHA
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest_sha="$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq '.sha')"
+          echo "latest_sha=${latest_sha}" >> "$GITHUB_OUTPUT"
+
+          if [[ "$GITHUB_SHA" == "$latest_sha" ]]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            echo "Latest main confirmed: $latest_sha"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            echo "Stale Pages run skipped. run=$GITHUB_SHA latest=$latest_sha"
+          fi
+
+  build:
+    needs: latest-main
+    if: needs.latest-main.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -34,13 +63,33 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [latest-main, build]
+    if: needs.latest-main.outputs.deploy == 'true' && needs.build.result == 'success'
+    timeout-minutes: 10
     steps:
+      - name: Re-check latest main before deploy
+        id: recheck
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest_sha="$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq '.sha')"
+
+          if [[ "$GITHUB_SHA" == "$latest_sha" ]]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            echo "Deploying latest main: $latest_sha"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            echo "A newer main commit exists. Skipping stale deploy. run=$GITHUB_SHA latest=$latest_sha"
+          fi
       - name: Deploy to GitHub Pages
+        if: steps.recheck.outputs.deploy == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
