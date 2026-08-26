@@ -20,6 +20,19 @@
 .law-open-button:focus-visible { outline: 3px solid rgba(38, 91, 145, .22); outline-offset: 2px; }
 .law-open-button__icon { font-size: 14px; line-height: 1; }
 
+[data-law-reference="true"] {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background .14s ease, box-shadow .14s ease;
+}
+
+[data-law-reference="true"]:hover,
+[data-law-reference="true"]:focus-visible {
+  background: rgba(198, 40, 40, .08);
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, .10);
+  outline: none;
+}
+
 .law-viewer-backdrop {
   position: fixed;
   inset: 0;
@@ -266,4 +279,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .law-viewer-backdrop, .law-viewer { animation: none; }
+  [data-law-reference="true"] { transition: none; }
 }
