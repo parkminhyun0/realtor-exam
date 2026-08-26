@@ -1,8 +1,6 @@
-name: Deploy GitHub Pages Emergency
+name: Deploy GitHub Pages Manual Recovery
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -10,13 +8,15 @@ permissions:
   pages: write
   id-token: write
 
+# Manual fallback only. Automatic production deploys are handled by deploy-pages.yml.
 concurrency:
-  group: pages-emergency
+  group: pages-production
   cancel-in-progress: true
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout latest main
         uses: actions/checkout@v4
@@ -36,9 +36,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
+
   deploy:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: build
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
