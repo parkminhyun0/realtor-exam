@@ -7,6 +7,7 @@ import { realEstateTheoryCalculations } from './data/realEstateTheoryCalculation
 import { realEstateTheoryRelations } from './data/realEstateTheoryRelations'
 import { realEstateTheoryExtraChapters, realEstateTheoryExtraContent, realEstateTheoryExtraRelations } from './data/realEstateTheoryExtra'
 import TheoryPastQuestion from './TheoryPastQuestion'
+import TheoryVisualSection from './TheoryVisualSection'
 import './real-estate-theory.css'
 
 const NUMBER_PATTERN = /([①②③④⑤⑥⑦⑧⑨⑩]|\d+(?:[.,]\d+)*(?:\s*(?:개|종|일|년|월|㎡|m²|%|호|조|항|세대|층))?)/g
@@ -106,13 +107,13 @@ export default function RealEstateTheoryPage({ onBack }) {
         <div>
           <span className="eyebrow">REAL ESTATE PRINCIPLES · 제37회 대비</span>
           <h1>부동산학개론 핵심정리</h1>
-          <p>첨부 교안의 기본이론을 공법·공시법과 동일한 학습 UI로 재구성하고, 핵심개념·전체 흐름·비교표·함정·암기·계산·연결 학습을 한 구조로 정리합니다.</p>
+          <p>첨부 교안의 기본이론을 공법·공시법과 동일한 학습 UI로 재구성하고, 핵심개념·전체 흐름·비교표·함정·암기·계산·그래프·연결 학습을 한 구조로 정리합니다.</p>
         </div>
         <div className="public-law-hero__badges" aria-label="부동산학개론 학습 구성">
           <span>8개 대단원</span>
           <span>{theoryChapterCount}개 장</span>
           <span>🧮 계산 {calculationChapterCount}개 장 강화</span>
-          <span>연결 학습 적용</span>
+          <span>📊 그래프·도식 적용</span>
         </div>
       </section>
 
@@ -285,6 +286,7 @@ function TheoryStudyContent({ content, chapter, calculations, relations, onOpenR
         </section>
       )}
 
+      <TheoryVisualSection chapterId={chapter.id} />
       <TheoryCalculationSection calculations={calculations} />
 
       <section className="study-block study-block--split">
