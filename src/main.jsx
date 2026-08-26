@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './styles.css'
 import './typography-responsive.css'
 import './registration-law-highlights.js'
+import './tax-law-nav-tree.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
