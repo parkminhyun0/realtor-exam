@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import LawTextViewer from './LawTextViewer'
+import { subjectLawSources } from './data/lawSources'
 import { searchSite } from './siteSearch'
 import './law-viewer.css'
 
@@ -33,6 +34,45 @@ export default function GlobalSearch({ onNavigate }) {
 
     window.addEventListener('realtor:open-law-viewer', onOpenLawReference)
     return () => window.removeEventListener('realtor:open-law-viewer', onOpenLawReference)
+  }, [])
+
+  useEffect(() => {
+    const theoryLawNames = subjectLawSources['real-estate-theory'].laws.map((law) => law.name)
+
+    const getTheoryLawTarget = (element) => {
+      const articleMatch = element.textContent?.trim().match(/^(\d+(?:의\d+)?)조$/)
+      if (!articleMatch) return null
+
+      const context = element.parentElement?.textContent || ''
+      const lawName = theoryLawNames
+        .slice()
+        .sort((a, b) => b.length - a.length)
+        .find((name) => context.includes(name))
+
+      if (!lawName) return null
+
+      return {
+        subjectId: 'real-estate-theory',
+        lawName,
+        article: `제${articleMatch[1]}조`,
+      }
+    }
+
+    const onTheoryLawNumberClick = (event) => {
+      if (!(event.target instanceof Element)) return
+      const number = event.target.closest('.real-estate-theory-page .theory-exam-number')
+      if (!number) return
+
+      const target = getTheoryLawTarget(number)
+      if (!target) return
+
+      event.preventDefault()
+      event.stopPropagation()
+      window.dispatchEvent(new CustomEvent('realtor:open-law-viewer', { detail: target }))
+    }
+
+    document.addEventListener('click', onTheoryLawNumberClick)
+    return () => document.removeEventListener('click', onTheoryLawNumberClick)
   }, [])
 
   const runSearch = () => {
