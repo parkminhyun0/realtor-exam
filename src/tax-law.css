@@ -1,10 +1,357 @@
-/* 부동산세법 목차 전용 레이아웃 */
+/* 부동산세법 목차 + 공법형 상세 학습 레이아웃 */
 .tax-law-hero {
   background: linear-gradient(135deg, #2f291d, #66552f 56%, #8a7649);
 }
 
 .tax-outline-intro {
   background: linear-gradient(135deg, #2b2a25, #494438);
+}
+
+.tax-law-page .tax-exam-number {
+  color: #c62828 !important;
+  font-weight: 900 !important;
+  text-decoration-line: underline;
+  text-decoration-color: #c62828;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.tax-law-page .tax-exam-keyword {
+  padding: 0 .1em;
+  border-radius: 3px;
+  background: rgba(255, 222, 89, .72);
+  color: #594000;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-color: rgba(198, 40, 40, .72);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.tax-study-tldr {
+  border-radius: 14px;
+  background: #16263e;
+  color: #fff;
+}
+
+.tax-study-tldr,
+.tax-study-tldr * {
+  color: #fff;
+}
+
+.tax-study-tldr .tax-exam-keyword {
+  background: rgba(255, 216, 107, .22);
+  color: #ffd86b !important;
+  text-decoration-color: #ffd86b;
+}
+
+.tax-study-tldr .tax-exam-number {
+  color: #ff8b8b !important;
+  text-decoration-color: #ff8b8b;
+}
+
+.civil-nav__ready--outline {
+  background: #eef1f4 !important;
+  color: #6c7784 !important;
+}
+
+.tax-exam-core {
+  border: 1px solid #edc9c6;
+  border-top: 5px solid #c62828;
+  background: linear-gradient(180deg, #fff8f7 0%, #fff 190px);
+  box-shadow: 0 10px 28px rgba(141, 31, 31, .07);
+}
+
+.tax-exam-core__heading {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+
+.tax-exam-core__heading > span {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #c62828;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+.tax-exam-core__heading h3 {
+  margin: 0;
+  color: #7f1d1d;
+  font-size: 14pt !important;
+}
+
+.tax-exam-core__heading p {
+  margin: 5px 0 0;
+  color: #7b5050;
+  line-height: 1.7;
+}
+
+.tax-exam-core__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tax-exam-core__grid > article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 11px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid #ecdada;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.tax-exam-core__grid > article > span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #fdecec;
+  color: #b42323;
+  font-weight: 900;
+}
+
+.tax-exam-core__grid strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #5f2020;
+  font-size: 14pt !important;
+}
+
+.tax-exam-core__grid p {
+  margin: 0;
+  color: #4f5968;
+  line-height: 1.78;
+}
+
+.tax-legal-basis {
+  border-top: 4px solid #8a7649;
+  background: linear-gradient(180deg, #fbf8f0 0%, #fff 140px);
+}
+
+.tax-legal-basis__intro {
+  margin: -3px 0 14px;
+  color: #596474;
+  line-height: 1.75;
+}
+
+.tax-legal-basis__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tax-legal-basis__grid article {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #e7dfce;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.tax-legal-basis__grid article > strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #4a3c22;
+  font-size: 14pt !important;
+}
+
+.tax-legal-basis__grid article > p {
+  margin: 0 0 9px;
+  color: #6d665a;
+}
+
+.tax-law-articles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.tax-law-articles > span {
+  margin-right: 2px;
+  color: #75613a;
+  font-weight: 900;
+}
+
+.tax-law-articles button {
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #c62828;
+  font: inherit;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.tax-law-articles button:hover,
+.tax-law-articles button:focus-visible {
+  background: rgba(198, 40, 40, .08);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, .10);
+}
+
+.tax-law-articles--compact {
+  justify-content: flex-end;
+}
+
+.tax-detail-section {
+  border-top: 4px solid #536b75;
+  background: linear-gradient(180deg, #f8fafc 0%, #fff 110px);
+}
+
+.tax-detail-section__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.tax-detail-section__head > div:first-child {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.tax-detail-section__head > div:first-child > span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #e8eef3;
+  color: #3f5663;
+  font-weight: 900;
+}
+
+.tax-detail-section__head h3 {
+  margin: 0;
+  color: #263b46;
+  font-size: 14pt !important;
+}
+
+.tax-study-table th:first-child {
+  min-width: 150px;
+}
+
+.tax-trap-memory .trap-card li + li {
+  margin-top: 7px;
+}
+
+.tax-ox-panel {
+  border-top: 4px solid #316d63;
+}
+
+.tax-ox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tax-ox-grid article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid #dce5e3;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.tax-ox-grid article > span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #e7f2ef;
+  color: #256858;
+  font-weight: 900;
+}
+
+.tax-ox-grid b {
+  color: #263b46;
+}
+
+.tax-ox-grid p {
+  margin: 7px 0 0;
+  color: #596677;
+  line-height: 1.7;
+}
+
+.tax-quiz-panel {
+  border-top: 4px solid #76588f;
+}
+
+.tax-quiz-list {
+  display: grid;
+  gap: 10px;
+}
+
+.tax-quiz-list details {
+  overflow: hidden;
+  border: 1px solid #e2e5e9;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.tax-quiz-list summary {
+  min-height: 48px;
+  padding: 12px 14px;
+  cursor: pointer;
+  color: #303b49;
+  font-weight: 800;
+  background: #f8f9fb;
+}
+
+.tax-quiz-list ul {
+  margin: 0;
+  padding: 12px 18px 8px 38px;
+  color: #505e70;
+  line-height: 1.8;
+}
+
+.tax-quiz-answer {
+  margin: 5px 14px 14px;
+  padding: 12px 13px;
+  border-left: 4px solid #76588f;
+  border-radius: 0 10px 10px 0;
+  background: #f6f2f9;
+}
+
+.tax-quiz-answer strong {
+  color: #5d3f72;
+  font-size: 14pt !important;
+}
+
+.tax-quiz-answer p {
+  margin: 6px 0 0;
+  color: #5c6070;
+}
+
+.tax-source-note {
+  border-left-color: #8a7649 !important;
 }
 
 .tax-hierarchy-block {
@@ -135,6 +482,24 @@
 }
 
 @media (max-width: 980px) {
+  .tax-exam-core__grid,
+  .tax-legal-basis__grid,
+  .tax-ox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-classification-flow {
+    flex-wrap: wrap;
+  }
+
+  .tax-detail-section__head {
+    flex-direction: column;
+  }
+
+  .tax-law-articles--compact {
+    justify-content: flex-start;
+  }
+
   .tax-hierarchy-flow {
     grid-template-columns: 1fr 1fr;
   }
@@ -145,6 +510,10 @@
 }
 
 @media (max-width: 700px) {
+  .tax-exam-core__heading {
+    grid-template-columns: 1fr;
+  }
+
   .tax-outline-groups,
   .tax-hierarchy-flow {
     grid-template-columns: 1fr;
@@ -152,5 +521,15 @@
 
   .tax-hierarchy-flow > div {
     min-height: 64px;
+  }
+
+  .tax-study-table {
+    min-width: 720px;
+  }
+
+  .tax-legal-basis__grid article,
+  .tax-exam-core__grid > article,
+  .tax-ox-grid article {
+    padding: 12px;
   }
 }

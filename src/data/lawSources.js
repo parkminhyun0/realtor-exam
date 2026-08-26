@@ -85,10 +85,14 @@ export const subjectLawSources = {
     title: '부동산세법',
     shortTitle: '세법',
     laws: [
+      { name: '대한민국헌법', url: lawUrl('대한민국헌법') },
+      { name: '국세기본법', url: lawUrl('국세기본법') },
+      { name: '지방세기본법', url: lawUrl('지방세기본법') },
       { name: '지방세법', url: lawUrl('지방세법') },
       { name: '종합부동산세법', url: lawUrl('종합부동산세법') },
       { name: '소득세법', url: lawUrl('소득세법') },
-      { name: '국세기본법', url: lawUrl('국세기본법') },
+      { name: '교육세법', url: lawUrl('교육세법') },
+      { name: '농어촌특별세법', url: lawUrl('농어촌특별세법') },
     ],
   },
 }
