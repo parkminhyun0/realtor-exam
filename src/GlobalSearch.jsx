@@ -64,8 +64,9 @@ export default function GlobalSearch({ onNavigate }) {
 
   useEffect(() => {
     const openLawViewer = (target) => {
+      if (!target?.lawName || !target?.article) return
       setOpen(false)
-      setLawViewerTarget(target || null)
+      setLawViewerTarget(target)
       setLawViewerOpen(true)
     }
 
@@ -86,6 +87,7 @@ export default function GlobalSearch({ onNavigate }) {
 
   useEffect(() => {
     const numberSelector = '.theory-exam-number, .exam-number'
+    const clickableSelector = '.theory-exam-number[data-law-reference], .exam-number[data-law-reference]'
 
     const getLawTarget = (element) => {
       const article = getArticleFromNumber(element)
@@ -114,7 +116,7 @@ export default function GlobalSearch({ onNavigate }) {
         number.setAttribute('data-law-reference', 'true')
         number.setAttribute('role', 'button')
         number.setAttribute('tabindex', '0')
-        number.setAttribute('title', `${target.lawName} ${target.article} 본문 열기`)
+        number.setAttribute('title', `${target.lawName} ${target.article} 조문 보기`)
       })
     }
 
@@ -129,14 +131,14 @@ export default function GlobalSearch({ onNavigate }) {
 
     const onLawNumberClick = (event) => {
       if (!(event.target instanceof Element)) return
-      const number = event.target.closest(`${numberSelector.split(', ').join('[data-law-reference], ')}[data-law-reference]`)
+      const number = event.target.closest(clickableSelector)
       if (!number) return
       openFromNumber(number, event)
     }
 
     const onLawNumberKeyDown = (event) => {
       if (!(event.target instanceof Element)) return
-      const number = event.target.closest(`${numberSelector.split(', ').join('[data-law-reference], ')}[data-law-reference]`)
+      const number = event.target.closest(clickableSelector)
       if (!number || !['Enter', ' '].includes(event.key)) return
       openFromNumber(number, event)
     }
@@ -236,26 +238,9 @@ export default function GlobalSearch({ onNavigate }) {
         )}
       </div>
 
-      <button
-        className="law-open-button"
-        type="button"
-        onClick={() => {
-          setOpen(false)
-          setLawViewerTarget(null)
-          setLawViewerOpen(true)
-        }}
-        aria-haspopup="dialog"
-        aria-label="관련 법령 본문 열기"
-        title="관련 법령 본문"
-      >
-        <span className="law-open-button__icon" aria-hidden="true">§</span>
-        <span className="law-open-button__text">법령 본문</span>
-      </button>
-
       <LawTextViewer
         open={lawViewerOpen}
         onClose={() => setLawViewerOpen(false)}
-        activeSubjectId={getActiveSubjectId()}
         target={lawViewerTarget}
       />
     </>
