@@ -1,3 +1,5 @@
+import './public-law-frame.css'
+
 export default function PublicLawPage({ onBack }) {
   const source = `${import.meta.env.BASE_URL}public-law.html`
 
