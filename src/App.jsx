@@ -132,16 +132,41 @@ export default function App() {
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">본문으로 바로가기</a>
-      <header className="topbar">
-        <button className="brand" type="button" onClick={() => navigate('')} aria-label="공인중개사 핵심정리 홈">
-          <span className="brand__mark">R</span>
-          <span><strong>공인중개사</strong><small>EXAM NOTE</small></span>
-        </button>
-        <div className="topbar__meta">
-          <span>2026 제37회</span>
-          <span className="topbar__dot" aria-hidden="true" />
-          <span>핵심정리</span>
+      <header className="site-header">
+        <div className="topbar">
+          <button className="brand" type="button" onClick={() => navigate('')} aria-label="공인중개사 핵심정리 홈">
+            <span className="brand__mark">R</span>
+            <span><strong>공인중개사</strong><small>EXAM NOTE</small></span>
+          </button>
+          <div className="topbar__meta">
+            <span>2026 제37회</span>
+            <span className="topbar__dot" aria-hidden="true" />
+            <span>핵심정리</span>
+          </div>
         </div>
+        <nav className="subject-nav" aria-label="과목 바로가기">
+          <button
+            type="button"
+            className={`subject-nav__item${route === '' ? ' active' : ''}`}
+            onClick={() => navigate('')}
+            aria-current={route === '' ? 'page' : undefined}
+          >
+            전체 과목
+          </button>
+          {allSubjects.map((subject) => (
+            <button
+              key={subject.id}
+              type="button"
+              className={`subject-nav__item${route === subject.id ? ' active' : ''}`}
+              onClick={() => navigate(subject.id)}
+              aria-current={route === subject.id ? 'page' : undefined}
+              title={subject.title}
+            >
+              <span className="subject-nav__icon" aria-hidden="true">{subject.icon}</span>
+              <span>{subject.shortTitle}</span>
+            </button>
+          ))}
+        </nav>
       </header>
       {content}
       <footer className="footer">
