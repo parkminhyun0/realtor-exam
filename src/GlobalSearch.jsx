@@ -1,11 +1,57 @@
 import { useEffect, useRef, useState } from 'react'
 import LawTextViewer from './LawTextViewer'
 import { subjectLawSources } from './data/lawSources'
+import { publicLawChapters } from './data/publicLaw'
+import { realEstateTheoryParts } from './data/realEstateTheory'
+import { realEstateTheoryExtraChapters } from './data/realEstateTheoryExtra'
+import { registrationLawParts } from './data/registrationLaw'
 import { searchSite } from './siteSearch'
 import './law-viewer.css'
 
+const SEARCH_JUMP_ATTEMPTS = 60
+const SEARCH_JUMP_DELAY = 75
+
+const theoryPartsWithExtras = realEstateTheoryParts.map((part) => (
+  part.id === 'part8'
+    ? { ...part, chapters: [...part.chapters, ...realEstateTheoryExtraChapters] }
+    : part
+))
+
+const searchTargetMeta = {
+  'public-law': Object.fromEntries(
+    publicLawChapters.flatMap((chapter) => chapter.sections.map((section) => [
+      section.id,
+      { label: section.title, groupLabel: `제${chapter.number}장 ${chapter.shortTitle}` },
+    ])),
+  ),
+  'registration-law': Object.fromEntries(
+    registrationLawParts.flatMap((part) => part.points.map((point) => [
+      point.id,
+      { label: point.title, groupLabel: `PART ${part.number} ${part.title}` },
+    ])),
+  ),
+  'real-estate-theory': Object.fromEntries(
+    theoryPartsWithExtras.flatMap((part) => part.chapters.map((chapter) => [
+      chapter.id,
+      { label: chapter.title, groupLabel: `제${Number(part.number)}편 ${part.title}` },
+    ])),
+  ),
+}
+
 function getActiveSubjectId() {
   return window.location.hash.replace(/^#\/?/, '') || ''
+}
+
+function normalizeSearchText(value = '') {
+  return String(value)
+    .toLocaleLowerCase('ko-KR')
+    .replace(/[\u00b7·•|/_,()[\]{}:;!?"'`~<>+=*\\-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function delay(ms) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms))
 }
 
 function getArticleFromNumber(element) {
@@ -45,6 +91,163 @@ function getLawNameFromContext(element, subjectId) {
   return null
 }
 
+function findTargetNavigationButton(result) {
+  if (!result?.targetId) return null
+  const targetMeta = searchTargetMeta[result.subjectId]?.[result.targetId]
+  if (!targetMeta) return null
+
+  const nav = document.querySelector('.public-law-nav')
+  if (!nav) return null
+
+  const wantedGroup = normalizeSearchText(targetMeta.groupLabel)
+  const wantedLabel = normalizeSearchText(targetMeta.label)
+  const details = [...nav.querySelectorAll('details')]
+  const group = details.find((detail) => (
+    normalizeSearchText(detail.querySelector('summary')?.textContent).includes(wantedGroup)
+  ))
+  const buttons = [...(group || nav).querySelectorAll('li button')]
+
+  return buttons.find((button) => normalizeSearchText(button.textContent).includes(wantedLabel)) || null
+}
+
+function findBestTextMatch(root, query, resultText = '') {
+  if (!root?.querySelectorAll) return null
+
+  const queryTokens = normalizeSearchText(query).split(' ').filter(Boolean)
+  const resultNeedle = normalizeSearchText(resultText)
+  const candidates = [...root.querySelectorAll([
+    'h1', 'h2', 'h3', 'h4',
+    'p', 'li', 'th', 'td',
+    'strong', 'b',
+    '.study-note', '.law-detail-card__exam', '.exam-core-item',
+    '.understanding-grid > div', '.hierarchy-flow__step',
+  ].join(','))]
+    .filter((element) => {
+      if (!(element instanceof Element)) return false
+      const text = normalizeSearchText(element.textContent)
+      return text && element.getClientRects().length > 0
+    })
+
+  if (resultNeedle && resultNeedle.length <= 260) {
+    const resultMatches = candidates
+      .filter((element) => normalizeSearchText(element.textContent).includes(resultNeedle))
+      .sort((a, b) => (a.textContent?.length || 0) - (b.textContent?.length || 0))
+    if (resultMatches[0]) return resultMatches[0]
+  }
+
+  if (!queryTokens.length) return null
+  return candidates
+    .filter((element) => {
+      const text = normalizeSearchText(element.textContent)
+      return queryTokens.every((token) => text.includes(token))
+    })
+    .sort((a, b) => (a.textContent?.length || 0) - (b.textContent?.length || 0))[0] || null
+}
+
+function flashElement(element) {
+  if (!element) return
+
+  if (typeof element.animate === 'function') {
+    element.animate([
+      { backgroundColor: 'rgba(255, 224, 102, .72)', outline: '3px solid rgba(185, 133, 43, .48)' },
+      { backgroundColor: 'rgba(255, 224, 102, .18)', outline: '3px solid rgba(185, 133, 43, .18)', offset: .62 },
+      { backgroundColor: 'transparent', outline: '3px solid transparent' },
+    ], { duration: 1900, easing: 'ease-out' })
+    return
+  }
+
+  const previousOutline = element.style.outline
+  const previousBackground = element.style.backgroundColor
+  element.style.outline = '3px solid rgba(185, 133, 43, .48)'
+  element.style.backgroundColor = 'rgba(255, 224, 102, .48)'
+  window.setTimeout(() => {
+    element.style.outline = previousOutline
+    element.style.backgroundColor = previousBackground
+  }, 1800)
+}
+
+function scrollToMatch(element, iframe = null) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height ?? 0
+  let targetTop
+
+  if (iframe) {
+    const frameRect = iframe.getBoundingClientRect()
+    const innerRect = element.getBoundingClientRect()
+    const innerScroll = iframe.contentWindow?.scrollY || 0
+    targetTop = window.scrollY + frameRect.top + innerRect.top + innerScroll - headerHeight - 24
+  } else {
+    const rect = element.getBoundingClientRect()
+    targetTop = window.scrollY + rect.top - headerHeight - 24
+  }
+
+  window.scrollTo({
+    top: Math.max(0, targetTop),
+    behavior: reduceMotion ? 'auto' : 'smooth',
+  })
+  flashElement(element)
+}
+
+async function jumpToSearchResult(result, query) {
+  let targetClicked = false
+
+  for (let attempt = 0; attempt < SEARCH_JUMP_ATTEMPTS; attempt += 1) {
+    if (getActiveSubjectId() !== result.subjectId) {
+      await delay(SEARCH_JUMP_DELAY)
+      continue
+    }
+
+    if (result.targetId && !targetClicked) {
+      const targetButton = findTargetNavigationButton(result)
+      if (!targetButton) {
+        await delay(SEARCH_JUMP_DELAY)
+        continue
+      }
+      if (!targetButton.classList.contains('active')) targetButton.click()
+      targetClicked = true
+      await delay(120)
+    }
+
+    const content = document.querySelector('.public-law-content')
+    if (!content) {
+      await delay(SEARCH_JUMP_DELAY)
+      continue
+    }
+
+    if (result.subjectId === 'public-law') {
+      const iframe = content.querySelector('.public-law-frame')
+      try {
+        const frameBody = iframe?.contentDocument?.body
+        const match = findBestTextMatch(frameBody, query, result.text)
+        if (match) {
+          scrollToMatch(match, iframe)
+          return
+        }
+      } catch {
+        // Same-origin iframe is expected. If the browser blocks access, fall through to the section heading.
+      }
+    } else {
+      const match = findBestTextMatch(content, query, result.text)
+      if (match) {
+        scrollToMatch(match)
+        return
+      }
+    }
+
+    if (!result.targetId && attempt > 4) {
+      scrollToMatch(content.querySelector('.study-section-heading') || content)
+      return
+    }
+
+    await delay(SEARCH_JUMP_DELAY)
+  }
+
+  const fallback = document.querySelector('.public-law-content .study-section-heading')
+    || document.querySelector('.public-law-content')
+    || document.querySelector('#main-content')
+  if (fallback) scrollToMatch(fallback)
+}
+
 export default function GlobalSearch({ onNavigate }) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
@@ -71,18 +274,8 @@ export default function GlobalSearch({ onNavigate }) {
     }
 
     const onOpenLawReference = (event) => openLawViewer(event.detail)
-    const onFrameMessage = (event) => {
-      if (event.origin !== window.location.origin) return
-      if (event.data?.type !== 'public-law:open-law-reference') return
-      openLawViewer(event.data.detail)
-    }
-
     window.addEventListener('realtor:open-law-viewer', onOpenLawReference)
-    window.addEventListener('message', onFrameMessage)
-    return () => {
-      window.removeEventListener('realtor:open-law-viewer', onOpenLawReference)
-      window.removeEventListener('message', onFrameMessage)
-    }
+    return () => window.removeEventListener('realtor:open-law-viewer', onOpenLawReference)
   }, [])
 
   useEffect(() => {
@@ -177,7 +370,7 @@ export default function GlobalSearch({ onNavigate }) {
   const handleResultClick = (result) => {
     setOpen(false)
     onNavigate(result.subjectId)
-    window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0)
+    void jumpToSearchResult(result, submittedQuery || query)
   }
 
   return (
@@ -224,7 +417,7 @@ export default function GlobalSearch({ onNavigate }) {
                       <span>{result.context}</span>
                     </span>
                     <span className="global-search__result-snippet">{result.snippet}</span>
-                    <span className="global-search__result-action">과목 열기 →</span>
+                    <span className="global-search__result-action">해당 위치로 이동 →</span>
                   </button>
                 ))}
               </div>
