@@ -1,4 +1,5 @@
 import { getPastQuestionsForCard } from './data/realEstateTheoryPastQuestions'
+import { realEstateTheoryPastQuestionOverrides } from './data/realEstateTheoryPastQuestionOverrides'
 import './theory-past-question.css'
 
 function HighlightQuestionNumbers({ children }) {
@@ -12,7 +13,12 @@ function HighlightQuestionNumbers({ children }) {
 }
 
 export default function TheoryPastQuestion({ cardTitle }) {
-  const questions = getPastQuestionsForCard(cardTitle)
+  const baseQuestions = getPastQuestionsForCard(cardTitle)
+  const overrides = realEstateTheoryPastQuestionOverrides[cardTitle] || []
+  const questions = overrides.length
+    ? [baseQuestions[0], ...overrides].filter(Boolean).slice(0, 2)
+    : baseQuestions
+
   if (!questions.length) return null
 
   return (
