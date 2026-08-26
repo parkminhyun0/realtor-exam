@@ -1,0 +1,212 @@
+.real-estate-theory-page {
+  --theory-accent: #c7a650;
+}
+
+.theory-hero {
+  background:
+    radial-gradient(circle at 90% 12%, rgba(199, 166, 80, .2), transparent 30%),
+    linear-gradient(135deg, #14233a 0%, #274d73 58%, #315f86 100%);
+}
+
+.theory-layout {
+  grid-template-columns: 300px minmax(0, 1fr);
+}
+
+.theory-nav {
+  scrollbar-width: thin;
+  scrollbar-color: #52657c transparent;
+}
+
+.theory-nav summary span {
+  line-height: 1.45;
+}
+
+.theory-nav li button {
+  min-height: 40px;
+  line-height: 1.45;
+}
+
+.theory-content {
+  min-height: 660px;
+}
+
+.theory-section-heading {
+  margin-bottom: 18px;
+}
+
+.theory-toc-intro {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #17273f, #213c5f);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(23, 39, 63, .1);
+}
+
+.theory-toc-intro > span {
+  display: block;
+  color: #f0cd72;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.theory-toc-intro > strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 14pt;
+  letter-spacing: -.025em;
+}
+
+.theory-toc-intro > p {
+  margin: 6px 0 0;
+  color: #d7e2ef;
+  font-size: 12pt;
+  line-height: 1.7;
+}
+
+.theory-section-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.theory-section-card {
+  overflow: hidden;
+  border: 1px solid #dfe5ec;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(30, 48, 72, .035);
+}
+
+.theory-section-card__head {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 14px;
+  border-bottom: 1px solid #e8edf2;
+  background: #f7f9fc;
+}
+
+.theory-section-card__head > span {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #e8eef5;
+  color: #2d5278;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.theory-section-card__head h3 {
+  margin: 0;
+  color: #24344c;
+  font-size: 14pt;
+  letter-spacing: -.03em;
+}
+
+.theory-topic-list {
+  margin: 0;
+  padding: 10px 14px 14px 48px;
+  columns: 2;
+  column-gap: 32px;
+  color: #4a596c;
+  font-size: 12pt;
+  line-height: 1.65;
+}
+
+.theory-topic-list li {
+  break-inside: avoid;
+  padding: 5px 0 5px 3px;
+}
+
+.theory-topic-list li::marker {
+  color: #7990a8;
+  font-weight: 800;
+}
+
+.theory-topic-empty {
+  margin: 0;
+  padding: 14px 16px;
+  color: #7a8795;
+  font-size: 12pt;
+  line-height: 1.7;
+}
+
+.theory-next-step {
+  margin-top: 18px;
+  padding: 16px 18px;
+  display: grid;
+  grid-template-columns: minmax(200px, .8fr) minmax(0, 1.2fr);
+  gap: 18px;
+  align-items: center;
+  border: 1px solid #dfd4af;
+  border-left: 5px solid var(--theory-accent);
+  border-radius: 13px;
+  background: #fffaf0;
+}
+
+.theory-next-step span {
+  display: block;
+  color: #967928;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.theory-next-step strong {
+  display: block;
+  margin-top: 3px;
+  color: #594a20;
+  font-size: 14pt;
+}
+
+.theory-next-step p {
+  margin: 0;
+  color: #6e6241;
+  font-size: 12pt;
+  line-height: 1.7;
+}
+
+@media (max-width: 1080px) {
+  .theory-layout {
+    grid-template-columns: 270px minmax(0, 1fr);
+  }
+
+  .theory-topic-list {
+    columns: 1;
+  }
+}
+
+@media (max-width: 980px) {
+  .theory-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .theory-nav {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .theory-nav li button {
+    min-height: 44px;
+  }
+
+  .theory-toc-intro {
+    padding: 16px;
+  }
+
+  .theory-topic-list {
+    padding: 9px 12px 13px 40px;
+  }
+
+  .theory-next-step {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
