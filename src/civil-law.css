@@ -1,0 +1,126 @@
+.civil-law-hero {
+  background: linear-gradient(135deg, #1c2d46, #385f86 58%, #4e6b88);
+}
+
+.civil-outline-intro {
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: #16263e;
+  color: #fff;
+}
+
+.civil-outline-intro > span {
+  display: block;
+  color: #ffd86b;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.civil-outline-intro strong {
+  display: block;
+  margin: 6px 0;
+  font-size: 18px;
+}
+
+.civil-outline-intro p {
+  margin: 0;
+  color: #d5dfeb;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.civil-outline-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.civil-outline-list li {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #e3e9ef;
+  border-radius: 11px;
+  background: #f8fafc;
+}
+
+.civil-outline-list__number {
+  flex: 0 0 auto;
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #eaf0f7;
+  color: #315f8f;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.civil-outline-list strong {
+  color: #2c3d53;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.civil-part-map__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 9px;
+}
+
+.civil-part-map__items button {
+  min-height: 72px;
+  padding: 11px 12px;
+  border: 1px solid #dce4ec;
+  border-radius: 12px;
+  background: #fff;
+  color: #384b62;
+  text-align: left;
+  cursor: pointer;
+}
+
+.civil-part-map__items button:hover,
+.civil-part-map__items button.active {
+  border-color: #315f8f;
+  background: #eef4fb;
+}
+
+.civil-part-map__items small {
+  display: block;
+  margin-bottom: 4px;
+  color: #7d8a99;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.civil-part-map__items strong {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@media (max-width: 700px) {
+  .civil-outline-list {
+    grid-template-columns: 1fr;
+  }
+
+  .civil-outline-list li {
+    min-height: 44px;
+  }
+
+  .civil-part-map__items {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .civil-part-map__items {
+    grid-template-columns: 1fr;
+  }
+}
