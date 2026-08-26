@@ -1,0 +1,107 @@
+export const publicLawChapters = [
+  {
+    id: 'national-land-planning',
+    number: 1,
+    title: '국토의 계획 및 이용에 관한 법률',
+    shortTitle: '국토계획법',
+    color: '#2E5E8C',
+    sections: [
+      { id: 'c1s1', title: '제1절 총칙', ready: true },
+      { id: 'c1s2', title: '제2절 광역도시계획' },
+      { id: 'c1s3', title: '제3절 도시·군기본계획' },
+      { id: 'c1s4', title: '제4절 도시·군관리계획' },
+      { id: 'c1s5', title: '제5절 공간재구조화계획' },
+      { id: 'c1s6', title: '제6절 용도지역·지구·구역' },
+      { id: 'c1s7', title: '제7절 도시·군계획시설사업' },
+      { id: 'c1s8', title: '제8절 지구단위계획구역' },
+      { id: 'c1s9', title: '제9절 개발행위허가' },
+      { id: 'c1s10', title: '제10절 개발밀도관리·기반시설부담구역' },
+    ],
+  },
+  {
+    id: 'urban-development',
+    number: 2,
+    title: '도시개발법',
+    shortTitle: '도시개발법',
+    color: '#7A3E7A',
+    sections: [
+      { id: 'c2s0', title: '▣ 시행절차' },
+      { id: 'c2s1', title: '제1절 개발계획·구역 지정' },
+      { id: 'c2s2', title: '제2절 시행자·조합' },
+      { id: 'c2s3', title: '제3절 실시계획' },
+      { id: 'c2s4', title: '제4절 사업의 시행' },
+      { id: 'c2s5', title: '제5절 비용부담·채권' },
+    ],
+  },
+  {
+    id: 'urban-renewal',
+    number: 3,
+    title: '도시 및 주거환경정비법',
+    shortTitle: '도시정비법',
+    color: '#B9651E',
+    sections: [
+      { id: 'c3s1', title: '제1절 총칙' },
+      { id: 'c3s2', title: '제2절 기본계획·정비구역' },
+      { id: 'c3s3', title: '제3절 정비사업의 시행' },
+    ],
+  },
+  {
+    id: 'building',
+    number: 4,
+    title: '건축법',
+    shortTitle: '건축법',
+    color: '#1E7F6E',
+    sections: [
+      { id: 'c4s1', title: '제1절 총칙' },
+      { id: 'c4s2', title: '제2절 건축물의 건축' },
+      { id: 'c4s3', title: '제3절 대지와 도로' },
+      { id: 'c4s4', title: '제4절 지역·지구의 건축물' },
+      { id: 'c4s5', title: '제5절 특별건축구역' },
+      { id: 'c4s6', title: '제6절 건축협정·결합건축' },
+    ],
+  },
+  {
+    id: 'housing',
+    number: 5,
+    title: '주택법',
+    shortTitle: '주택법',
+    color: '#1B2A41',
+    sections: [
+      { id: 'c5s1', title: '제1절 총칙' },
+      { id: 'c5s2', title: '제2절 주택의 건설' },
+      { id: 'c5s3', title: '제3절 주택의 공급' },
+      { id: 'c5s4', title: '제4절 리모델링' },
+    ],
+  },
+  {
+    id: 'farmland',
+    number: 6,
+    title: '농지법',
+    shortTitle: '농지법',
+    color: '#5E7A2E',
+    sections: [
+      { id: 'c6s1', title: '제1절 총칙' },
+      { id: 'c6s2', title: '제2절 농지의 소유' },
+      { id: 'c6s3', title: '제3절 농지의 이용' },
+      { id: 'c6s4', title: '제4절 농지의 보전' },
+    ],
+  },
+]
+
+export const publicLawGeneralTerms = [
+  ['광역도시계획', '광역계획권의 장기발전방향을 제시하는 계획', '도시·군계획에 포함되지 않음'],
+  ['도시·군계획', '관할구역의 공간구조와 발전방향에 대한 계획 = 기본계획 + 관리계획', '광역도시계획과 구분'],
+  ['도시·군기본계획', '기본적인 공간구조와 장기발전방향을 제시하고 관리계획 수립의 지침이 되는 계획', '일반 국민 직접 구속력 없음'],
+  ['도시·군관리계획', '용도지역·지구·구역, 기반시설, 도시개발·정비사업, 지구단위계획 등 실제 규제·결정에 연결되는 계획', '개별 토지에 직접 영향'],
+  ['지구단위계획', '도시·군계획 수립 대상지역의 일부에 대해 토지이용 합리화·기능 증진·미관 개선 등을 위한 계획', '"일부"가 핵심'],
+  ['기반시설', '교통·공간·유통공급·공공문화체육·방재·보건위생·환경기초시설', '도시·군계획시설은 관리계획으로 결정된 기반시설'],
+  ['개발밀도관리구역', '기반시설 설치가 곤란한 지역에서 건폐율·용적률을 강화하는 구역', '규제 강화'],
+  ['기반시설부담구역', '개발로 기반시설 설치가 필요한 지역에서 설치비용을 부과하기 위해 지정하는 구역', '비용 부담'],
+]
+
+export const publicLawHierarchy = [
+  '국가계획',
+  '광역도시계획',
+  '도시·군기본계획',
+  '도시·군관리계획',
+]
