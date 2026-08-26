@@ -13,7 +13,9 @@
 <strong>부동산공법 내용을 불러오는 중입니다…</strong>
 <script>
 (async()=>{
-  const embedded=new URLSearchParams(window.location.search).get('embed')==='1'
+  const params=new URLSearchParams(window.location.search)
+  const embedded=params.get('embed')==='1'
+  const activeLawName=params.get('law')||''
   if(!embedded){
     window.location.replace('./#/public-law')
     return
@@ -117,6 +119,30 @@ tbody th{background:#f8fafc!important;color:#263950!important}
 }
 details.quiz,details.card{overflow:hidden!important}
 details summary{cursor:pointer!important;font-weight:900!important}
+.embedded-law-reference{
+  display:inline!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:4px!important;
+  background:transparent!important;
+  color:#c62828!important;
+  font:inherit!important;
+  font-weight:900!important;
+  line-height:inherit!important;
+  text-decoration:underline!important;
+  text-decoration-thickness:2px!important;
+  text-underline-offset:3px!important;
+  cursor:pointer!important;
+  vertical-align:baseline!important;
+}
+.embedded-law-reference:hover,.embedded-law-reference:focus-visible{
+  background:rgba(198,40,40,.08)!important;
+  box-shadow:0 0 0 2px rgba(198,40,40,.10)!important;
+  outline:none!important;
+}
 @media(max-width:900px){
   .card,.section-deep,.inline-proc,.proc-table{overflow-x:auto;-webkit-overflow-scrolling:touch}
   table{min-width:700px}
@@ -131,9 +157,62 @@ details summary{cursor:pointer!important;font-weight:900!important}
 }
 </style>`
 
-    const bridge='<script id="public-law-embed-bridge">'+
-      '(()=>{const send=()=>{const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);parent.postMessage({type:"public-law:height",height:h},location.origin)};window.addEventListener("load",()=>{send();setTimeout(send,120);setTimeout(send,500)});window.addEventListener("click",()=>setTimeout(send,80),true);if(window.ResizeObserver){new ResizeObserver(send).observe(document.documentElement)}})();'+
-      '<'+'/script>'
+    const bridge=`<script id="public-law-embed-bridge">
+(()=>{
+  const lawName=${JSON.stringify(activeLawName)};
+  const send=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    parent.postMessage({type:'public-law:height',height:h},location.origin);
+  };
+  const decorateLawReferences=()=>{
+    if(!lawName)return;
+    const articlePattern=/제\\s*(\\d+)\\s*조(?:의\\s*(\\d+))?/g;
+    const skipTags=new Set(['SCRIPT','STYLE','BUTTON','A','TEXTAREA','INPUT','SELECT','OPTION']);
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+      acceptNode(node){
+        const parentElement=node.parentElement;
+        if(!parentElement||skipTags.has(parentElement.tagName)||parentElement.closest('.embedded-law-reference'))return NodeFilter.FILTER_REJECT;
+        articlePattern.lastIndex=0;
+        return articlePattern.test(node.nodeValue||'')?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+      }
+    });
+    const nodes=[];
+    while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(node=>{
+      const text=node.nodeValue||'';
+      const fragment=document.createDocumentFragment();
+      let lastIndex=0;
+      articlePattern.lastIndex=0;
+      for(const match of text.matchAll(articlePattern)){
+        fragment.append(document.createTextNode(text.slice(lastIndex,match.index)));
+        const button=document.createElement('button');
+        button.type='button';
+        button.className='embedded-law-reference';
+        button.dataset.article='제'+match[1]+'조'+(match[2]?'의'+match[2]:'');
+        button.title=lawName+' '+button.dataset.article+' 본문 열기';
+        button.textContent=match[0];
+        fragment.append(button);
+        lastIndex=match.index+match[0].length;
+      }
+      fragment.append(document.createTextNode(text.slice(lastIndex)));
+      node.replaceWith(fragment);
+    });
+  };
+  document.addEventListener('click',event=>{
+    const reference=event.target.closest&&event.target.closest('.embedded-law-reference');
+    if(reference){
+      event.preventDefault();
+      event.stopPropagation();
+      parent.postMessage({type:'public-law:open-law-reference',detail:{subjectId:'public-law',lawName:lawName,article:reference.dataset.article}},location.origin);
+    }
+    setTimeout(send,80);
+  },true);
+  window.addEventListener('load',()=>{decorateLawReferences();send();setTimeout(send,120);setTimeout(send,500)});
+  decorateLawReferences();
+  setTimeout(send,0);
+  if(window.ResizeObserver){new ResizeObserver(send).observe(document.documentElement)}
+})();
+<\/script>`
 
     html=html.replace(/<span>글자크기 11pt 통일<\/span>/,'<span>글자크기: 본문 12pt · 중요 텍스트 14pt</span>')
     html=html.replace('</head>',`${override}</head>`)
