@@ -1,0 +1,21 @@
+.registration-law-page::highlight(registration-exam-critical) {
+  background-color: rgba(255, 222, 89, .72);
+  color: #5f4200;
+  text-decoration-line: underline;
+  text-decoration-color: rgba(198, 40, 40, .82);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.registration-law-page::highlight(registration-exam-frequent) {
+  background-color: rgba(255, 241, 174, .78);
+  color: #514518;
+}
+
+@media print {
+  .registration-law-page::highlight(registration-exam-critical),
+  .registration-law-page::highlight(registration-exam-frequent) {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
