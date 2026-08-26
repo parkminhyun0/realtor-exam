@@ -1,16 +1,9 @@
-import { realEstateTheoryPastQuestions } from './data/realEstateTheoryPastQuestions'
+import { getPastQuestionsForCard } from './data/realEstateTheoryPastQuestions'
 import './theory-past-question.css'
-
-function findQuestions(cardTitle) {
-  for (const chapter of Object.values(realEstateTheoryPastQuestions)) {
-    if (chapter?.[cardTitle]?.length) return chapter[cardTitle]
-  }
-  return []
-}
 
 function HighlightQuestionNumbers({ children }) {
   if (typeof children !== 'string') return children
-  const pattern = /(\d+(?:[.,]\d+)*(?:\s*(?:억|만원|원|%|㎡|km|명|년|회|배))?)/g
+  const pattern = /(\d+(?:[.,]\d+)*(?:\s*(?:억|만원|원|%|㎡|km|명|년|회|배|개월))?)/g
   return children.split(pattern).map((part, index) => (
     index % 2 === 1
       ? <span className="theory-exam-number" key={`${part}-${index}`}>{part}</span>
@@ -19,19 +12,30 @@ function HighlightQuestionNumbers({ children }) {
 }
 
 export default function TheoryPastQuestion({ cardTitle }) {
-  const questions = findQuestions(cardTitle)
+  const questions = getPastQuestionsForCard(cardTitle)
   if (!questions.length) return null
 
   return (
     <div className="theory-past-question-list" aria-label={`${cardTitle} 기출문제 적용`}>
-      {questions.map((item) => (
-        <article className="theory-past-question" key={`${item.year}-${item.number}-${item.title}`}>
+      <div className="theory-past-question-list__title">
+        <span>📚 기출 적용</span>
+        <strong>{questions.length}문제</strong>
+        <small>공식 선택 → 값 대입 → 계산기 입력</small>
+      </div>
+
+      {questions.map((item, questionIndex) => (
+        <article className="theory-past-question" key={item.id || `${item.year}-${item.number}-${item.title}`}>
           <header className="theory-past-question__head">
             <div>
-              <span>기출문제</span>
+              <span>기출문제 {questionIndex + 1}</span>
               <strong>{item.year}년 제{item.round}회 · 부동산학개론 {item.number}번</strong>
             </div>
-            <a href={item.officialUrl} target="_blank" rel="noreferrer">Q-Net 원문 ↗</a>
+            <div className="theory-past-question__links">
+              <a href={item.officialUrl} target="_blank" rel="noreferrer">공식/기출 확인 ↗</a>
+              {item.verifyUrl && item.verifyUrl !== item.officialUrl && (
+                <a href={item.verifyUrl} target="_blank" rel="noreferrer">해설 확인 ↗</a>
+              )}
+            </div>
           </header>
 
           <div className="theory-past-question__body">
