@@ -41,7 +41,7 @@ export const subjectGroups = [
         shortTitle: '공법',
         icon: '▦',
         description: '국토계획법 · 도시개발법 · 도시정비법 · 건축법 · 주택법 · 농지법',
-        status: '콘텐츠 편입 예정',
+        status: '공개 시작',
         featured: true,
       },
       {
