@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { allSubjects, subjectGroups } from './data/subjects'
 import PublicLawPage from './PublicLawPage'
+import './public-law.css'
 
 function getRoute() {
   return window.location.hash.replace(/^#\/?/, '') || ''
