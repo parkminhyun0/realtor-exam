@@ -135,6 +135,38 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    const mobileViewport = window.matchMedia('(max-width: 980px)')
+
+    const onMobileTocClick = (event) => {
+      if (!mobileViewport.matches || !(event.target instanceof Element)) return
+
+      const tocButton = event.target.closest('.public-law-nav li button, [data-mobile-toc] button')
+      if (!tocButton) return
+
+      const layout = tocButton.closest('.public-law-layout, [data-mobile-toc-layout]')
+      if (!layout) return
+
+      window.setTimeout(() => {
+        const contentTarget = layout.querySelector('.public-law-content, [data-mobile-toc-content]')
+        if (!contentTarget) return
+
+        const header = document.querySelector('.site-header')
+        const headerHeight = header?.getBoundingClientRect().height ?? 0
+        const targetTop = window.scrollY + contentTarget.getBoundingClientRect().top - headerHeight - 12
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+        window.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: reduceMotion ? 'auto' : 'smooth',
+        })
+      }, 0)
+    }
+
+    document.addEventListener('click', onMobileTocClick)
+    return () => document.removeEventListener('click', onMobileTocClick)
+  }, [])
+
   const activeSubject = useMemo(
     () => allSubjects.find((subject) => subject.id === route),
     [route],
