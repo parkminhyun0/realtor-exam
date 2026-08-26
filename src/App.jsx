@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { allSubjects, subjectGroups } from './data/subjects'
 import PublicLawPage from './PublicLawPage'
+import RealEstateTheoryPage from './RealEstateTheoryPage'
 import RegistrationLawPage from './RegistrationLawPage'
 import './public-law.css'
 import './scroll-top.css'
@@ -59,7 +60,7 @@ function Dashboard() {
 
       <section className="study-guide" aria-label="학습 안내">
         <span className="study-guide__label">현재 구축 순서</span>
-        <strong>메인 대시보드 → 부동산공법 → 부동산공시법 → 나머지 과목</strong>
+        <strong>메인 대시보드 → 부동산공법 → 부동산공시법 → 부동산학개론 → 나머지 과목</strong>
         <span>모든 과목을 동일한 공통 헤더·카드·목차·본문 디자인 시스템으로 확장합니다.</span>
       </section>
 
@@ -143,7 +144,8 @@ export default function App() {
   }
 
   let content = <Dashboard />
-  if (route === 'public-law') content = <PublicLawPage onBack={() => navigate('')} />
+  if (route === 'real-estate-theory') content = <RealEstateTheoryPage onBack={() => navigate('')} />
+  else if (route === 'public-law') content = <PublicLawPage onBack={() => navigate('')} />
   else if (route === 'registration-law') content = <RegistrationLawPage onBack={() => navigate('')} />
   else if (activeSubject) content = <SubjectPlaceholder subject={activeSubject} />
 
