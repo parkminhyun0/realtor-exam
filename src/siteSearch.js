@@ -1,4 +1,5 @@
 import { allSubjects } from './data/subjects'
+import * as civilLawData from './data/civilLaw'
 import * as publicLawData from './data/publicLaw'
 import * as realEstateTheoryData from './data/realEstateTheory'
 import * as realEstateTheoryContentData from './data/realEstateTheoryContent'
@@ -21,12 +22,32 @@ const subjectData = {
     realEstateTheoryRelationsData,
     realEstateTheoryExtraData,
   ],
+  'civil-law': [civilLawData],
   'public-law': [publicLawData],
   'registration-law': [registrationLawData, registrationLawDeepDive, registrationLawExamCore],
 }
 
 const labelKeys = ['title', 'name', 'label', 'term', 'heading', 'chapterTitle', 'sectionTitle', 'pointTitle', 'shortTitle']
 const ignoredKeys = new Set(['id', 'color', 'icon', 'status', 'featured', 'url'])
+const TARGET_ID_PATTERN = /^(?:c\d+s\d+|p\d+s\d+|p\d+c\d+)$/i
+const TARGET_ID_IN_PATH_PATTERN = /(?:^|\.)(c\d+s\d+|p\d+s\d+|p\d+c\d+)(?=\.|\[|$)/i
+const PUBLIC_LAW_TARGET_HINTS = [
+  ['기반시설부담구역', 'c1s10'],
+  ['개발밀도관리구역', 'c1s10'],
+  ['도시 군계획시설', 'c1s7'],
+  ['도시 군관리계획', 'c1s4'],
+  ['도시 군기본계획', 'c1s3'],
+  ['광역도시계획', 'c1s2'],
+  ['지구단위계획', 'c1s8'],
+  ['개발행위허가', 'c1s9'],
+  ['용도지역', 'c1s6'],
+  ['용도지구', 'c1s6'],
+  ['용도구역', 'c1s6'],
+  ['용적률', 'c1s10'],
+  ['건폐율', 'c1s10'],
+  ['기반시설', 'c1s7'],
+  ['국가계획', 'c1s1'],
+]
 
 function normalize(value) {
   return String(value ?? '')
@@ -51,8 +72,28 @@ function getLocalLabel(value, fallback) {
   return fallback
 }
 
-function collectLeafEntries(value, subject, out, context = subject.title, path = '') {
+function resolveTargetId(value, path, inheritedTargetId = '') {
+  if (value && !Array.isArray(value) && typeof value === 'object') {
+    const ownId = typeof value.id === 'string' ? value.id.trim() : ''
+    if (TARGET_ID_PATTERN.test(ownId)) return ownId
+  }
+
+  const pathMatch = String(path || '').match(TARGET_ID_IN_PATH_PATTERN)
+  if (pathMatch) return pathMatch[1]
+  return inheritedTargetId
+}
+
+function inferTargetId(subjectId, context, text, targetId) {
+  if (targetId || subjectId !== 'public-law') return targetId
+  const haystack = normalize(`${context} ${text}`)
+  const hint = PUBLIC_LAW_TARGET_HINTS.find(([keyword]) => haystack.includes(normalize(keyword)))
+  return hint?.[1] || ''
+}
+
+function collectLeafEntries(value, subject, out, context = subject.title, path = '', inheritedTargetId = '') {
   if (value == null) return
+
+  const resolvedTargetId = resolveTargetId(value, path, inheritedTargetId)
 
   if (typeof value === 'string' || typeof value === 'number') {
     const text = String(value).trim()
@@ -63,6 +104,7 @@ function collectLeafEntries(value, subject, out, context = subject.title, path =
       shortTitle: subject.shortTitle,
       context: context || subject.title,
       path,
+      targetId: inferTargetId(subject.id, context, text, resolvedTargetId),
       text,
       haystack: normalize(`${subject.title} ${subject.shortTitle} ${context} ${text}`),
     })
@@ -70,7 +112,14 @@ function collectLeafEntries(value, subject, out, context = subject.title, path =
   }
 
   if (Array.isArray(value)) {
-    value.forEach((item, index) => collectLeafEntries(item, subject, out, context, `${path}[${index}]`))
+    value.forEach((item, index) => collectLeafEntries(
+      item,
+      subject,
+      out,
+      context,
+      `${path}[${index}]`,
+      resolvedTargetId,
+    ))
     return
   }
 
@@ -79,7 +128,8 @@ function collectLeafEntries(value, subject, out, context = subject.title, path =
     Object.entries(value).forEach(([key, child]) => {
       if (ignoredKeys.has(key)) return
       const nextContext = labelKeys.includes(key) ? localLabel : (localLabel || readableKey(key) || context)
-      collectLeafEntries(child, subject, out, nextContext, path ? `${path}.${key}` : key)
+      const nextPath = path ? `${path}.${key}` : key
+      collectLeafEntries(child, subject, out, nextContext, nextPath, resolvedTargetId)
     })
   }
 }
@@ -94,6 +144,7 @@ allSubjects.forEach((subject) => {
     shortTitle: subject.shortTitle,
     context: '과목 안내',
     path: 'subject',
+    targetId: '',
     text: metadataText,
     haystack: normalize(metadataText),
   })
@@ -134,6 +185,7 @@ export function searchSite(query, limit = 18) {
       if (title.includes(normalizedQuery)) score += 120
       if (context.includes(normalizedQuery)) score += 70
       if (text.includes(normalizedQuery)) score += 50
+      if (entry.targetId) score += 6
       score += tokens.reduce((sum, token) => {
         if (title.includes(token)) return sum + 18
         if (context.includes(token)) return sum + 12
@@ -151,7 +203,7 @@ export function searchSite(query, limit = 18) {
     .filter(Boolean)
     .sort((a, b) => b.score - a.score)
     .filter((entry) => {
-      const key = `${entry.subjectId}|${entry.context}|${entry.snippet}`
+      const key = `${entry.subjectId}|${entry.targetId}|${entry.context}|${entry.snippet}`
       if (dedupe.has(key)) return false
       dedupe.add(key)
       return true

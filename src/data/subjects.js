@@ -18,7 +18,7 @@ export const subjectGroups = [
         shortTitle: '민법',
         icon: '§',
         description: '민법총칙 · 물권법 · 계약법 · 민사특별법을 시험 중심으로 정리합니다.',
-        status: '준비 중',
+        status: '공개 시작',
       },
     ],
   },
