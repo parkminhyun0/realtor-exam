@@ -1,20 +1,38 @@
 import { useMemo, useState } from 'react'
-import { realEstateTheoryChapterCount, realEstateTheoryParts } from './data/realEstateTheory'
+import { realEstateTheoryParts } from './data/realEstateTheory'
 import { realEstateTheoryContent } from './data/realEstateTheoryContent'
 import { realEstateTheoryHandoutContent } from './data/realEstateTheoryHandoutContent'
 import { realEstateTheoryRelations } from './data/realEstateTheoryRelations'
+import { realEstateTheoryExtraChapters, realEstateTheoryExtraContent, realEstateTheoryExtraRelations } from './data/realEstateTheoryExtra'
 import './real-estate-theory.css'
 
 const NUMBER_PATTERN = /([①②③④⑤⑥⑦⑧⑨⑩]|\d+(?:[.,]\d+)*(?:\s*(?:개|종|일|년|월|㎡|m²|%|호|조|항|세대|층))?)/g
 
+const theoryParts = realEstateTheoryParts.map((part) => (
+  part.id === 'part8'
+    ? { ...part, chapters: [...part.chapters, ...realEstateTheoryExtraChapters] }
+    : part
+))
+
+const theoryChapterCount = theoryParts.reduce((sum, part) => sum + part.chapters.length, 0)
+
 const chapterMeta = Object.fromEntries(
-  realEstateTheoryParts.flatMap((part) => (
+  theoryParts.flatMap((part) => (
     part.chapters.map((chapter) => [chapter.id, { part, chapter }])
   )),
 )
 
 function getTheoryContent(chapterId) {
-  return realEstateTheoryHandoutContent[chapterId] || realEstateTheoryContent[chapterId]
+  return realEstateTheoryExtraContent[chapterId]
+    || realEstateTheoryHandoutContent[chapterId]
+    || realEstateTheoryContent[chapterId]
+}
+
+function getTheoryRelations(chapterId) {
+  return [
+    ...(realEstateTheoryRelations[chapterId] || []),
+    ...(realEstateTheoryExtraRelations[chapterId] || []),
+  ]
 }
 
 function HighlightNumbers({ children }) {
@@ -47,7 +65,7 @@ export default function RealEstateTheoryPage({ onBack }) {
 
   const selected = useMemo(() => chapterMeta[selectedId] || chapterMeta.p1c1, [selectedId])
   const chapterContent = getTheoryContent(selected.chapter.id)
-  const relations = realEstateTheoryRelations[selected.chapter.id] || []
+  const relations = getTheoryRelations(selected.chapter.id)
 
   const openChapter = (chapterId) => {
     setSelectedId(chapterId)
@@ -69,7 +87,7 @@ export default function RealEstateTheoryPage({ onBack }) {
         </div>
         <div className="public-law-hero__badges" aria-label="부동산학개론 학습 구성">
           <span>8개 대단원</span>
-          <span>{realEstateTheoryChapterCount}개 장</span>
+          <span>{theoryChapterCount}개 장</span>
           <span>교안 기반 본문 확장</span>
           <span>연결 학습 적용</span>
         </div>
@@ -82,7 +100,7 @@ export default function RealEstateTheoryPage({ onBack }) {
             <span>대단원 → 장 → 본문 · 공법/공시법 공통 구조</span>
           </div>
 
-          {realEstateTheoryParts.map((part) => (
+          {theoryParts.map((part) => (
             <details key={part.id} open={part.chapters.some((chapter) => chapter.id === selectedId)}>
               <summary>
                 <i style={{ background: part.color }} />
@@ -357,7 +375,7 @@ function RelationSection({ relations, onOpenRelation }) {
             <button
               type="button"
               className="theory-relation-card"
-              key={`${relation.target}-${relation.type}`}
+              key={`${relation.target}-${relation.type}-${relation.reason}`}
               onClick={() => onOpenRelation(relation.target)}
             >
               <span className="theory-relation-card__type">{relation.type}</span>
