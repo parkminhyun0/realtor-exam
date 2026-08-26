@@ -70,8 +70,22 @@ function check(dir, file) {
     for (const re of EMPTY_TALK)
       if (re.test(firstLine)) return problems.push([p, rel, '"다 했다" 만 적혀 있다']);
 
-  if (NEEDS_VERDICT.has(file) && !/\b(PASS|FAIL)\b/.test(body))
-    return problems.push([p, rel, '판정(PASS/FAIL)이 없다']);
+  /* 구현 보고서를 못 읽고 쓴 리뷰는 리뷰가 아니다.
+   *
+   * 되돌리기가 02-impl.md 를 지우는 순간, 이미 배정돼 돌고 있던 2차 검증이
+   * 그 파일을 읽으려다 없어서 FAIL 을 낸다. 그 FAIL 이 또 되돌리기를 부르고
+   * 되돌리기가 또 파일을 지운다 — task5 가 이렇게 3회를 다 태웠다(2026-08-27).
+   * 모델의 능력 문제가 아니므로 실패로 세지 않는다. 지워서 다시 돌게 한다.
+   */
+  if (NEEDS_VERDICT.has(file)) {
+    const cantRead =
+      /02-impl\.md[^\n]*(No such file|없|찾을 수 없|not found)/i.test(body) ||
+      /(No such file|찾을 수 없)[^\n]*02-impl\.md/i.test(body) ||
+      /02-impl\.md\s*(가|이)?\s*없으므로/.test(body);
+    if (cantRead) return problems.push([p, rel, '구현 보고서를 못 읽고 쓴 리뷰 — 경쟁 조건. 실패로 세지 않는다']);
+    if (!/\b(PASS|FAIL)\b/.test(body))
+      return problems.push([p, rel, '판정(PASS/FAIL)이 없다']);
+  }
 }
 
 let dirs = [];

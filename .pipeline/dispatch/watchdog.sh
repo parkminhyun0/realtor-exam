@@ -77,6 +77,18 @@ while [ ! -f .pipeline/dispatch/STOP ]; do
   #  알 길이 없었다. 색이 그 자리를 메운다.)
   [ -f .pipeline/dispatch/paint.sh ] && bash .pipeline/dispatch/paint.sh >>"$LOG" 2>&1
 
+  # 2차·3차가 모두 PASS 인 과제를 과목 통합브랜치에 병합한다.
+  # main 병합은 하지 않는다 — main 은 즉시 배포다. 박 목사님 위임 범위가
+  # 통합브랜치까지다(2026-08-27).
+  if [ -f .pipeline/dispatch/merge-lane.mjs ]; then
+    node .pipeline/dispatch/merge-lane.mjs >>"$LOG" 2>&1 || true
+  fi
+
+  # 단원이 빌 때마다 다음 것을 채운다. 큐가 마르면 열 패널이 논다.
+  if [ -f .pipeline/dispatch/next-batch.mjs ]; then
+    node .pipeline/dispatch/next-batch.mjs --inflight "${INFLIGHT:-10}" >>"$LOG" 2>&1 || true
+  fi
+
   for d in dispatcher advance supply relay supervisor; do
     sc="$(daemon_script "$d")"; surf="$(daemon_surface "$d")"
     [ -n "$surf" ] || continue
