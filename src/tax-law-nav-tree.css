@@ -1,0 +1,90 @@
+/* 부동산세법 좌측 목차: PART → POINT(대분류) → 중분류 3단 트리 */
+.tax-law-page .tax-nav-point {
+  display: block;
+  min-width: 0;
+}
+
+.tax-law-page .tax-nav-point > .tax-nav-point__button {
+  width: 100%;
+}
+
+.tax-law-page .tax-nav-groups {
+  display: grid;
+  gap: 2px;
+  margin: 2px 8px 9px 18px !important;
+  padding: 5px 0 5px 11px !important;
+  border-left: 2px solid #d9cfb8;
+  list-style: none;
+}
+
+.tax-law-page .tax-nav-groups > li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tax-law-page .tax-nav-groups > li > button {
+  width: 100%;
+  min-height: 40px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 7px 9px !important;
+  border: 0 !important;
+  border-radius: 9px;
+  background: transparent !important;
+  color: #59616d !important;
+  text-align: left;
+  box-shadow: none !important;
+}
+
+.tax-law-page .tax-nav-groups > li > button:hover,
+.tax-law-page .tax-nav-groups > li > button:focus-visible {
+  background: #f5f1e7 !important;
+  color: #4b4028 !important;
+  outline: none;
+}
+
+.tax-law-page .tax-nav-groups > li > button.active {
+  background: #f0e8d6 !important;
+  color: #5b4720 !important;
+  font-weight: 900;
+}
+
+.tax-nav-group__index {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #eee7d8;
+  color: #75613a;
+  font-size: 9pt !important;
+  font-weight: 900;
+}
+
+.tax-law-page .tax-nav-groups > li > button.active .tax-nav-group__index {
+  background: #75613a;
+  color: #fff;
+}
+
+.tax-nav-group__label {
+  min-width: 0;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.tax-group-anchor {
+  scroll-margin-top: 92px;
+}
+
+@media (max-width: 700px) {
+  .tax-law-page .tax-nav-groups {
+    margin-left: 14px !important;
+    padding-left: 9px !important;
+  }
+
+  .tax-law-page .tax-nav-groups > li > button {
+    min-height: 44px;
+  }
+}
