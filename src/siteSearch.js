@@ -1,6 +1,9 @@
 import { allSubjects } from './data/subjects'
 import * as civilLawData from './data/civilLaw'
 import * as civilLawContentData from './data/civilLawContent'
+import * as civilLawPart2ContentData from './data/civilLawPart2Content'
+import * as civilLawPart3ContentData from './data/civilLawPart3Content'
+import * as civilLawPart4ContentData from './data/civilLawPart4Content'
 import * as publicLawData from './data/publicLaw'
 import * as realEstateTheoryData from './data/realEstateTheory'
 import * as realEstateTheoryContentData from './data/realEstateTheoryContent'
@@ -26,7 +29,13 @@ const subjectData = {
     realEstateTheoryRelationsData,
     realEstateTheoryExtraData,
   ],
-  'civil-law': [civilLawData, civilLawContentData],
+  'civil-law': [
+    civilLawData,
+    civilLawContentData,
+    civilLawPart2ContentData,
+    civilLawPart3ContentData,
+    civilLawPart4ContentData,
+  ],
   'public-law': [publicLawData],
   'registration-law': [registrationLawData, registrationLawDeepDive, registrationLawExamCore, registrationLawExamDetail],
 }
