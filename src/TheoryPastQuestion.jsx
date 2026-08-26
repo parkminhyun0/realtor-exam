@@ -15,9 +15,11 @@ function HighlightQuestionNumbers({ children }) {
 export default function TheoryPastQuestion({ cardTitle }) {
   const baseQuestions = getPastQuestionsForCard(cardTitle)
   const overrides = realEstateTheoryPastQuestionOverrides[cardTitle] || []
-  const questions = overrides.length
-    ? [baseQuestions[0], ...overrides].filter(Boolean).slice(0, 2)
-    : baseQuestions
+  const questions = overrides.length >= 2
+    ? overrides.slice(0, 2)
+    : overrides.length === 1
+      ? [baseQuestions[0], overrides[0]].filter(Boolean)
+      : baseQuestions
 
   if (!questions.length) return null
 
