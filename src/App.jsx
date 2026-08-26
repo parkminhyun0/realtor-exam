@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { allSubjects, subjectGroups } from './data/subjects'
+import PublicLawPage from './PublicLawPage'
 
 function getRoute() {
   return window.location.hash.replace(/^#\/?/, '') || ''
@@ -52,7 +53,7 @@ function Dashboard() {
       <section className="study-guide" aria-label="학습 안내">
         <span className="study-guide__label">현재 구축 순서</span>
         <strong>메인 대시보드 → 부동산공법 → 나머지 과목</strong>
-        <span>공법을 첫 기준 과목으로 완성한 뒤 동일한 UI 규격을 다른 과목에 확장합니다.</span>
+        <span>부동산공법부터 실제 콘텐츠를 공개하고 동일한 UI 규격을 다른 과목에 확장합니다.</span>
       </section>
 
       {subjectGroups.map((group) => (
@@ -96,8 +97,8 @@ function SubjectPlaceholder({ subject }) {
         </div>
       </section>
       <section className="placeholder-card">
-        <span>{subject.featured ? 'NEXT' : '준비 중'}</span>
-        <h2>{subject.featured ? '기존 부동산공법 핵심정리 콘텐츠를 이곳에 편입합니다.' : '과목별 학습 콘텐츠를 순차적으로 추가합니다.'}</h2>
+        <span>준비 중</span>
+        <h2>과목별 학습 콘텐츠를 순차적으로 추가합니다.</h2>
         <p>
           최종 구조에서는 왼쪽에 과목 세부 목차가 표시되고, 선택한 장·절의 내용만 본문에 표시됩니다.
           핵심정리·비교표·절차 인포그래픽·함정 선지·암기·확인문제를 동일한 규격으로 제공합니다.
@@ -121,6 +122,10 @@ export default function App() {
     [route],
   )
 
+  let content = <Dashboard />
+  if (route === 'public-law') content = <PublicLawPage onBack={() => navigate('')} />
+  else if (activeSubject) content = <SubjectPlaceholder subject={activeSubject} />
+
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">본문으로 바로가기</a>
@@ -135,7 +140,7 @@ export default function App() {
           <span>핵심정리</span>
         </div>
       </header>
-      {activeSubject ? <SubjectPlaceholder subject={activeSubject} /> : <Dashboard />}
+      {content}
       <footer className="footer">
         <span>공인중개사 시험 핵심정리</span>
         <span>과목별 현행 법령 기준일은 각 학습 페이지에 별도 표기합니다.</span>
