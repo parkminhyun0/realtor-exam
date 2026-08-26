@@ -123,7 +123,7 @@ function findBestTextMatch(root, query, resultText = '') {
     '.understanding-grid > div', '.hierarchy-flow__step',
   ].join(','))]
     .filter((element) => {
-      if (!(element instanceof Element)) return false
+      if (element?.nodeType !== 1) return false
       const text = normalizeSearchText(element.textContent)
       return text && element.getClientRects().length > 0
     })
