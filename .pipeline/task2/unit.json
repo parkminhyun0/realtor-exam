@@ -1,0 +1,9 @@
+{
+  "prio": 1,
+  "subject": "civil-law",
+  "unitId": "p2s1",
+  "parent": "PART 2 물권법",
+  "title": "POINT 01 · 물권의 의의",
+  "taskId": "task2",
+  "branch": "pipeline/civil-law-p2s1"
+}

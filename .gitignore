@@ -5,3 +5,24 @@ dist/
 .env
 .env.*
 !.env.example
+
+# 파이프라인 — 스크립트·프롬프트·산출 문서는 저장소에 남기고,
+# 돌 때마다 바뀌는 것(로그·큐·배정 원장·패널 배치)만 뺀다.
+# panels.env 는 이 맥의 cmux 배치라 다른 기계에서 뜻이 없고,
+# 커밋하면 매 주기 충돌한다(sync-panels.mjs 가 다시 만든다).
+.pipeline/dispatch/*.log
+.pipeline/dispatch/jobs.tsv
+.pipeline/dispatch/inflight.tsv
+.pipeline/dispatch/cooldown.tsv
+.pipeline/dispatch/queue.tsv
+.pipeline/dispatch/panels.env
+.pipeline/dispatch/panels.env.bak-*
+.pipeline/dispatch/state.latest.json
+.pipeline/dispatch/plan.json
+.pipeline/dispatch/STOP
+.worktrees/
+
+# 과제 폴더 안의 파생물 — 매번 다시 찍히고 이 맥의 절대경로가 박힌다.
+# 명세(01-plan)·산출물(02·03·03b·04)·되돌림 사유(feedback-*)는 남긴다.
+.pipeline/task*/prompt-*.txt
+.pipeline/task*/.retry
