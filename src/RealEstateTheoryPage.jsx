@@ -3,6 +3,7 @@ import { realEstateTheoryParts } from './data/realEstateTheory'
 import { realEstateTheoryContent } from './data/realEstateTheoryContent'
 import { realEstateTheoryHandoutContent } from './data/realEstateTheoryHandoutContent'
 import { realEstateTheoryHandoutSupplements } from './data/realEstateTheoryHandoutSupplement'
+import { realEstateTheoryCalculations } from './data/realEstateTheoryCalculations'
 import { realEstateTheoryRelations } from './data/realEstateTheoryRelations'
 import { realEstateTheoryExtraChapters, realEstateTheoryExtraContent, realEstateTheoryExtraRelations } from './data/realEstateTheoryExtra'
 import './real-estate-theory.css'
@@ -16,6 +17,7 @@ const theoryParts = realEstateTheoryParts.map((part) => (
 ))
 
 const theoryChapterCount = theoryParts.reduce((sum, part) => sum + part.chapters.length, 0)
+const calculationChapterCount = Object.keys(realEstateTheoryCalculations).length
 
 const chapterMeta = Object.fromEntries(
   theoryParts.flatMap((part) => (
@@ -84,6 +86,7 @@ export default function RealEstateTheoryPage({ onBack }) {
 
   const selected = useMemo(() => chapterMeta[selectedId] || chapterMeta.p1c1, [selectedId])
   const chapterContent = getTheoryContent(selected.chapter.id)
+  const calculations = realEstateTheoryCalculations[selected.chapter.id]
   const relations = getTheoryRelations(selected.chapter.id)
 
   const openChapter = (chapterId) => {
@@ -102,12 +105,12 @@ export default function RealEstateTheoryPage({ onBack }) {
         <div>
           <span className="eyebrow">REAL ESTATE PRINCIPLES · 제37회 대비</span>
           <h1>부동산학개론 핵심정리</h1>
-          <p>첨부 교안의 기본이론을 공법·공시법과 동일한 학습 UI로 재구성하고, 핵심개념·전체 흐름·비교표·함정·암기·연결 학습을 한 구조로 정리합니다.</p>
+          <p>첨부 교안의 기본이론을 공법·공시법과 동일한 학습 UI로 재구성하고, 핵심개념·전체 흐름·비교표·함정·암기·계산·연결 학습을 한 구조로 정리합니다.</p>
         </div>
         <div className="public-law-hero__badges" aria-label="부동산학개론 학습 구성">
           <span>8개 대단원</span>
           <span>{theoryChapterCount}개 장</span>
-          <span>교안 기반 본문 확장</span>
+          <span>🧮 계산 {calculationChapterCount}개 장 강화</span>
           <span>연결 학습 적용</span>
         </div>
       </section>
@@ -134,9 +137,12 @@ export default function RealEstateTheoryPage({ onBack }) {
                       onClick={() => openChapter(chapter.id)}
                     >
                       <span>제{Number(chapter.number)}장 · {chapter.title}</span>
-                      {getTheoryContent(chapter.id)
-                        ? <b className="theory-nav__ready">본문</b>
-                        : <small>목차</small>}
+                      <span className="theory-nav__badges">
+                        {realEstateTheoryCalculations[chapter.id] && <b className="theory-nav__calc">계산</b>}
+                        {getTheoryContent(chapter.id)
+                          ? <b className="theory-nav__ready">본문</b>
+                          : <small>목차</small>}
+                      </span>
                     </button>
                   </li>
                 ))}
@@ -170,6 +176,7 @@ export default function RealEstateTheoryPage({ onBack }) {
               <TheoryStudyContent
                 content={chapterContent}
                 chapter={selected.chapter}
+                calculations={calculations}
                 relations={relations}
                 onOpenRelation={openChapter}
               />
@@ -187,7 +194,7 @@ export default function RealEstateTheoryPage({ onBack }) {
   )
 }
 
-function TheoryStudyContent({ content, chapter, relations, onOpenRelation }) {
+function TheoryStudyContent({ content, chapter, calculations, relations, onOpenRelation }) {
   const isHandoutContent = content.statusLabel?.includes('교안')
 
   return (
@@ -277,6 +284,8 @@ function TheoryStudyContent({ content, chapter, relations, onOpenRelation }) {
         </section>
       )}
 
+      <TheoryCalculationSection calculations={calculations} />
+
       <section className="study-block study-block--split">
         <div className="trap-card">
           <span>⚠️ 함정 선지</span>
@@ -305,6 +314,78 @@ function TheoryStudyContent({ content, chapter, relations, onOpenRelation }) {
         </div>
       </section>
     </>
+  )
+}
+
+function TheoryCalculationSection({ calculations }) {
+  if (!calculations?.cards?.length) return null
+
+  return (
+    <section className="study-block theory-calculations" aria-label="계산문제 공식과 계산기 최단풀이">
+      <div className="study-block__title"><span>🧮</span><h3>{calculations.title}</h3></div>
+      <p className="study-note">{calculations.note}</p>
+      <div className="theory-calculation-grid">
+        {calculations.cards.map((item, index) => (
+          <article className="theory-calc-card" key={`${item.title}-${item.source}`}>
+            <header className="theory-calc-card__head">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <strong>{item.title}</strong>
+                <small>{item.source}</small>
+              </div>
+            </header>
+
+            <div className="theory-calc-formula">
+              <span>공식</span>
+              <code><HighlightNumbers>{item.formula}</HighlightNumbers></code>
+            </div>
+
+            <div className="theory-calc-body">
+              <div>
+                <b>문제에서 이 말이 나오면</b>
+                <p><HighlightNumbers>{item.when}</HighlightNumbers></p>
+              </div>
+              <div>
+                <b>먼저 찾을 값</b>
+                <p><HighlightNumbers>{item.find}</HighlightNumbers></p>
+              </div>
+            </div>
+
+            <div className="theory-calc-steps">
+              <b>계산 순서</b>
+              <ol>
+                {item.steps.map((step) => <li key={step}><HighlightNumbers>{step}</HighlightNumbers></li>)}
+              </ol>
+            </div>
+
+            <div className="theory-calc-keypad">
+              <b>⌨ 계산기 최단입력</b>
+              <code><HighlightNumbers>{item.calculator}</HighlightNumbers></code>
+            </div>
+
+            {item.example && (
+              <div className="theory-calc-example">
+                <b>예시</b>
+                <p><HighlightNumbers>{item.example}</HighlightNumbers></p>
+                {item.result && <strong>→ <HighlightNumbers>{item.result}</HighlightNumbers></strong>}
+              </div>
+            )}
+
+            <div className="theory-calc-trap">
+              <b>⚠️ 계산 함정</b>
+              <p><HighlightNumbers>{item.trap}</HighlightNumbers></p>
+            </div>
+
+            {item.tip && (
+              <div className="theory-calc-tip">
+                <b>💡 최단풀이 팁</b>
+                <p><HighlightNumbers>{item.tip}</HighlightNumbers></p>
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
   )
 }
 
