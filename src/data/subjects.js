@@ -9,8 +9,8 @@ export const subjectGroups = [
         title: '부동산학개론',
         shortTitle: '학개론',
         icon: '◫',
-        description: '부동산학 총론 · 경제론 · 시장론 · 정책론 · 투자론 · 금융론 · 감정평가론',
-        status: '준비 중',
+        description: '총론 · 경제론 · 시장론 · 정책론 · 투자론 · 금융론 · 개발·관리·마케팅론 · 감정평가론',
+        status: '목차 공개',
       },
       {
         id: 'civil-law',
