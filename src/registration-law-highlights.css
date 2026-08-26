@@ -1,3 +1,4 @@
+/* 공법의 시험 핵심 표시와 같은 계열의 노랑 하이라이트 + 핵심 밑줄 */
 .registration-law-page::highlight(registration-exam-critical) {
   background-color: rgba(255, 222, 89, .72);
   color: #5f4200;
