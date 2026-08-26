@@ -1,4 +1,5 @@
 import { realEstateTheoryPastQuestions } from './data/realEstateTheoryPastQuestions'
+import './theory-past-question.css'
 
 function findQuestions(cardTitle) {
   for (const chapter of Object.values(realEstateTheoryPastQuestions)) {
