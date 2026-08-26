@@ -3,6 +3,7 @@ import { allSubjects, subjectGroups } from './data/subjects'
 import PublicLawPage from './PublicLawPage'
 import RegistrationLawPage from './RegistrationLawPage'
 import './public-law.css'
+import './scroll-top.css'
 
 function getRoute() {
   return window.location.hash.replace(/^#\/?/, '') || ''
@@ -112,6 +113,7 @@ function SubjectPlaceholder({ subject }) {
 
 export default function App() {
   const [route, setRoute] = useState(getRoute)
+  const [showScrollTop, setShowScrollTop] = useState(false)
 
   useEffect(() => {
     const onHashChange = () => setRoute(getRoute())
@@ -119,10 +121,22 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 420)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const activeSubject = useMemo(
     () => allSubjects.find((subject) => subject.id === route),
     [route],
   )
+
+  const scrollToTop = () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+  }
 
   let content = <Dashboard />
   if (route === 'public-law') content = <PublicLawPage onBack={() => navigate('')} />
@@ -169,6 +183,15 @@ export default function App() {
         </nav>
       </header>
       {content}
+      <button
+        className={`scroll-top-button${showScrollTop ? ' visible' : ''}`}
+        type="button"
+        onClick={scrollToTop}
+        aria-label="맨 위로 이동"
+        title="맨 위로"
+      >
+        <span className="scroll-top-button__icon" aria-hidden="true">↑</span>
+      </button>
       <footer className="footer">
         <span>공인중개사 시험 핵심정리</span>
         <span>과목별 현행 법령 기준일은 각 학습 페이지에 별도 표기합니다.</span>
