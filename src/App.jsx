@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { allSubjects, subjectGroups } from './data/subjects'
+import GlobalSearch from './GlobalSearch'
 import PublicLawPage from './PublicLawPage'
 import RealEstateTheoryPage from './RealEstateTheoryPage'
 import RegistrationLawPage from './RegistrationLawPage'
 import './public-law.css'
 import './scroll-top.css'
+import './global-search.css'
 
 function getRoute() {
   return window.location.hash.replace(/^#\/?/, '') || ''
@@ -158,6 +160,7 @@ export default function App() {
             <span className="brand__mark">R</span>
             <span><strong>공인중개사</strong><small>EXAM NOTE</small></span>
           </button>
+          <GlobalSearch onNavigate={navigate} />
           <div className="topbar__meta">
             <span>2026 제37회</span>
             <span className="topbar__dot" aria-hidden="true" />
