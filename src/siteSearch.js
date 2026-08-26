@@ -3,6 +3,7 @@ import * as publicLawData from './data/publicLaw'
 import * as realEstateTheoryData from './data/realEstateTheory'
 import * as realEstateTheoryContentData from './data/realEstateTheoryContent'
 import * as realEstateTheoryHandoutData from './data/realEstateTheoryHandoutContent'
+import * as realEstateTheorySupplementData from './data/realEstateTheoryHandoutSupplement'
 import * as realEstateTheoryRelationsData from './data/realEstateTheoryRelations'
 import * as realEstateTheoryExtraData from './data/realEstateTheoryExtra'
 import * as registrationLawData from './data/registrationLaw'
@@ -14,6 +15,7 @@ const subjectData = {
     realEstateTheoryData,
     realEstateTheoryContentData,
     realEstateTheoryHandoutData,
+    realEstateTheorySupplementData,
     realEstateTheoryRelationsData,
     realEstateTheoryExtraData,
   ],
