@@ -72,6 +72,11 @@ while [ ! -f .pipeline/dispatch/STOP ]; do
     fi
   fi
 
+  # 패널을 직무·상태에 따라 칠한다. 노는 칸이 회색으로 보여야 한 눈에 든다.
+  # (앞 파이프라인에서 열 중 아홉이 4시간 50분을 놀았는데 화면만으로는
+  #  알 길이 없었다. 색이 그 자리를 메운다.)
+  [ -f .pipeline/dispatch/paint.sh ] && bash .pipeline/dispatch/paint.sh >>"$LOG" 2>&1
+
   for d in dispatcher advance supply relay supervisor; do
     sc="$(daemon_script "$d")"; surf="$(daemon_surface "$d")"
     [ -n "$surf" ] || continue

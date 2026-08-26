@@ -38,6 +38,8 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { allTasks, nextTaskId } from './state.mjs';
+import { modelFor } from './advance.mjs';
+import { shortTitle } from './titles.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
@@ -211,8 +213,8 @@ for (const u of picked) {
   }
 
   lines.push([
-    'codex',
-    `${taskId} 1차 ${u.subject} ${u.title}`,
+    modelFor(taskId, 'impl'),
+    shortTitle(taskId, 'impl', u.subject, u.title),
     path.relative(ROOT, path.join(dir, 'prompt-impl.txt')),
     path.relative(ROOT, path.join(dir, '02-impl.md')),
   ].join('\t'));

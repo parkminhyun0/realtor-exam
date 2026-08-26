@@ -129,11 +129,59 @@ is_idle() {
 # 패널은 모델에 고정돼 있지 않다 — 디스패처가 유휴 패널 아무 데나 물리므로,
 # 색도 배정할 때마다 바꾼다. OSC 11 은 터미널 배경색을 바꾸는 표준 시퀀스다.
 # 글자가 읽히도록 아주 어두운 색만 쓴다.
-color_of() {
+# 패널 이름은 짧아야 읽힌다. 열여섯 칸이 나란히 있으면 긴 제목은 잘려서
+# 앞부분만 보이고, 앞부분은 죄다 "taskN 1차 real-estate-theory..." 로 같다.
+# 무엇이 다른지가 안 보인다. 그래서 짧게 줄이고 **모델명을 넣는다.**
+#   보기: "t7 1차 Gem31 학개론·시장의 기초"
+# 패널 이름 = "<모델약칭> <짧은 제목>".
+#
+# 짧은 제목은 jobs.tsv 에 이미 짧게 들어 있다(next-batch.mjs / advance.mjs 가
+# 만든다). 셸에서 한글을 자르지 않는다 — 로케일에 따라 바이트 단위로 잘려
+# 글자가 깨진다. 실제로 "학개론·부동산시장" 이 "\xed\x95"로 잘려 나왔다.
+# 모델은 승계로 바뀔 수 있으므로 배정 시점에 여기서 붙인다.
+model_short() {
   case "$1" in
-    codex)  echo "#0e1c2e" ;;   # 짙은 파랑 — GPT 계열
-    claude) echo "#2b1a10" ;;   # 짙은 주황 — Claude 계열
-    *)      echo "#12241c" ;;   # 짙은 초록 — Gemini(agy) 계열
+    codex)                 echo GPT5 ;;
+    claude)                echo Opus5 ;;
+    gemini-3.1-pro-high)   echo Gem31 ;;
+    gemini-3.7-flash-high) echo Gem37 ;;
+    *)                     echo "$1" ;;
+  esac
+}
+
+color_of() {
+  # 색으로 두 가지를 한눈에 보인다.
+  #   색상(hue)  = 계열   파랑 GPT · 주황 Claude · 초록 Gemini
+  #   밝기       = 차수   1차 가장 어둡게 → 3차 가장 밝게
+  #
+  # 열 패널이 나란히 있으면 제목만으로는 무엇이 어느 단계인지 안 들어온다.
+  # 패널은 모델에 고정돼 있지 않다 — 디스패처가 유휴 패널 아무 데나 물리므로
+  # 배정할 때마다 다시 칠한다. OSC 11 은 터미널 배경색을 바꾸는 표준 시퀀스다.
+  # 글자가 읽히도록 아주 어두운 색만 쓴다.
+  local model="$1" title="${2:-}" stage=1
+  case "$title" in
+    *2차*) stage=2 ;;
+    *3차*) stage=3 ;;
+  esac
+  case "$model" in
+    codex)
+      case "$stage" in
+        1) echo "#0a1730" ;;   # GPT · 1차 실행
+        2) echo "#12263f" ;;   # GPT · 2차 검증
+        *) echo "#1c3554" ;;   # GPT · 3차 리뷰
+      esac ;;
+    claude)
+      case "$stage" in
+        1) echo "#2b1408" ;;   # Claude · 1차
+        2) echo "#3d1e0c" ;;   # Claude · 2차
+        *) echo "#4f2a12" ;;   # Claude · 3차
+      esac ;;
+    *)
+      case "$stage" in
+        1) echo "#0b1f15" ;;   # Gemini · 1차
+        2) echo "#14311f" ;;   # Gemini · 2차
+        *) echo "#1e442c" ;;   # Gemini · 3차
+      esac ;;
   esac
 }
 
@@ -336,10 +384,10 @@ dispatch() {
     cmd="cd $ROOT && agy --dangerously-skip-permissions --model $MODEL --print-timeout 60m --output-format stream-json -p \"\$(cat $PROMPT)\" 2>&1 | node $VIEW '$label'"
   fi
 
-  cmux rename-tab --workspace "$WS" --surface "$(sref "$surf")" "$TITLE" >/dev/null 2>&1
+  cmux rename-tab --workspace "$WS" --surface "$(sref "$surf")" "$(model_short "$MODEL") $TITLE" >/dev/null 2>&1
   # 배경색을 먼저 보낸다. 명령과 같은 줄에 붙이면 셸이 그 줄을 다시 그릴 때
   # 색이 섞여 보인다.
-  cmux send --workspace "$WS" --surface "$(sref "$surf")" "printf '\\033]11;$(color_of "$MODEL")\\007'" >/dev/null 2>&1
+  cmux send --workspace "$WS" --surface "$(sref "$surf")" "printf '\\033]11;$(color_of "$MODEL" "$TITLE")\\007'" >/dev/null 2>&1
   cmux send-key --workspace "$WS" --surface "$(sref "$surf")" Enter >/dev/null 2>&1
   cmux send --workspace "$WS" --surface "$(sref "$surf")" "$cmd" >/dev/null 2>&1
   cmux send-key --workspace "$WS" --surface "$(sref "$surf")" Enter >/dev/null 2>&1
