@@ -133,7 +133,7 @@ if (!workers.length) {
 const caps = {
   CAP_AGY: prevVal('CAP_AGY') || '4',
   CAP_CODEX: prevVal('CAP_CODEX') || '3',
-  CAP_CLAUDE: prevVal('CAP_CLAUDE') || '3',
+  CAP_CLAUDE: prevVal('CAP_CLAUDE') || '1',
 };
 const capSum = Object.values(caps).reduce((a, b) => a + Number(b), 0);
 

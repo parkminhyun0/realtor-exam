@@ -16,7 +16,11 @@ cd "$(dirname "$0")/../.." || exit 1
 ROOT="$PWD"
 VIEW=".pipeline/dispatch/stream-view.mjs"
 LOG=".pipeline/dispatch/tax-lane.log"
-MODEL="${TAX_MODEL:-claude}"     # 웹 검색이 필요해 claude 를 쓴다
+# 기본을 codex(GPT)로 둔다. **쿼터가 계열마다 따로**이고, claude 쿼터는
+# 0-lead 세션이 같은 계정으로 쓰고 있어 밤새 돌리면 둘 다 막힌다.
+# 법령 조사는 law.go.kr 공개 API 를 curl 로 부르는 방식이라 계열을 안 탄다
+# (2026-08-27 claude 가 이 경로를 찾아냈고, 같은 curl 을 codex 도 쓴다).
+MODEL="${TAX_MODEL:-codex}"
 POLL="${TAX_POLL:-30}"
 
 log() { printf '%s %s\n' "$(date '+%H:%M:%S')" "$*" | tee -a "$LOG"; }
@@ -51,8 +55,16 @@ while [ ! -f .pipeline/dispatch/STOP ] && [ ! -f .pipeline/dispatch/TAX_STOP ]; 
        "🧾 세법 작업 · $unit" >/dev/null 2>&1
   printf '\033]11;#2a1f05\007'      # 짙은 황토 — 세법 레인 고유색
 
-  claude --dangerously-skip-permissions --verbose --output-format stream-json \
+  if [ "$MODEL" = "codex" ]; then
+    codex exec --sandbox workspace-write --skip-git-repo-check \
+         "$(cat "$prompt")" 2>&1 | node "$VIEW" "세법_${task}_집필"
+  elif [ "$MODEL" = "claude" ]; then
+    claude --dangerously-skip-permissions --verbose --output-format stream-json \
          -p "$(cat "$prompt")" 2>&1 | node "$VIEW" "세법_${task}_집필"
+  else
+    agy --dangerously-skip-permissions --model "$MODEL" --print-timeout 60m \
+         --output-format stream-json -p "$(cat "$prompt")" 2>&1 | node "$VIEW" "세법_${task}_집필"
+  fi
 
   if [ -f "$out" ]; then
     log "✔ $task 집필 끝 — 02-impl.md 생김. 검증은 본 파이프라인이 물린다."
