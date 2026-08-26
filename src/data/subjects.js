@@ -18,7 +18,7 @@ export const subjectGroups = [
         shortTitle: '민법',
         icon: '§',
         description: '민법총칙 · 물권법 · 계약법 · 민사특별법을 시험 중심으로 정리합니다.',
-        status: '공개 시작',
+        status: '공개',
       },
     ],
   },
@@ -41,7 +41,7 @@ export const subjectGroups = [
         shortTitle: '공법',
         icon: '▦',
         description: '국토계획법 · 도시개발법 · 도시정비법 · 건축법 · 주택법 · 농지법',
-        status: '공개 시작',
+        status: '공개',
         featured: true,
       },
       {
@@ -50,7 +50,7 @@ export const subjectGroups = [
         shortTitle: '공시법',
         icon: '▤',
         description: '공간정보법과 부동산등기법을 비교표·절차·기출 포인트 중심으로 정리합니다.',
-        status: '공개 시작',
+        status: '공개',
       },
       {
         id: 'tax-law',
