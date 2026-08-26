@@ -20,6 +20,18 @@ export const realEstateTheoryPastQuestionOverrides = {
   ],
   '거래사례비교법': [
     q({
+      id:'sales31_39', year:2020, round:31, number:39,
+      title:'거래사례비교법 비준가액 계산',
+      prompt:'대상토지 110㎡. 거래사례는 120㎡·2억4천만원이며 정상거래, 거래 후 상업지역 지가가 5% 상승했고 대상토지가 사례보다 개별요인 3% 우세하다. 상승식 비준가액을 구하라.',
+      answer:'237,930,000원',
+      formula:'비준가액 = 사례단가 × 사정보정 × 시점수정 × 지역요인 × 개별요인 × 대상면적',
+      work:['사례단가=2억4천만원÷120㎡=200만원/㎡','정상거래 → 사정보정 1.00, 시점수정 1.05','대상이 사례보다 3% 우세 → 개별요인 1.03','200만원×1×1.05×1×1.03×110㎡=237,930,000원'],
+      calculator:'240000000÷120×1.05×1.03×110 = 237930000',
+      point:'거래사례의 총액을 단가로 바꾸고 사례를 대상 기준으로 보정한 뒤 대상면적을 곱한다.',
+      officialUrl:'https://www.q-net.or.kr/cst003.do?id=cst00302&gSite=Q&gId=',
+      verifyUrl:'https://www.bomgichul.com/exam/realestate/2020/39',
+    }),
+    q({
       id:'sales33_39', year:2022, round:33, number:39,
       title:'거래사례비교법 비준가액 계산',
       prompt:'대상토지 150㎡. 거래사례는 200㎡·8억원이고 사정보정치 0.9, 주거지역 지가가 5% 상승, 지역요인은 동일, 대상토지는 사례보다 개별요인이 5% 열세이다. 상승식으로 비준가액을 구하라.',
@@ -27,7 +39,7 @@ export const realEstateTheoryPastQuestionOverrides = {
       formula:'비준가액 = 사례단가 × 사정보정 × 시점수정 × 지역요인 × 개별요인 × 대상면적',
       work:['사례단가=8억원÷200㎡=400만원/㎡','사정보정 0.9, 시점수정 1.05, 지역요인 1.00','대상이 사례보다 5% 열세 → 개별요인 0.95','400만원×0.9×1.05×1×0.95×150㎡=538,650,000원'],
       calculator:'800000000÷200×0.9×1.05×0.95×150 = 538650000',
-      point:'비교법은 사례를 대상 기준으로 보정한 뒤 대상 면적을 곱한다. 열세는 0.95처럼 1보다 작은 비교치를 쓴다.',
+      point:'열세는 0.95처럼 1보다 작은 비교치를 사용한다. 사정보정치가 따로 주어지면 반드시 반영한다.',
       officialUrl:'https://www.q-net.or.kr/cst003.do?artlSeq=5211107&boardId=Q004&gId=08&gSite=L&id=cst00302&menuType=cst00309',
       verifyUrl:'https://puldapass.com/gongin/exam/33/rea/39',
     }),
