@@ -1,18 +1,26 @@
 import { allSubjects } from './data/subjects'
 import * as publicLawData from './data/publicLaw'
 import * as realEstateTheoryData from './data/realEstateTheory'
+import * as realEstateTheoryContentData from './data/realEstateTheoryContent'
+import * as realEstateTheoryHandoutData from './data/realEstateTheoryHandoutContent'
+import * as realEstateTheoryRelationsData from './data/realEstateTheoryRelations'
 import * as registrationLawData from './data/registrationLaw'
 import * as registrationLawDeepDive from './data/registrationLawDeepDive'
 import * as registrationLawExamCore from './data/registrationLawExamCore'
 
 const subjectData = {
-  'real-estate-theory': [realEstateTheoryData],
+  'real-estate-theory': [
+    realEstateTheoryData,
+    realEstateTheoryContentData,
+    realEstateTheoryHandoutData,
+    realEstateTheoryRelationsData,
+  ],
   'public-law': [publicLawData],
   'registration-law': [registrationLawData, registrationLawDeepDive, registrationLawExamCore],
 }
 
 const labelKeys = ['title', 'name', 'label', 'term', 'heading', 'chapterTitle', 'sectionTitle', 'pointTitle', 'shortTitle']
-const ignoredKeys = new Set(['id', 'color', 'icon', 'status', 'featured'])
+const ignoredKeys = new Set(['id', 'color', 'icon', 'status', 'featured', 'url'])
 
 function normalize(value) {
   return String(value ?? '')
