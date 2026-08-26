@@ -8,6 +8,43 @@ function getActiveSubjectId() {
   return window.location.hash.replace(/^#\/?/, '') || ''
 }
 
+function getArticleFromNumber(element) {
+  const text = element.textContent?.trim().replace(/\s+/g, '') || ''
+  const match = text.match(/^(\d+)조(?:의(\d+))?$/)
+  if (!match) return null
+  return `제${match[1]}조${match[2] ? `의${match[2]}` : ''}`
+}
+
+function getLawNameFromContext(element, subjectId) {
+  const subject = subjectLawSources[subjectId]
+  if (!subject) return null
+
+  const laws = [...subject.laws].sort((a, b) => b.name.length - a.name.length)
+  const containers = [
+    element.closest('tr'),
+    element.closest('li'),
+    element.closest('p'),
+    element.closest('.law-detail-card'),
+    element.closest('.study-block'),
+    element.closest('.public-law-content'),
+  ].filter(Boolean)
+
+  for (const container of containers) {
+    const text = container.textContent || ''
+    const matchedLaw = laws.find((law) => text.includes(law.name))
+    if (matchedLaw) return matchedLaw.name
+  }
+
+  if (subjectId === 'registration-law') {
+    const breadcrumb = document.querySelector('.registration-law-page .public-law-breadcrumb')?.textContent || ''
+    if (/PART\s*1/i.test(breadcrumb)) return subject.laws[0]?.name || null
+    if (/PART\s*2/i.test(breadcrumb)) return subject.laws[1]?.name || null
+  }
+
+  if (subject.laws.length === 1) return subject.laws[0].name
+  return null
+}
+
 export default function GlobalSearch({ onNavigate }) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
@@ -26,39 +63,46 @@ export default function GlobalSearch({ onNavigate }) {
   }, [])
 
   useEffect(() => {
-    const onOpenLawReference = (event) => {
+    const openLawViewer = (target) => {
       setOpen(false)
-      setLawViewerTarget(event.detail || null)
+      setLawViewerTarget(target || null)
       setLawViewerOpen(true)
     }
 
+    const onOpenLawReference = (event) => openLawViewer(event.detail)
+    const onFrameMessage = (event) => {
+      if (event.origin !== window.location.origin) return
+      if (event.data?.type !== 'public-law:open-law-reference') return
+      openLawViewer(event.data.detail)
+    }
+
     window.addEventListener('realtor:open-law-viewer', onOpenLawReference)
-    return () => window.removeEventListener('realtor:open-law-viewer', onOpenLawReference)
+    window.addEventListener('message', onFrameMessage)
+    return () => {
+      window.removeEventListener('realtor:open-law-viewer', onOpenLawReference)
+      window.removeEventListener('message', onFrameMessage)
+    }
   }, [])
 
   useEffect(() => {
-    const theoryLawNames = subjectLawSources['real-estate-theory'].laws
-      .map((law) => law.name)
-      .sort((a, b) => b.length - a.length)
+    const numberSelector = '.theory-exam-number, .exam-number'
 
-    const getTheoryLawTarget = (element) => {
-      const articleMatch = element.textContent?.trim().match(/^(\d+(?:의\d+)?)조$/)
-      if (!articleMatch) return null
+    const getLawTarget = (element) => {
+      const article = getArticleFromNumber(element)
+      if (!article) return null
 
-      const context = element.parentElement?.textContent || ''
-      const lawName = theoryLawNames.find((name) => context.includes(name))
+      const subjectId = getActiveSubjectId()
+      if (!subjectLawSources[subjectId]) return null
+
+      const lawName = getLawNameFromContext(element, subjectId)
       if (!lawName) return null
 
-      return {
-        subjectId: 'real-estate-theory',
-        lawName,
-        article: `제${articleMatch[1]}조`,
-      }
+      return { subjectId, lawName, article }
     }
 
     const decorateLawNumbers = () => {
-      document.querySelectorAll('.real-estate-theory-page .theory-exam-number').forEach((number) => {
-        const target = getTheoryLawTarget(number)
+      document.querySelectorAll(numberSelector).forEach((number) => {
+        const target = getLawTarget(number)
         if (!target) {
           number.removeAttribute('data-law-reference')
           number.removeAttribute('role')
@@ -75,7 +119,7 @@ export default function GlobalSearch({ onNavigate }) {
     }
 
     const openFromNumber = (number, event) => {
-      const target = getTheoryLawTarget(number)
+      const target = getLawTarget(number)
       if (!target) return
 
       event.preventDefault()
@@ -83,30 +127,30 @@ export default function GlobalSearch({ onNavigate }) {
       window.dispatchEvent(new CustomEvent('realtor:open-law-viewer', { detail: target }))
     }
 
-    const onTheoryLawNumberClick = (event) => {
+    const onLawNumberClick = (event) => {
       if (!(event.target instanceof Element)) return
-      const number = event.target.closest('.real-estate-theory-page .theory-exam-number[data-law-reference]')
+      const number = event.target.closest(`${numberSelector.split(', ').join('[data-law-reference], ')}[data-law-reference]`)
       if (!number) return
       openFromNumber(number, event)
     }
 
-    const onTheoryLawNumberKeyDown = (event) => {
+    const onLawNumberKeyDown = (event) => {
       if (!(event.target instanceof Element)) return
-      const number = event.target.closest('.real-estate-theory-page .theory-exam-number[data-law-reference]')
+      const number = event.target.closest(`${numberSelector.split(', ').join('[data-law-reference], ')}[data-law-reference]`)
       if (!number || !['Enter', ' '].includes(event.key)) return
       openFromNumber(number, event)
     }
 
     decorateLawNumbers()
     const observer = new MutationObserver(decorateLawNumbers)
-    observer.observe(document.body, { childList: true, subtree: true })
-    document.addEventListener('click', onTheoryLawNumberClick)
-    document.addEventListener('keydown', onTheoryLawNumberKeyDown)
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true })
+    document.addEventListener('click', onLawNumberClick)
+    document.addEventListener('keydown', onLawNumberKeyDown)
 
     return () => {
       observer.disconnect()
-      document.removeEventListener('click', onTheoryLawNumberClick)
-      document.removeEventListener('keydown', onTheoryLawNumberKeyDown)
+      document.removeEventListener('click', onLawNumberClick)
+      document.removeEventListener('keydown', onLawNumberKeyDown)
     }
   }, [])
 
