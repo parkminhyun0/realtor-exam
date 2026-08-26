@@ -143,20 +143,26 @@
   animation: law-spin .75s linear infinite;
 }
 
-.law-article-popup__status--error span {
-  max-width: 430px;
-  color: #7c8796;
-  line-height: 1.6;
+.law-article-popup__frame-wrap {
+  height: min(440px, 56vh);
+  margin: -20px -22px -22px;
+  overflow: hidden;
+  background: #fff;
 }
 
-.law-article-popup__status a,
+.law-article-popup__frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
 .law-article-popup__footer a {
   color: #315b82;
   font-weight: 900;
   text-decoration: none;
 }
 
-.law-article-popup__status a:hover,
 .law-article-popup__footer a:hover { text-decoration: underline; }
 
 .law-article-popup__footer {
@@ -214,6 +220,10 @@
   }
 
   .law-article-popup__body { padding: 18px 18px 20px; }
+  .law-article-popup__frame-wrap {
+    height: min(48dvh, 460px);
+    margin: -18px -18px -20px;
+  }
   .law-article-popup__footer { padding: 9px 16px; }
 }
 
@@ -221,6 +231,10 @@
   .law-article-popup { max-height: 76dvh; }
   .law-article-popup__header h2 { max-width: calc(100vw - 92px); }
   .law-article-popup__body { padding: 16px 16px 18px; }
+  .law-article-popup__frame-wrap {
+    height: min(50dvh, 460px);
+    margin: -16px -16px -18px;
+  }
   .law-article-popup__footer {
     align-items: flex-start;
     flex-direction: column;
