@@ -14,36 +14,49 @@ function hardenEmbeddedTableScrolling(frame) {
     const style = doc.createElement('style')
     style.id = 'public-law-mobile-table-scroll-fix'
     style.textContent = `
+      .mobile-table-host {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+      }
+      .mobile-table-scroll {
+        position: relative !important;
+        display: block !important;
+        box-sizing: border-box !important;
+        inline-size: 100% !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        margin: 0 0 10px !important;
+        padding: 0 14px 10px 0 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-x: contain !important;
+        scroll-behavior: auto !important;
+        scroll-snap-type: none !important;
+        scroll-padding-inline-end: 14px !important;
+        touch-action: pan-x pan-y !important;
+        scrollbar-gutter: auto !important;
+        contain: inline-size !important;
+        isolation: isolate !important;
+      }
+      .mobile-table-scroll > table {
+        display: table !important;
+        box-sizing: border-box !important;
+        width: max(100%, 720px) !important;
+        min-width: 720px !important;
+        max-width: none !important;
+        margin: 0 !important;
+      }
+      .mobile-table-scroll > table th:last-child,
+      .mobile-table-scroll > table td:last-child {
+        border-right-width: 2px !important;
+      }
       @media (max-width: 900px) {
-        .mobile-table-host { overflow-x: visible !important; min-width: 0 !important; }
-        .mobile-table-scroll {
-          position: relative !important;
-          display: block !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          margin: 0 0 10px !important;
-          padding: 0 0 10px !important;
-          overflow-x: scroll !important;
-          overflow-y: hidden !important;
-          -webkit-overflow-scrolling: touch !important;
-          overscroll-behavior-x: contain !important;
-          scroll-behavior: auto !important;
-          scroll-snap-type: none !important;
-          scroll-padding-inline: 12px !important;
-          touch-action: pan-x pan-y !important;
-          scrollbar-gutter: auto !important;
-        }
-        .mobile-table-scroll > table {
-          display: table !important;
-          width: max(100%, 720px) !important;
-          min-width: 720px !important;
-          max-width: none !important;
-          margin: 0 !important;
-        }
-        .mobile-table-scroll > table th:last-child,
-        .mobile-table-scroll > table td:last-child {
-          border-right-width: 2px !important;
-        }
+        .mobile-table-scroll { overflow-x: scroll !important; }
       }
     `
     doc.head.appendChild(style)
