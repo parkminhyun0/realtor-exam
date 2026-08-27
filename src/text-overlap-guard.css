@@ -1,0 +1,315 @@
+/*
+ * 전 과목 텍스트 겹침 방지 가드
+ * - flex/grid 안의 긴 제목·법령명·상태배지가 서로 침범하지 않도록 축소/줄바꿈 허용
+ * - 한국어는 단어 단위 줄바꿈을 우선하고, 긴 연속 문자열은 최종적으로 안전하게 분리
+ * - 모바일에서는 상태배지를 다음 줄로 내려도 본문을 가리지 않도록 처리
+ */
+
+/* 공통 텍스트 줄바꿈 */
+.public-law-page h1,
+.public-law-page h2,
+.public-law-page h3,
+.public-law-page h4,
+.public-law-page p,
+.public-law-page li,
+.public-law-page .public-law-breadcrumb,
+.public-law-page .law-reference,
+.public-law-page .source-note,
+.public-law-page .study-note,
+.public-law-page .study-table th,
+.public-law-page .study-table td {
+  max-width: 100%;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* flex/grid 자식이 내용 너비 때문에 옆 요소를 밀어 겹치지 않도록 함 */
+.public-law-topline > *,
+.public-law-hero > *,
+.public-law-hero > div,
+.public-law-hero__badges,
+.study-section-heading > *,
+.study-section-heading > div,
+.study-section-heading > div > *,
+.study-block__title > *,
+.section-heading > *,
+.understanding-grid > *,
+.study-block--split > *,
+.civil-topic-entry-grid > *,
+.tax-legal-basis__grid > *,
+.tax-exam-core__grid > *,
+.law-article-popup__header > *,
+.law-article-text__heading > * {
+  min-width: 0;
+}
+
+/* 상단 과목 행 */
+.public-law-topline {
+  flex-wrap: wrap;
+}
+
+.public-law-topline .back-button {
+  flex: 0 0 auto;
+}
+
+.public-law-topline > span {
+  flex: 1 1 220px;
+  min-width: 0;
+  text-align: right;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 히어로 영역 */
+.public-law-hero {
+  flex-wrap: wrap;
+}
+
+.public-law-hero > div:first-child {
+  flex: 1 1 520px;
+  min-width: 0;
+}
+
+.public-law-hero__badges {
+  flex: 0 1 460px;
+  min-width: 0;
+  align-content: flex-start;
+}
+
+.public-law-hero__badges span {
+  max-width: 100%;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* 좌측 목차: 장/편 제목 */
+.public-law-nav > details > summary > span {
+  min-width: 0;
+  flex: 1 1 auto;
+  white-space: normal !important;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 공법·학개론·세법의 1차 항목: 본문명과 상태배지가 겹치지 않도록 함 */
+.public-law-nav > details > ul > li > button {
+  align-items: flex-start;
+}
+
+.public-law-nav > details > ul > li > button > span:first-child {
+  min-width: 0;
+  flex: 1 1 auto;
+  white-space: normal !important;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+
+.public-law-nav > details > ul > li > button > b,
+.public-law-nav > details > ul > li > button > small,
+.public-law-nav .theory-nav__badges {
+  flex: 0 0 auto;
+  max-width: 46%;
+  white-space: nowrap;
+}
+
+.public-law-nav .theory-nav__badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+/* 민법 3단 트리 */
+.civil-law-page .civil-nav-point > summary {
+  align-items: flex-start;
+}
+
+.civil-law-page .civil-nav-point__label {
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.civil-law-page .civil-nav-point__label > span:first-child {
+  min-width: 0;
+  flex: 1 1 150px;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.civil-law-page .civil-nav__ready {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.civil-law-page .civil-nav-topic-button > span:last-child {
+  min-width: 0;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 공시법 상세 트리 */
+.registration-law-nav-v2 .registration-point__summary {
+  min-width: 0;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.registration-law-nav-v2 .registration-point__summary > span:first-child {
+  min-width: 0;
+  flex: 1 1 auto;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.registration-law-nav-v2 .registration-point__summary > b,
+.registration-law-nav-v2 .registration-point__summary > small {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.registration-law-nav-v2 .registration-toc-node button > span,
+.registration-law-nav-v2 .registration-point-open {
+  min-width: 0;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 세법 중분류 */
+.tax-law-page .tax-nav-group__label {
+  min-width: 0;
+  white-space: normal !important;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 본문 헤더: 긴 PART/POINT/법령 상태 텍스트가 충돌하지 않도록 함 */
+.study-section-heading {
+  flex-wrap: wrap;
+}
+
+.study-section-heading > div {
+  min-width: 0;
+  flex: 1 1 440px;
+  align-items: flex-start;
+}
+
+.study-section-heading > div > div {
+  min-width: 0;
+}
+
+.study-section-heading__chapter,
+.study-section-heading h2 {
+  max-width: 100%;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.study-section-heading .law-reference {
+  min-width: 0;
+  flex: 0 1 280px;
+  max-width: 100%;
+  text-align: right;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 카드 제목도 숫자 배지와 제목이 서로 침범하지 않도록 함 */
+.study-block__title {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.study-block__title > span:first-child {
+  flex: 0 0 auto;
+}
+
+.study-block__title h3 {
+  min-width: 0;
+  flex: 1 1 240px;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 법령 팝업 */
+.law-article-popup__header > div,
+.law-article-text__heading h3 {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.law-article-popup__header h2,
+.law-article-text__heading h3 {
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.law-article-text__heading a,
+.law-viewer__close {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 700px) {
+  .public-law-topline > span {
+    flex-basis: 100%;
+    text-align: left;
+  }
+
+  .study-section-heading .law-reference {
+    flex-basis: 100%;
+    text-align: left;
+  }
+
+  .public-law-hero__badges {
+    flex-basis: 100%;
+  }
+
+  .law-article-text__heading {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  /* 매우 좁은 화면에서는 상태 배지를 다음 줄로 내려 겹침을 원천 차단 */
+  .public-law-nav > details > ul > li > button {
+    flex-wrap: wrap;
+  }
+
+  .public-law-nav > details > ul > li > button > span:first-child {
+    flex-basis: 100%;
+  }
+
+  .public-law-nav > details > ul > li > button > b,
+  .public-law-nav > details > ul > li > button > small,
+  .public-law-nav .theory-nav__badges {
+    max-width: 100%;
+    margin-left: auto;
+  }
+
+  .registration-law-nav-v2 .registration-point__summary {
+    flex-wrap: wrap;
+  }
+
+  .registration-law-nav-v2 .registration-point__summary > span:first-child {
+    flex-basis: 100%;
+  }
+
+  .registration-law-nav-v2 .registration-point__summary > b,
+  .registration-law-nav-v2 .registration-point__summary > small {
+    margin-left: auto;
+  }
+}
