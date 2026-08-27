@@ -17,10 +17,11 @@ function read(rel) {
 }
 
 function tRegion(source) {
-  const start = source.indexOf('const T = {')
-  if (start < 0) throw new Error('const T = { block not found')
+  const match = /const\s+T\s*=\s*\{/.exec(source)
+  if (!match) throw new Error('const T object block not found')
+  const start = match.index
   const markers = ['function escapeHtml', 'function esc', 'function renderLaw', 'function renderPanel']
-    .map((marker) => source.indexOf(marker, start + 1))
+    .map((marker) => source.indexOf(marker, start + match[0].length))
     .filter((index) => index > start)
   const end = markers.length ? Math.min(...markers) : source.length
   return source.slice(start, end)
@@ -29,7 +30,7 @@ function tRegion(source) {
 function extractTopicKeys(source) {
   const region = tRegion(source)
   const keys = []
-  const re = /^\s{2}['"]([^'"]+)['"]\s*:\s*\{/gm
+  const re = /^\s*['"]([^'"]+)['"]\s*:\s*\{/gm
   let match
   while ((match = re.exec(region)) !== null) keys.push(match[1])
   return keys
@@ -41,16 +42,19 @@ function counts(values) {
   return map
 }
 
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function entrySegment(source, topic) {
   const region = tRegion(source)
-  const needle1 = `  '${topic}': {`
-  const needle2 = `  \"${topic}\": {`
-  let start = region.indexOf(needle1)
-  if (start < 0) start = region.indexOf(needle2)
-  if (start < 0) return ''
-  const rest = region.slice(start + 2)
-  const next = rest.search(/^\s{2}['"][^'"]+['"]\s*:\s*\{/m)
-  return next >= 0 ? region.slice(start, start + 2 + next) : region.slice(start)
+  const startRe = new RegExp(`^\\s*['\"]${escapeRegExp(topic)}['\"]\\s*:\\s*\\{`, 'm')
+  const match = startRe.exec(region)
+  if (!match) return ''
+  const start = match.index
+  const rest = region.slice(start + match[0].length)
+  const next = /^\s*['"][^'"]+['"]\s*:\s*\{/m.exec(rest)
+  return next ? region.slice(start, start + match[0].length + next.index) : region.slice(start)
 }
 
 const expectedTotal = civilLawParts.reduce(
