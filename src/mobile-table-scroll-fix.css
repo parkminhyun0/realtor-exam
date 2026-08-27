@@ -1,6 +1,7 @@
-/* Table scrolling hardening for mobile Safari and browser zoom
-   The scroll surface must stay narrower than the table even when page zoom changes
-   the media-query viewport. Keep these core constraints viewport-independent. */
+/* Table scrolling hardening for mobile Safari, Chrome iOS and page zoom.
+   The visible scroll surface must stay inside the *visual viewport*, not only the
+   layout viewport.  A small JS companion writes --table-visible-width when the
+   browser zoom level or visual viewport changes. */
 
 .public-law-page,
 .public-law-page .public-law-layout,
@@ -10,13 +11,7 @@
 .public-law-page .tax-detail-section,
 .public-law-page .tax-rate-guide,
 .public-law-page .tax-rate-guide__sections,
-.public-law-page .tax-rate-guide__section {
-  min-width: 0 !important;
-}
-
-/* Grid/flex descendants that own a table must be allowed to shrink to the content card.
-   Without this, the grid item's automatic min-content width grows to the table width,
-   so the table escapes the card and there is nothing left for the inner scroller to scroll. */
+.public-law-page .tax-rate-guide__section,
 .public-law-page :where(section, article, div):has(> .table-wrap),
 .public-law-page :where(section, article, div):has(> h4 + .table-wrap) {
   min-width: 0 !important;
@@ -27,23 +22,31 @@
   position: relative;
   display: block !important;
   box-sizing: border-box;
-  inline-size: 100% !important;
-  width: 100% !important;
+  inline-size: min(100%, var(--table-visible-width, 100%)) !important;
+  width: min(100%, var(--table-visible-width, 100%)) !important;
   min-width: 0 !important;
-  max-width: 100% !important;
-  margin-inline: 0 !important;
-  padding: 0 14px 10px 0 !important;
-  overflow-x: auto !important;
+  max-width: min(100%, var(--table-visible-width, 100%)) !important;
+  margin: 0 !important;
+  padding: 0 16px 10px 0 !important;
+  overflow-x: scroll !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
+  overscroll-behavior-inline: contain;
   scroll-behavior: auto;
   scroll-snap-type: none;
-  scroll-padding-inline-end: 14px;
+  scroll-padding-inline-end: 16px;
   touch-action: pan-x pan-y;
   scrollbar-gutter: auto;
-  contain: inline-size;
   isolation: isolate;
+}
+
+/* A parent card must never expand to the table's intrinsic width. */
+.public-law-page .study-block:has(.table-wrap),
+.public-law-page .tax-rate-guide:has(.table-wrap),
+.public-law-page .tax-rate-guide__section:has(.table-wrap),
+.public-law-page .tax-detail-section:has(.table-wrap) {
+  overflow: visible !important;
+  contain: layout !important;
 }
 
 .public-law-page .table-wrap > table,
@@ -76,6 +79,14 @@
 .public-law-page .table-wrap > table th:last-child,
 .public-law-page .table-wrap > table td:last-child {
   border-right-width: 2px !important;
+}
+
+/* The last column needs a real trailing hit area so iOS cannot stop one cell early. */
+.public-law-page .table-wrap::after {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 1px;
 }
 
 @media (max-width: 768px) {
