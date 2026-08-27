@@ -17,6 +17,9 @@ import * as registrationLawData from './data/registrationLaw'
 import * as registrationLawDeepDive from './data/registrationLawDeepDive'
 import * as registrationLawExamCore from './data/registrationLawExamCore'
 import * as registrationLawExamDetail from './data/registrationLawExamDetail'
+import * as taxLawData from './data/taxLaw'
+import * as taxLawContentData from './data/taxLawContent'
+import * as taxLawExamSupplementData from './data/taxLawExamSupplement'
 
 const subjectData = {
   'real-estate-theory': [
@@ -38,6 +41,7 @@ const subjectData = {
   ],
   'public-law': [publicLawData],
   'registration-law': [registrationLawData, registrationLawDeepDive, registrationLawExamCore, registrationLawExamDetail],
+  'tax-law': [taxLawData, taxLawContentData, taxLawExamSupplementData],
 }
 
 const labelKeys = ['title', 'name', 'label', 'term', 'heading', 'chapterTitle', 'sectionTitle', 'pointTitle', 'shortTitle']
