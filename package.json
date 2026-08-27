@@ -11,8 +11,9 @@
     "verify:civil-deep": "node scripts/verify-civil-deep-study.mjs",
     "verify:civil-graph": "node scripts/verify-civil-learning-graph.mjs",
     "verify:civil-part1-visuals": "node scripts/verify-civil-part1-visuals.mjs",
+    "verify:civil-part2-visuals": "node scripts/verify-civil-part2-visuals.mjs",
     "verify:exam36": "node scripts/verify-exam36-bank.mjs",
-    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && npm run verify:civil-graph && npm run verify:civil-part1-visuals && npm run verify:exam36 && vite build",
+    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && npm run verify:civil-graph && npm run verify:civil-part1-visuals && npm run verify:civil-part2-visuals && npm run verify:exam36 && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
