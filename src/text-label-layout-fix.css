@@ -1,0 +1,166 @@
+/*
+ * 전 과목 라벨 + 제목 겹침 방지 보정
+ *
+ * 원인:
+ * typography-responsive.css가 전역 12pt/14pt 규칙을 적용하면서,
+ * 기존에 숫자 배지 폭을 전제로 만든 제목 행에 DETAIL/CORE/해설 같은
+ * 긴 라벨이 들어오면 고정 폭을 넘어 제목 영역과 시각적으로 겹칠 수 있다.
+ *
+ * 원칙:
+ * 1) 라벨 열은 실제 텍스트 너비(max-content)를 확보한다.
+ * 2) 제목 열은 minmax(0, 1fr)로 남은 영역만 사용하며 자연스럽게 줄바꿈한다.
+ * 3) 고정 width/absolute 위치/overflow 숨김을 해제해 어떤 과목에서도 침범하지 않는다.
+ */
+
+/* 모든 과목에서 공통으로 사용하는 학습 카드 제목 행 */
+.public-law-page .study-block__title {
+  display: grid !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  align-items: start !important;
+  justify-content: stretch !important;
+  column-gap: 12px !important;
+  row-gap: 6px !important;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.public-law-page .study-block__title > span:first-child {
+  position: static !important;
+  inset: auto !important;
+  align-self: start;
+  justify-self: start;
+  width: auto !important;
+  min-width: 34px !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 30px;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  box-sizing: border-box;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  line-height: 1.25 !important;
+  flex: none !important;
+}
+
+.public-law-page .study-block__title > h2,
+.public-law-page .study-block__title > h3,
+.public-law-page .study-block__title > h4 {
+  grid-column: 2;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-left: 0 !important;
+  transform: none !important;
+  white-space: normal !important;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  overflow: visible !important;
+  line-height: 1.45 !important;
+}
+
+/* 공시법 DETAIL/해설/CORE 카드: 첨부 화면에서 확인된 직접 회귀 영역 */
+.registration-law-page .registration-exam-topic .study-block__title,
+.registration-law-page .registration-focused-section .study-block__title,
+.registration-law-page .exam-core-panel .study-block__title,
+.registration-law-page .registration-focus-panel .study-block__title {
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+}
+
+.registration-law-page .registration-exam-topic .study-block__title > span:first-child,
+.registration-law-page .registration-focused-section .study-block__title > span:first-child,
+.registration-law-page .exam-core-panel .study-block__title > span:first-child,
+.registration-law-page .registration-focus-panel .study-block__title > span:first-child {
+  width: auto !important;
+  min-width: max-content !important;
+  max-width: none !important;
+}
+
+/* 공시법의 별도 배지+제목 그리드도 동일 원칙 적용 */
+.registration-law-page .exam-core-panel__heading,
+.registration-law-page .registration-exam-detail__heading,
+.registration-law-page .registration-exam-topic__head {
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  min-width: 0;
+}
+
+.registration-law-page .exam-core-panel__heading > *,
+.registration-law-page .registration-exam-detail__heading > *,
+.registration-law-page .registration-exam-topic__head > * {
+  min-width: 0;
+}
+
+.registration-law-page .exam-core-panel__badge,
+.registration-law-page .registration-exam-detail__heading > span,
+.registration-law-page .registration-exam-topic__head > span {
+  position: static !important;
+  width: auto !important;
+  min-width: 34px;
+  max-width: none !important;
+  padding-left: 8px;
+  padding-right: 8px;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  box-sizing: border-box;
+}
+
+/* 민법·공법·학개론·세법도 같은 study-block 구조를 사용하므로
+   긴 라벨/제목 조합에서 제목이 라벨 밑으로 파고들지 않도록 명시 보강 */
+.civil-law-page .study-block__title,
+.public-law-page:not(.registration-law-page) .study-block__title,
+.tax-law-page .study-block__title {
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+}
+
+/* 제목 내부 강조 span은 라벨 열 규칙에 영향을 받지 않게 한다. */
+.public-law-page .study-block__title h2 span,
+.public-law-page .study-block__title h3 span,
+.public-law-page .study-block__title h4 span {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  white-space: normal !important;
+}
+
+/* 시험 함정/법령 링크처럼 라벨 + 긴 문장 구조인 영역 */
+.public-law-page .registration-exam-topic__trap,
+.public-law-page .law-detail-card__exam {
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  align-items: start;
+}
+
+.public-law-page .registration-exam-topic__trap > *,
+.public-law-page .law-detail-card__exam > * {
+  min-width: 0;
+}
+
+/* 작은 화면에서는 라벨을 한 줄 독립 열로 올려 제목 폭을 최대한 확보 */
+@media (max-width: 560px) {
+  .public-law-page .study-block__title {
+    grid-template-columns: 1fr !important;
+    gap: 7px !important;
+  }
+
+  .public-law-page .study-block__title > span:first-child {
+    grid-column: 1;
+    width: max-content !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .public-law-page .study-block__title > h2,
+  .public-law-page .study-block__title > h3,
+  .public-law-page .study-block__title > h4 {
+    grid-column: 1;
+  }
+
+  .registration-law-page .exam-core-panel__heading,
+  .registration-law-page .registration-exam-detail__heading {
+    grid-template-columns: 1fr !important;
+  }
+}
