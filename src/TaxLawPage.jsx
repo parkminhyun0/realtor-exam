@@ -2,10 +2,11 @@ import { useMemo, useState } from 'react'
 import LawTextViewer from './LawTextViewer'
 import { taxLawParts, taxLawPointCount } from './data/taxLaw'
 import { taxLawContent } from './data/taxLawContent'
+import { taxLawExamSupplement } from './data/taxLawExamSupplement'
 import './civil-law.css'
 import './tax-law.css'
 
-const TAX_KEYWORD_PATTERN = /(장기보유특별공제|공정시장가액비율|제2차 납세의무|인별·전국합산|부동산에 관한 권리|사실상취득가격|조세법률주의|조세평등주의|종합부동산세|등록면허세|양도소득세|과세기준일|조세우선권|법정기일|연대납세의무|사실상 취득|간주취득|과점주주|시가인정액|신고납부|보통징수|종합합산|별도합산|분리과세|종합소득|분류과세|사업소득|필요경비|양도차익|1세대 1주택|대금청산일|예정신고|확정신고|납세의무|성립|확정|소멸|재산세|취득세|소득세|국세|지방세|보통세|목적세|직접세|간접세|지방교육세|지역자원시설세|교육세|농어촌특별세|소득과세|소비과세|재산과세|유통과세|취득단계|보유단계|양도단계|등기·등록단계|제\s*\d+\s*조(?:의\s*\d+)?|\d+(?:[.,]\d+)*(?:\s*(?:개|종|일|년|월|%|㎡|m²|억원|만원))?)/g
+const TAX_KEYWORD_PATTERN = /(장기보유특별공제|양도소득 기본공제|공정시장가액비율|제2차 납세의무|인별·전국합산|부동산에 관한 권리|사실상취득가격|조세법률주의|조세평등주의|종합부동산세|등록면허세|양도소득세|과세기준일|조세우선권|법정기일|연대납세의무|사실상 취득|간주취득|과점주주|시가인정액|신고납부|보통징수|종합합산|별도합산|분리과세|종합소득|분류과세|사업소득|필요경비|양도차익|1세대 1주택|대금청산일|예정신고|확정신고|납세의무|성립|확정|소멸|재산세|취득세|소득세|국세|지방세|보통세|목적세|직접세|간접세|지방교육세|지역자원시설세|교육세|농어촌특별세|소득과세|소비과세|재산과세|유통과세|취득단계|보유단계|양도단계|등기·등록단계|제\s*\d+\s*조(?:의\s*\d+)?|\d+(?:[.,]\d+)*(?:\s*(?:개|종|일|년|월|%|㎡|m²|억원|만원))?)/g
 const NUMBER_LIKE_PATTERN = /^(?:제\s*\d+\s*조|\d|①|②|③|④|⑤|⑥|⑦|⑧|⑨|⑩)/
 
 export default function TaxLawPage({ onBack }) {
@@ -156,6 +157,8 @@ function TaxLawButtons({ references = [], onOpenLaw, compact = false }) {
 }
 
 function TaxStudyPoint({ part, point, content, onOpenLaw }) {
+  const supplement = taxLawExamSupplement[point.id]
+
   return (
     <>
       <div className="study-tldr tax-study-tldr">
@@ -252,6 +255,8 @@ function TaxStudyPoint({ part, point, content, onOpenLaw }) {
         </section>
       ))}
 
+      {supplement && <TaxExamDrill supplement={supplement} onOpenLaw={onOpenLaw} />}
+
       <section className="study-block study-block--split tax-trap-memory">
         <div className="trap-card">
           <span>⚠️ 함정 선지</span>
@@ -304,6 +309,61 @@ function TaxStudyPoint({ part, point, content, onOpenLaw }) {
         <TaxLawButtons references={content.legalBases} onOpenLaw={onOpenLaw} />
       </section>
     </>
+  )
+}
+
+function TaxExamDrill({ supplement, onOpenLaw }) {
+  return (
+    <section className="study-block tax-exam-drill" aria-label="숫자 예외 계산 집중훈련">
+      <div className="tax-exam-drill__heading">
+        <span>EXAM DRILL</span>
+        <div>
+          <h3>숫자 · 예외 · 계산 집중훈련</h3>
+          <p><HighlightTaxText>{supplement.title}</HighlightTaxText></p>
+        </div>
+      </div>
+
+      <div className="tax-exam-drill__numbers">
+        {supplement.numbers.map(([label, value, detail]) => (
+          <article key={`${label}-${value}`}>
+            <small>{label}</small>
+            <strong><HighlightTaxText>{value}</HighlightTaxText></strong>
+            <p><HighlightTaxText>{detail}</HighlightTaxText></p>
+          </article>
+        ))}
+      </div>
+
+      <div className="tax-exam-drill__exceptions">
+        <div className="tax-exam-drill__subhead"><span>원칙 ↔ 예외</span><strong>선지에서 뒤집어 내는 부분</strong></div>
+        {supplement.exceptions.map(([title, principle, exception]) => (
+          <article key={title}>
+            <b><HighlightTaxText>{title}</HighlightTaxText></b>
+            <div>
+              <p><span>원칙</span><HighlightTaxText>{principle}</HighlightTaxText></p>
+              <p><span>체크</span><HighlightTaxText>{exception}</HighlightTaxText></p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="tax-exam-drill__calc">
+        <div>
+          <span>계산·판단 훈련</span>
+          <h4>{supplement.calculation.title}</h4>
+          <code><HighlightTaxText>{supplement.calculation.formula}</HighlightTaxText></code>
+        </div>
+        <div className="tax-exam-drill__problem">
+          <p><b>문제</b><HighlightTaxText>{supplement.calculation.question}</HighlightTaxText></p>
+          <p><b>풀이</b><HighlightTaxText>{supplement.calculation.answer}</HighlightTaxText></p>
+          <p className="tax-exam-drill__note"><HighlightTaxText>{supplement.calculation.note}</HighlightTaxText></p>
+        </div>
+      </div>
+
+      <div className="tax-exam-drill__source">
+        <p><b>근거 정리</b> <HighlightTaxText>{supplement.sourceNote}</HighlightTaxText></p>
+        <TaxLawButtons references={supplement.sourceRefs} onOpenLaw={onOpenLaw} compact />
+      </div>
+    </section>
   )
 }
 
