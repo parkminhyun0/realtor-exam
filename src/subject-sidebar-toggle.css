@@ -1,0 +1,104 @@
+/* 전과목 공통 좌측 패널 토글 스타일 */
+.public-law-nav details {
+  overflow: clip;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.public-law-nav details > summary {
+  position: relative;
+  min-height: 44px;
+  padding-right: 34px;
+  transition: background .16s ease, color .16s ease;
+}
+
+.public-law-nav details > summary::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  opacity: .72;
+  transform: translateY(-62%) rotate(45deg);
+  transform-origin: center;
+  transition: transform .2s cubic-bezier(.2,.8,.2,1), opacity .16s ease;
+}
+
+.public-law-nav details[open] > summary::after {
+  transform: translateY(-35%) rotate(225deg);
+  opacity: 1;
+}
+
+.public-law-nav details[open] > summary {
+  background: rgba(255,255,255,.07);
+  color: #fff;
+}
+
+.public-law-nav details > ul,
+.public-law-nav details > .civil-nav-point-list {
+  transform-origin: top;
+}
+
+.public-law-nav details[open] > ul,
+.public-law-nav details[open] > .civil-nav-point-list {
+  animation: subject-nav-reveal .2s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.public-law-nav .civil-nav-point {
+  margin: 3px 0;
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+.public-law-nav .civil-nav-point > summary {
+  min-height: 42px;
+  margin: 0;
+  padding: 7px 34px 7px 9px;
+  border-radius: 9px;
+  color: #bdcbd9;
+}
+
+.public-law-nav .civil-nav-point[open] {
+  border-color: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.035);
+}
+
+.public-law-nav .civil-nav-point[open] > summary {
+  background: rgba(255,255,255,.065);
+  color: #fff;
+}
+
+.public-law-nav .civil-nav-point > .civil-nav-topic-list {
+  padding-top: 3px;
+  padding-bottom: 7px;
+}
+
+.public-law-nav summary:focus-visible,
+.public-law-nav button:focus-visible {
+  outline: 2px solid rgba(255,216,107,.92);
+  outline-offset: 2px;
+}
+
+@keyframes subject-nav-reveal {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 980px) {
+  .public-law-nav details > summary,
+  .public-law-nav .civil-nav-point > summary {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-law-nav details > summary,
+  .public-law-nav details > summary::after,
+  .public-law-nav details[open] > ul,
+  .public-law-nav details[open] > .civil-nav-point-list {
+    transition: none !important;
+    animation: none !important;
+  }
+}
