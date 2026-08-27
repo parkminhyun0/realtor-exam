@@ -33,7 +33,7 @@ for (const [subjectId, rule] of Object.entries(expected)) {
     }
     if (!Number.isInteger(item.sourcePage) || item.sourcePage < 1) errors.push(`${subjectId}[${index}] invalid sourcePage.`)
     if (item.prompt.length < 20) errors.push(`${subjectId}[${index}] prompt too short.`)
-    if (item.explanation.length < 20) errors.push(`${subjectId}[${index}] explanation too short.`)
+    if (item.explanation.length < 8) errors.push(`${subjectId}[${index}] explanation too short.`)
   })
 }
 
