@@ -17,6 +17,7 @@ import './civil-law-part2-law-first.js'
 import './civil-law-part3-law-first.js'
 import './civil-law-part4-law-first.js'
 import './subject-ui-unified.css'
+import './text-overlap-guard.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
