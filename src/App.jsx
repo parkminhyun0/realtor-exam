@@ -7,6 +7,7 @@ import RealEstateTheoryPage from './RealEstateTheoryPage'
 import RegistrationLawPage from './RegistrationLawPageV2'
 import TaxLawPage from './TaxLawPage'
 import Exam36QuestionSection from './Exam36QuestionSection'
+import StudyTextToolbar from './StudyTextToolbar'
 import './public-law.css'
 import './scroll-top.css'
 import './global-search.css'
@@ -100,25 +101,55 @@ function Dashboard() {
 }
 
 function SubjectPlaceholder({ subject }) {
+  const scrollToQuestions = () => {
+    window.setTimeout(() => document.getElementById('exam36-question-bank')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+  }
+
   return (
-    <main className="subject-shell" id="main-content">
-      <button className="back-button" type="button" onClick={() => navigate('')}>← 전체 과목</button>
-      <section className="subject-hero">
-        <span className="subject-hero__icon" aria-hidden="true">{subject.icon}</span>
+    <main className="public-law-page subject-placeholder-page" id="main-content">
+      <div className="public-law-topline">
+        <button className="back-button" type="button" onClick={() => navigate('')}>← 전체 과목</button>
+        <span>{subject.title}</span>
+      </div>
+
+      <section className="public-law-hero">
         <div>
-          <span className="eyebrow">{subject.shortTitle}</span>
+          <span className="eyebrow">{subject.shortTitle} · 2026</span>
           <h1>{subject.title}</h1>
           <p>{subject.description}</p>
         </div>
+        <div className="public-law-hero__badges">
+          <span>공통 학습 UI</span><span>제36회 기출 변형 공개</span>
+        </div>
       </section>
-      <section className="placeholder-card">
-        <span>본문 준비 중 · 제36회 기출 변형 공개</span>
-        <h2>과목별 학습 콘텐츠를 순차적으로 추가합니다.</h2>
-        <p>
-          정규 본문은 구축 중이지만, 아래에서 2025년 제36회 Q-Net 기출의 출제 논점을 유지해 재구성한
-          학습용 변형문제를 먼저 풀 수 있습니다.
-        </p>
-      </section>
+
+      <div className="public-law-layout">
+        <aside className="public-law-nav" aria-label={`${subject.title} 목차`}>
+          <div className="public-law-nav__title"><strong>{subject.shortTitle}</strong><span>카테고리 → 본문 → 기출</span></div>
+          <details open>
+            <summary><i /><span>학습 자료</span></summary>
+            <ul>
+              <li><button type="button" className="active"><span>과목 안내</span><small>본문</small></button></li>
+              <li><button type="button" onClick={scrollToQuestions}><span>제36회 기출 변형</span><small>문제</small></button></li>
+            </ul>
+          </details>
+        </aside>
+
+        <article className="public-law-content">
+          <div className="public-law-breadcrumb">{subject.title} <span>›</span> 과목 안내</div>
+          <header className="study-section-heading">
+            <div>
+              <span className="study-section-heading__number">01</span>
+              <div><span className="study-section-heading__chapter">{subject.shortTitle}</span><h2>과목별 학습 콘텐츠</h2></div>
+            </div>
+            <span className="law-reference">공통 UI 적용</span>
+          </header>
+          <section className="study-block placeholder-card">
+            <div className="study-block__title"><span>01</span><h3>현재 제공 범위</h3></div>
+            <p>정규 본문은 순차적으로 구축하고 있으며, 아래에서 제36회 Q-Net 기출 논점을 재구성한 학습용 변형문제를 먼저 확인할 수 있습니다.</p>
+          </section>
+        </article>
+      </div>
     </main>
   )
 }
@@ -207,38 +238,18 @@ export default function App() {
           </div>
         </div>
         <nav className="subject-nav" aria-label="과목 바로가기">
-          <button
-            type="button"
-            className={`subject-nav__item${route === '' ? ' active' : ''}`}
-            onClick={() => navigate('')}
-            aria-current={route === '' ? 'page' : undefined}
-          >
-            전체 과목
-          </button>
+          <button type="button" className={`subject-nav__item${route === '' ? ' active' : ''}`} onClick={() => navigate('')} aria-current={route === '' ? 'page' : undefined}>전체 과목</button>
           {allSubjects.map((subject) => (
-            <button
-              key={subject.id}
-              type="button"
-              className={`subject-nav__item${route === subject.id ? ' active' : ''}`}
-              onClick={() => openSubject(subject)}
-              aria-current={route === subject.id ? 'page' : undefined}
-              title={subject.title}
-            >
-              <span className="subject-nav__icon" aria-hidden="true">{subject.icon}</span>
-              <span>{subject.shortTitle}</span>
+            <button key={subject.id} type="button" className={`subject-nav__item${route === subject.id ? ' active' : ''}`} onClick={() => openSubject(subject)} aria-current={route === subject.id ? 'page' : undefined} title={subject.title}>
+              <span className="subject-nav__icon" aria-hidden="true">{subject.icon}</span><span>{subject.shortTitle}</span>
             </button>
           ))}
         </nav>
+        <StudyTextToolbar active={Boolean(route)} />
       </header>
       {content}
       <Exam36QuestionSection subjectId={route} />
-      <button
-        className={`scroll-top-button${showScrollTop ? ' visible' : ''}`}
-        type="button"
-        onClick={scrollToTop}
-        aria-label="맨 위로 이동"
-        title="맨 위로"
-      >
+      <button className={`scroll-top-button${showScrollTop ? ' visible' : ''}`} type="button" onClick={scrollToTop} aria-label="맨 위로 이동" title="맨 위로">
         <span className="scroll-top-button__icon" aria-hidden="true">↑</span>
       </button>
       <footer className="footer">
