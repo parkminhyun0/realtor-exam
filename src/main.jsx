@@ -14,6 +14,7 @@ import './exam-wording-standard.js'
 import './civil-law-part1-law-first.css'
 import './civil-law-part1-law-first.js'
 import './civil-law-part2-law-first.js'
+import './civil-law-part3-law-first.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
