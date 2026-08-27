@@ -5,6 +5,7 @@ import './styles.css'
 import './typography-responsive.css'
 import './registration-law-highlights.js'
 import './tax-law-nav-tree.js'
+import './tax-law-exam-drill.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
