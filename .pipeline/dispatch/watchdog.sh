@@ -75,6 +75,10 @@ while [ ! -f .pipeline/dispatch/STOP ]; do
   # 패널을 직무·상태에 따라 칠한다. 노는 칸이 회색으로 보여야 한 눈에 든다.
   # (앞 파이프라인에서 열 중 아홉이 4시간 50분을 놀았는데 화면만으로는
   #  알 길이 없었다. 색이 그 자리를 메운다.)
+  # 사고를 스스로 되돌린다 — 일꾼이 만든 STOP, 엉뚱한 자리의 산출물.
+  # **다른 무엇보다 먼저** 한다. STOP 이 살아 있으면 아래가 다 헛돈다.
+  [ -f .pipeline/dispatch/rescue.sh ] && bash .pipeline/dispatch/rescue.sh >>"$LOG" 2>&1
+
   [ -f .pipeline/dispatch/paint.sh ] && bash .pipeline/dispatch/paint.sh >>"$LOG" 2>&1
 
   # 2차·3차가 모두 PASS 인 과제를 과목 통합브랜치에 병합한다.
