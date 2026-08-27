@@ -1,6 +1,6 @@
-import { exam36TheoryQuestions, exam36CivilQuestions } from './exam36FirstSession'
-import { exam36BrokerageQuestions, exam36PublicLawQuestions } from './exam36SecondFirstSession'
-import { exam36RegistrationQuestions, exam36TaxQuestions } from './exam36SecondSecondSession'
+import { exam36TheoryQuestions, exam36CivilQuestions } from './exam36FirstSession.js'
+import { exam36BrokerageQuestions, exam36PublicLawQuestions } from './exam36SecondFirstSession.js'
+import { exam36RegistrationQuestions, exam36TaxQuestions } from './exam36SecondSecondSession.js'
 
 export const EXAM36_QNET_URL = 'https://www.q-net.or.kr/cst003.do?artlSeq=5247125&boardId=Q004&gId=08&gSite=L&id=cst00302&menuType=cst00309'
 
