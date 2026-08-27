@@ -8,7 +8,8 @@
     "verify:theory": "node scripts/verify-theory-past-questions.mjs",
     "verify:civil-law": "node scripts/verify-civil-law-leaf-coverage.mjs",
     "verify:civil-intensive": "node scripts/verify-civil-intensive-drills.mjs",
-    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && vite build",
+    "verify:civil-deep": "node scripts/verify-civil-deep-study.mjs",
+    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
