@@ -1,0 +1,249 @@
+.tax-exam-drill {
+  border: 1px solid #e8d8bd;
+  border-top: 5px solid #a56b20;
+  background: linear-gradient(180deg, #fffaf0 0%, #fff 210px);
+  box-shadow: 0 10px 30px rgba(117, 86, 35, .07);
+}
+
+.tax-exam-drill__heading {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 15px;
+}
+
+.tax-exam-drill__heading > span {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #a56b20;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
+.tax-exam-drill__heading h3 {
+  margin: 0;
+  color: #6d4616;
+  font-size: 14pt !important;
+}
+
+.tax-exam-drill__heading p {
+  margin: 5px 0 0;
+  color: #705f47;
+  line-height: 1.7;
+}
+
+.tax-exam-drill__numbers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.tax-exam-drill__numbers article {
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid #eadfcf;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.tax-exam-drill__numbers small {
+  display: block;
+  margin-bottom: 6px;
+  color: #7a6850;
+  font-weight: 900;
+}
+
+.tax-exam-drill__numbers strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #a12626;
+  font-size: 14pt !important;
+  line-height: 1.35;
+}
+
+.tax-exam-drill__numbers p {
+  margin: 0;
+  color: #596474;
+  line-height: 1.7;
+}
+
+.tax-exam-drill__exceptions {
+  display: grid;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid #ead6d2;
+  border-radius: 13px;
+  background: #fff8f7;
+}
+
+.tax-exam-drill__subhead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
+.tax-exam-drill__subhead span {
+  color: #b3261e;
+  font-weight: 900;
+}
+
+.tax-exam-drill__subhead strong {
+  color: #5b3633;
+  font-size: 14pt !important;
+}
+
+.tax-exam-drill__exceptions article {
+  display: grid;
+  grid-template-columns: minmax(120px, .38fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding-top: 9px;
+  border-top: 1px solid #f0dfdc;
+}
+
+.tax-exam-drill__exceptions article > b {
+  color: #713631;
+}
+
+.tax-exam-drill__exceptions article > div {
+  display: grid;
+  gap: 6px;
+}
+
+.tax-exam-drill__exceptions p {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 7px;
+  margin: 0;
+  color: #566170;
+  line-height: 1.65;
+}
+
+.tax-exam-drill__exceptions p > span {
+  display: inline-flex;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  background: #f3e5e2;
+  color: #a12a21;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.tax-exam-drill__calc {
+  display: grid;
+  grid-template-columns: minmax(190px, .42fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 13px;
+  background: #17283c;
+  color: #fff;
+}
+
+.tax-exam-drill__calc > div:first-child > span {
+  color: #f8cf79;
+  font-weight: 900;
+}
+
+.tax-exam-drill__calc h4 {
+  margin: 5px 0 10px;
+  color: #fff;
+  font-size: 14pt !important;
+}
+
+.tax-exam-drill__calc code {
+  display: block;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .09);
+  color: #f9e5b1;
+  font-family: inherit;
+  font-weight: 800;
+  line-height: 1.6;
+  white-space: normal;
+}
+
+.tax-exam-drill__calc .tax-exam-keyword {
+  background: rgba(255, 216, 107, .18);
+  color: #ffe093 !important;
+  text-decoration-color: #ffe093;
+}
+
+.tax-exam-drill__calc .tax-exam-number {
+  color: #ff9d9d !important;
+  text-decoration-color: #ff9d9d;
+}
+
+.tax-exam-drill__problem {
+  display: grid;
+  gap: 9px;
+}
+
+.tax-exam-drill__problem p {
+  margin: 0;
+  color: #edf2f7;
+  line-height: 1.75;
+}
+
+.tax-exam-drill__problem p > b {
+  display: inline-block;
+  min-width: 42px;
+  margin-right: 7px;
+  color: #f8cf79;
+}
+
+.tax-exam-drill__note {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  color: #cbd5df !important;
+  font-size: 11px;
+}
+
+.tax-exam-drill__source {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #ddceb5;
+}
+
+.tax-exam-drill__source p {
+  margin: 0;
+  color: #6a6257;
+  line-height: 1.7;
+}
+
+@media (max-width: 980px) {
+  .tax-exam-drill__numbers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tax-exam-drill__source {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 700px) {
+  .tax-exam-drill__heading,
+  .tax-exam-drill__calc,
+  .tax-exam-drill__exceptions article,
+  .tax-exam-drill__numbers {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-exam-drill__exceptions p {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+}
