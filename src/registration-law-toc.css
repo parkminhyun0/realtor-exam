@@ -1,0 +1,231 @@
+.registration-law-nav-v2 .registration-point-list {
+  display: grid;
+  gap: 8px;
+  padding: 8px 10px 12px;
+}
+
+.registration-law-nav-v2 .registration-point {
+  border: 1px solid rgba(70, 86, 103, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+}
+
+.registration-law-nav-v2 .registration-point > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 12px;
+}
+
+.registration-law-nav-v2 .registration-point > summary::-webkit-details-marker,
+.registration-law-nav-v2 .registration-toc-node details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.registration-point__summary {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.registration-point__summary b,
+.registration-point__summary small {
+  flex: 0 0 auto;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.registration-point__summary b {
+  color: #147d64;
+  background: rgba(20, 125, 100, 0.1);
+}
+
+.registration-point__summary small {
+  color: #7e8791;
+  background: rgba(126, 135, 145, 0.1);
+}
+
+.registration-detailed-toc,
+.registration-detailed-toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.registration-detailed-toc {
+  border-top: 1px solid rgba(70, 86, 103, 0.1);
+  padding: 6px 8px 10px;
+}
+
+.registration-toc-node {
+  margin: 2px 0;
+}
+
+.registration-toc-node details > summary {
+  list-style: none;
+  position: relative;
+}
+
+.registration-toc-node details > summary::before {
+  content: '›';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  font-size: 12px;
+  color: #7c8794;
+  transform: rotate(0deg);
+  transition: transform 0.16s ease;
+}
+
+.registration-toc-node details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.registration-toc-node button,
+.registration-point-open {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.registration-toc-node button {
+  padding: 8px 8px 8px 20px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.registration-toc-node--depth-1 button {
+  padding-left: 30px;
+  font-size: 11.5px;
+}
+
+.registration-toc-node--depth-2 button {
+  padding-left: 42px;
+  font-size: 11px;
+}
+
+.registration-toc-node button:hover,
+.registration-point-open:hover {
+  background: rgba(46, 94, 140, 0.08);
+}
+
+.registration-toc-node button.active,
+.registration-point-open.active {
+  color: #184c78;
+  background: rgba(46, 94, 140, 0.13);
+  font-weight: 800;
+}
+
+.registration-point-open {
+  margin: 0 8px 10px;
+  width: calc(100% - 16px);
+  padding: 9px 12px;
+  font-size: 11.5px;
+}
+
+.registration-breadcrumb-leaf {
+  display: inline;
+}
+
+.registration-focus-panel {
+  border-left: 4px solid var(--chapter-color, #2e5e8c);
+}
+
+.registration-focus-panel > p {
+  margin: 0;
+  color: #4f5f6f;
+  line-height: 1.65;
+}
+
+.registration-focus-path {
+  margin-top: 10px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: rgba(46, 94, 140, 0.08);
+  color: #315a7e;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.registration-focused-section > p,
+.registration-focused-section > ul,
+.registration-exam-topic > ul {
+  line-height: 1.7;
+}
+
+.registration-focused-section > ul,
+.registration-exam-topic > ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+
+.registration-focused-section > ul li + li,
+.registration-exam-topic > ul li + li {
+  margin-top: 6px;
+}
+
+.registration-focus-exam {
+  display: grid;
+  gap: 5px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(190, 56, 56, 0.08);
+}
+
+.registration-focus-exam b {
+  color: #a12f2f;
+}
+
+@media (prefers-color-scheme: dark) {
+  .registration-law-nav-v2 .registration-point {
+    background: rgba(255, 255, 255, 0.025);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .registration-detailed-toc {
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .registration-toc-node button.active,
+  .registration-point-open.active {
+    color: #b9daf5;
+    background: rgba(88, 148, 197, 0.2);
+  }
+
+  .registration-focus-panel > p {
+    color: #b5c0cb;
+  }
+
+  .registration-focus-path {
+    color: #c9e1f5;
+    background: rgba(88, 148, 197, 0.16);
+  }
+}
+
+@media (max-width: 980px) {
+  .registration-law-nav-v2 .registration-point-list {
+    padding-inline: 6px;
+  }
+
+  .registration-toc-node button {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .registration-toc-node details > summary::before {
+    top: 13px;
+  }
+}
