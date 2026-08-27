@@ -1,0 +1,132 @@
+/* 모든 과목 공통 표 레이아웃
+   - 표 안 텍스트는 프로젝트 기본 12pt를 유지한다.
+   - 열 수에 따라 폭을 균형 있게 배분한다.
+   - 모바일에서는 글자를 억지로 줄이지 않고 표 자체를 가로 스크롤한다. */
+
+.public-law-page .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+}
+
+.public-law-page .table-wrap > table,
+.public-law-page table.study-table,
+.public-law-page table.tax-rate-table {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+  font-size: var(--font-base, 12pt) !important;
+  line-height: 1.58 !important;
+}
+
+.public-law-page table th,
+.public-law-page table td {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 10px 12px !important;
+  vertical-align: middle !important;
+  text-align: left !important;
+  white-space: normal !important;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  font-size: var(--font-base, 12pt) !important;
+  line-height: 1.58 !important;
+}
+
+.public-law-page table thead th {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-weight: 900;
+}
+
+.public-law-page table tbody th {
+  vertical-align: middle !important;
+  font-weight: 900;
+}
+
+/* 2열 표: 구분 30% / 설명 70% */
+.public-law-page table:has(> thead > tr > :nth-child(2):last-child) {
+  min-width: 560px !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(2):last-child) > thead > tr > :nth-child(1),
+.public-law-page table:has(> thead > tr > :nth-child(2):last-child) > tbody > tr > :nth-child(1) {
+  width: 30% !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(2):last-child) > thead > tr > :nth-child(2),
+.public-law-page table:has(> thead > tr > :nth-child(2):last-child) > tbody > tr > :nth-child(2) {
+  width: 70% !important;
+}
+
+/* 3열 표: 구분 22% / 핵심내용 48% / 시험포인트 30% */
+.public-law-page table:has(> thead > tr > :nth-child(3):last-child) {
+  min-width: 720px !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(3):last-child) > thead > tr > :nth-child(1),
+.public-law-page table:has(> thead > tr > :nth-child(3):last-child) > tbody > tr > :nth-child(1) {
+  width: 22% !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(3):last-child) > thead > tr > :nth-child(2),
+.public-law-page table:has(> thead > tr > :nth-child(3):last-child) > tbody > tr > :nth-child(2) {
+  width: 48% !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(3):last-child) > thead > tr > :nth-child(3),
+.public-law-page table:has(> thead > tr > :nth-child(3):last-child) > tbody > tr > :nth-child(3) {
+  width: 30% !important;
+}
+
+/* 4열 표: 짧은 구분열과 세율열은 좁게, 설명열은 넓게 */
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) {
+  min-width: 860px !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) > thead > tr > :nth-child(1),
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) > tbody > tr > :nth-child(1) {
+  width: 18% !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) > thead > tr > :nth-child(2),
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) > tbody > tr > :nth-child(2) {
+  width: 34% !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) > thead > tr > :nth-child(3),
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) > tbody > tr > :nth-child(3) {
+  width: 18% !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) > thead > tr > :nth-child(4),
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) > tbody > tr > :nth-child(4) {
+  width: 30% !important;
+}
+
+/* 5열 이상은 동일 폭으로 압축하지 않고 최소 폭을 확보해 읽기성을 우선한다. */
+.public-law-page table:has(> thead > tr > :nth-child(5)) {
+  min-width: 980px !important;
+}
+.public-law-page table:has(> thead > tr > :nth-child(5)) > thead > tr > :first-child,
+.public-law-page table:has(> thead > tr > :nth-child(5)) > tbody > tr > :first-child {
+  width: 17% !important;
+}
+
+/* 세율표는 세율 열을 중앙 정렬해 숫자를 빠르게 비교한다. */
+.public-law-page .tax-rate-table th:nth-child(3),
+.public-law-page .tax-rate-table td:nth-child(3) {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+@media (max-width: 768px) {
+  .public-law-page .table-wrap {
+    margin-inline: -2px;
+    width: calc(100% + 4px);
+    padding-bottom: 4px;
+  }
+
+  .public-law-page table th,
+  .public-law-page table td {
+    padding: 9px 10px !important;
+  }
+}
