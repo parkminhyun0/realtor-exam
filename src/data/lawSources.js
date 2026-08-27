@@ -40,6 +40,7 @@ export const subjectLawSources = {
     shortTitle: '민법',
     laws: [
       { name: '민법', url: lawUrl('민법') },
+      { name: '부동산등기법', url: lawUrl('부동산등기법') },
       { name: '주택임대차보호법', url: lawUrl('주택임대차보호법') },
       { name: '상가건물 임대차보호법', url: lawUrl('상가건물임대차보호법') },
       { name: '집합건물의 소유 및 관리에 관한 법률', url: lawUrl('집합건물의소유및관리에관한법률') },
