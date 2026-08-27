@@ -1,0 +1,279 @@
+/* 전과목 공통 UI/UX · 11pt 본문 + 12/13/14pt 제목 위계 + 사용자 선택 서식 */
+:root {
+  --study-body-size: 11pt;
+  --study-title-small: 12pt;
+  --study-title-medium: 13pt;
+  --study-title-large: 14pt;
+  --study-text: #273142;
+  --study-muted: #687385;
+  --study-border: #dfe4ea;
+  --study-soft: #f7f8fa;
+  --study-surface: #ffffff;
+}
+
+/* 상단 고정 편집 툴바 */
+.study-text-toolbar {
+  border-top: 1px solid #e5e9ee;
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(14px);
+}
+.study-text-toolbar__inner {
+  width: min(1380px, calc(100% - 36px));
+  min-height: 42px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 5px 0;
+}
+.study-text-toolbar__status {
+  min-width: 220px;
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  white-space: nowrap;
+}
+.study-text-toolbar__status strong { font-size: 10pt; color: #263244; }
+.study-text-toolbar__status span { font-size: 9pt; color: #7a8492; }
+.study-text-toolbar__controls { display: flex; align-items: center; gap: 5px; overflow-x: auto; scrollbar-width: none; }
+.study-text-toolbar__controls::-webkit-scrollbar { display: none; }
+.study-text-tool {
+  height: 31px;
+  min-width: 34px;
+  border: 1px solid #d9dee5;
+  border-radius: 8px;
+  background: #fff;
+  color: #263244;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 9px;
+  font-size: 9pt;
+  font-weight: 700;
+  cursor: pointer;
+}
+.study-text-tool:hover:not(:disabled) { background: #f3f5f7; border-color: #c8ced7; }
+.study-text-tool:disabled,
+.study-text-tool:has(input:disabled) { opacity: .38; cursor: default; }
+.study-text-tool--bold { font-weight: 900; }
+.study-text-tool--underline { text-decoration: underline; }
+.study-text-tool--highlight { background: #fff8ce; }
+.study-text-tool--clear { min-width: 72px; font-weight: 600; }
+.study-text-tool input[type='color'] {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.study-text-tool input[type='color']::-webkit-color-swatch-wrapper { padding: 1px; }
+.study-text-tool input[type='color']::-webkit-color-swatch { border: 1px solid #cbd2da; border-radius: 4px; }
+
+/* 모든 과목 동일 외곽 레이아웃 */
+body .public-law-page {
+  width: min(1380px, calc(100% - 36px)) !important;
+  margin: 0 auto !important;
+  padding: 24px 0 72px !important;
+  font-size: var(--study-body-size) !important;
+  color: var(--study-text) !important;
+}
+body .public-law-topline {
+  margin-bottom: 12px !important;
+  font-size: 9pt !important;
+  color: var(--study-muted) !important;
+}
+body .public-law-hero,
+body .civil-law-hero,
+body .tax-law-page .public-law-hero,
+body .registration-law-page .public-law-hero,
+body .real-estate-theory-page .public-law-hero {
+  min-height: 0 !important;
+  padding: 22px 24px !important;
+  border: 1px solid var(--study-border) !important;
+  border-radius: 16px !important;
+  background: var(--study-surface) !important;
+  color: var(--study-text) !important;
+  box-shadow: none !important;
+  align-items: center !important;
+}
+body .public-law-hero h1,
+body .civil-law-hero h1,
+body .subject-placeholder-page .public-law-hero h1 {
+  margin: 5px 0 7px !important;
+  font-family: inherit !important;
+  font-size: var(--study-title-large) !important;
+  line-height: 1.4 !important;
+  letter-spacing: -.02em !important;
+  color: var(--study-text) !important;
+}
+body .public-law-hero p,
+body .civil-law-hero p { color: var(--study-muted) !important; font-size: var(--study-body-size) !important; line-height: 1.72 !important; }
+body .public-law-hero .eyebrow { min-height: 0 !important; padding: 0 !important; background: transparent !important; color: var(--study-muted) !important; font-size: 9pt !important; }
+body .public-law-hero__badges span {
+  min-height: 28px !important;
+  border: 1px solid var(--study-border) !important;
+  background: var(--study-soft) !important;
+  color: #586273 !important;
+  font-size: 9pt !important;
+}
+body .public-law-layout { grid-template-columns: 286px minmax(0,1fr) !important; gap: 18px !important; margin-top: 18px !important; }
+body .public-law-content {
+  min-width: 0 !important;
+  padding: 22px 24px 34px !important;
+  border: 1px solid var(--study-border) !important;
+  border-radius: 16px !important;
+  background: var(--study-surface) !important;
+  color: var(--study-text) !important;
+  box-shadow: none !important;
+  font-size: var(--study-body-size) !important;
+  line-height: 1.72 !important;
+}
+body .public-law-breadcrumb { margin-bottom: 18px !important; padding-bottom: 12px !important; font-size: 9pt !important; color: var(--study-muted) !important; }
+
+/* 제목 위계: 대 14pt / 중 13pt / 소 12pt / 본문 11pt */
+body .study-section-heading { margin-bottom: 14px !important; padding-bottom: 11px !important; border-bottom: 1px solid var(--study-border) !important; }
+body .study-section-heading__number { font-family: inherit !important; font-size: var(--study-title-medium) !important; color: #4f5968 !important; }
+body .study-section-heading__chapter { font-size: 9pt !important; color: var(--study-muted) !important; }
+body .study-section-heading h2 { margin-top: 2px !important; font-size: var(--study-title-medium) !important; color: var(--study-text) !important; }
+body .study-block__title h3,
+body .civil-topic-focus h3,
+body .exam36-card h3 { font-size: var(--study-title-small) !important; color: var(--study-text) !important; }
+body .study-block__title span { background: #eef1f4 !important; color: #5d6674 !important; }
+body .law-reference { font-size: 9pt !important; color: var(--study-muted) !important; }
+
+/* 동일 카드 패턴 */
+body .study-block,
+body .civil-topic-focus,
+body .civil-law-first-panel,
+body .civil-precedent-panel,
+body .civil-intensive-drill,
+body .civil-deep-study,
+body .tax-detail-section,
+body .registration-study-block {
+  margin-top: 14px !important;
+  padding: 17px 18px !important;
+  border: 1px solid var(--study-border) !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: var(--study-text) !important;
+  box-shadow: none !important;
+}
+body .study-tldr,
+body .civil-study-tldr,
+body .trap-card,
+body .memory-card,
+body .study-note,
+body .source-note,
+body .theory-basis-card {
+  border: 1px solid var(--study-border) !important;
+  background: var(--study-soft) !important;
+  color: var(--study-text) !important;
+  box-shadow: none !important;
+}
+body .study-tldr { padding: 15px 17px !important; border-radius: 12px !important; }
+body .study-tldr span,
+body .study-tldr strong,
+body .study-tldr p { color: var(--study-text) !important; font-size: var(--study-body-size) !important; }
+body .study-tldr strong { font-weight: 400 !important; }
+body .understanding-grid > div,
+body .civil-topic-entry-card,
+body .hierarchy-flow__step { background: #fafbfc !important; border: 1px solid var(--study-border) !important; color: var(--study-text) !important; }
+
+/* 본문 기본값: 11pt, 기존 강조/색상/밑줄/형광 제거 */
+body .public-law-content p,
+body .public-law-content li,
+body .public-law-content td,
+body .public-law-content dd,
+body .public-law-content blockquote,
+body .public-law-content .study-note,
+body .exam36-card__prompt,
+body .exam36-card__answer-body p,
+body .exam36-card__answer-body span {
+  font-size: var(--study-body-size) !important;
+  font-weight: 400 !important;
+  color: var(--study-text) !important;
+  text-decoration: none !important;
+  line-height: 1.72 !important;
+}
+body .public-law-content p :where(strong,b,em,u,mark,span):not(.study-user-format),
+body .public-law-content li :where(strong,b,em,u,mark,span):not(.study-user-format),
+body .public-law-content td :where(strong,b,em,u,mark,span):not(.study-user-format),
+body .public-law-content .civil-exam-number,
+body .public-law-content .exam-word,
+body .public-law-content .highlight,
+body .public-law-content mark,
+body .public-law-content u {
+  font-weight: 400 !important;
+  font-style: normal !important;
+  color: inherit !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+body .public-law-content .civil-exam-number,
+body .public-law-content [class*='highlight'],
+body .public-law-content [class*='emphasis'] { border: 0 !important; }
+
+/* 사용자 편집 서식은 기존 제거 규칙보다 우선 */
+.study-user-format { border-radius: 2px; padding: 0 1px; }
+
+/* 표도 전과목 동일 */
+body .study-table,
+body .public-law-content table { font-size: var(--study-body-size) !important; border-collapse: collapse !important; }
+body .study-table th,
+body .study-table td,
+body .public-law-content table th,
+body .public-law-content table td { padding: 9px 10px !important; border-color: var(--study-border) !important; }
+body .study-table thead th,
+body .public-law-content table thead th { background: #f2f4f6 !important; color: var(--study-text) !important; font-weight: 600 !important; }
+body .study-table tbody th { background: #fafbfc !important; color: var(--study-text) !important; font-weight: 500 !important; }
+
+/* 좌측 목차 공통 폰트 위계 */
+body .public-law-nav { top: 166px !important; max-height: calc(100vh - 184px) !important; border-radius: 14px !important; }
+body .public-law-nav__title strong { font-size: var(--study-title-medium) !important; }
+body .public-law-nav__title span { font-size: 9pt !important; }
+body .public-law-nav > details > summary { font-size: 13pt !important; }
+body .public-law-nav .civil-nav-point > summary,
+body .public-law-nav .tax-nav-point > button,
+body .public-law-nav details details > summary { font-size: 12pt !important; }
+body .public-law-nav li button,
+body .public-law-nav .civil-nav-topic-button,
+body .public-law-nav .tax-nav-groups button { font-size: 11pt !important; }
+
+/* 제36회 기출 영역도 같은 표면/타이포 */
+body .exam36-shell { width: min(1380px, calc(100% - 36px)) !important; font-size: var(--study-body-size) !important; }
+body .exam36-head,
+body .exam36-toolbar,
+body .exam36-card { border-color: var(--study-border) !important; box-shadow: none !important; }
+body .exam36-head h2 { font-size: var(--study-title-large) !important; color: var(--study-text) !important; }
+body .exam36-card__topic { font-size: var(--study-title-small) !important; color: var(--study-text) !important; font-weight: 600 !important; }
+
+/* placeholder도 실제 과목과 동일 레이아웃 */
+.subject-placeholder-page .public-law-nav summary i { background: #8b95a3; }
+.subject-placeholder-page .placeholder-card { margin-top: 0 !important; }
+
+@media (max-width: 980px) {
+  .study-text-toolbar__inner { width: calc(100% - 20px); }
+  .study-text-toolbar__status { min-width: 168px; }
+  body .public-law-layout { grid-template-columns: 1fr !important; }
+  body .public-law-nav { position: static !important; max-height: none !important; }
+}
+
+@media (max-width: 700px) {
+  .study-text-toolbar__inner { align-items: stretch; flex-direction: column; gap: 4px; padding: 6px 0 7px; }
+  .study-text-toolbar__status { min-width: 0; justify-content: space-between; }
+  .study-text-toolbar__controls { width: 100%; padding-bottom: 1px; }
+  .study-text-tool { min-height: 34px; }
+  body .public-law-page { width: calc(100% - 20px) !important; padding-top: 16px !important; }
+  body .public-law-hero { padding: 18px !important; align-items: flex-start !important; }
+  body .public-law-content { padding: 17px 14px 26px !important; }
+  body .public-law-nav li button { min-height: 44px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .study-text-toolbar *, .public-law-page * { transition: none !important; animation: none !important; }
+}
