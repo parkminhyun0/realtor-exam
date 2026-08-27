@@ -32,8 +32,8 @@ export const subjectGroups = [
         title: '공인중개사법령 및 중개실무',
         shortTitle: '중개사법',
         icon: '⌂',
-        description: '중개사법령 · 중개실무 · 거래신고제도를 핵심 조문과 절차 중심으로 정리합니다.',
-        status: '준비 중',
+        description: '정규 본문 구축 중 · 2025 제36회 Q-Net 기출 변형 40문항을 먼저 제공합니다.',
+        status: '기출 공개',
       },
       {
         id: 'public-law',
