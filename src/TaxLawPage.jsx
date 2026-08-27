@@ -5,7 +5,7 @@ import { taxLawContent } from './data/taxLawContent'
 import './civil-law.css'
 import './tax-law.css'
 
-const TAX_KEYWORD_PATTERN = /(조세법률주의|조세평등주의|국세|지방세|종합부동산세|재산세|취득세|등록면허세|양도소득세|소득세|보통세|목적세|직접세|간접세|지방교육세|지역자원시설세|교육세|농어촌특별세|소득과세|소비과세|재산과세|유통과세|취득단계|보유단계|양도단계|등기·등록단계|제\s*\d+\s*조(?:의\s*\d+)?|\d+(?:[.,]\d+)*(?:\s*(?:개|종|일|년|월|%|㎡|m²))?)/g
+const TAX_KEYWORD_PATTERN = /(장기보유특별공제|공정시장가액비율|제2차 납세의무|인별·전국합산|부동산에 관한 권리|사실상취득가격|조세법률주의|조세평등주의|종합부동산세|등록면허세|양도소득세|과세기준일|조세우선권|법정기일|연대납세의무|사실상 취득|간주취득|과점주주|시가인정액|신고납부|보통징수|종합합산|별도합산|분리과세|종합소득|분류과세|사업소득|필요경비|양도차익|1세대 1주택|대금청산일|예정신고|확정신고|납세의무|성립|확정|소멸|재산세|취득세|소득세|국세|지방세|보통세|목적세|직접세|간접세|지방교육세|지역자원시설세|교육세|농어촌특별세|소득과세|소비과세|재산과세|유통과세|취득단계|보유단계|양도단계|등기·등록단계|제\s*\d+\s*조(?:의\s*\d+)?|\d+(?:[.,]\d+)*(?:\s*(?:개|종|일|년|월|%|㎡|m²|억원|만원))?)/g
 const NUMBER_LIKE_PATTERN = /^(?:제\s*\d+\s*조|\d|①|②|③|④|⑤|⑥|⑦|⑧|⑨|⑩)/
 
 export default function TaxLawPage({ onBack }) {
@@ -155,7 +155,7 @@ function TaxLawButtons({ references = [], onOpenLaw, compact = false }) {
   )
 }
 
-function TaxStudyPoint({ part, content, onOpenLaw }) {
+function TaxStudyPoint({ part, point, content, onOpenLaw }) {
   return (
     <>
       <div className="study-tldr tax-study-tldr">
@@ -168,8 +168,8 @@ function TaxStudyPoint({ part, content, onOpenLaw }) {
         <div className="tax-exam-core__heading">
           <span>EXAM CORE</span>
           <div>
-            <h3>⭐ POINT 01에서 먼저 잡아야 할 핵심</h3>
-            <p>법정 세목과 조세이론상 분류를 섞지 않는 것이 첫 번째 기준입니다.</p>
+            <h3>⭐ POINT {point.number}에서 먼저 잡아야 할 핵심</h3>
+            <p>{point.title}에서 먼저 체크할 빈출 기준과 숫자입니다.</p>
           </div>
         </div>
         <div className="tax-exam-core__grid">
