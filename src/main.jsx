@@ -31,6 +31,7 @@ import './civil-law-deep-study-layer.js'
 import './civil-law-book-map-exam.js'
 import './civil-law-part1-topic-visual.js'
 import './civil-law-part2-topic-visual.js'
+import './civil-law-part3-topic-visual.js'
 import './subject-nav-auto-scroll.js'
 import './subject-sidebar-toggle.css'
 import './subject-sidebar-toggle.js'
@@ -41,6 +42,7 @@ import './unified-study-ui-v2.css'
 import './inline-text-flow-fix.css'
 import './civil-law-book-map-exam.css'
 import './civil-law-part1-visuals.css'
+import './civil-law-part3-visuals.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
