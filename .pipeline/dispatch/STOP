@@ -1,0 +1,7 @@
+LEAD-STOP
+일시정지 — 박 목사님 지시 2026-08-27 09:4x.
+
+큐·산출물·배정 원장·통합브랜치는 그대로 보존한다. 새 배정만 멈춘다.
+재개: 이 파일을 지우고 감시견을 띄우면 나머지 데몬은 스스로 선다.
+  cmux 로 🐕 감시견 패널에서:
+  cd ~/realtor-exam && bash .pipeline/dispatch/watchdog.sh
