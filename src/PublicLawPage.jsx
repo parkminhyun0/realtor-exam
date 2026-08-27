@@ -8,7 +8,8 @@ const LAW_ARTICLE_PATTERN = /^제\s*\d+\s*조(?:의\s*\d+)?$/
 
 function hardenEmbeddedTableScrolling(frame) {
   const doc = frame?.contentDocument
-  if (!doc?.head || !doc?.body) return
+  const view = frame?.contentWindow
+  if (!doc?.head || !doc?.body || !view) return
 
   if (!doc.getElementById('public-law-mobile-table-scroll-fix')) {
     const style = doc.createElement('style')
@@ -20,27 +21,27 @@ function hardenEmbeddedTableScrolling(frame) {
         min-width: 0 !important;
         max-width: 100% !important;
         overflow: visible !important;
+        contain: layout !important;
       }
       .mobile-table-scroll {
         position: relative !important;
         display: block !important;
         box-sizing: border-box !important;
-        inline-size: 100% !important;
-        width: 100% !important;
+        inline-size: min(100%, var(--embedded-table-visible-width, 100%)) !important;
+        width: min(100%, var(--embedded-table-visible-width, 100%)) !important;
         min-width: 0 !important;
-        max-width: 100% !important;
+        max-width: min(100%, var(--embedded-table-visible-width, 100%)) !important;
         margin: 0 0 10px !important;
-        padding: 0 14px 10px 0 !important;
-        overflow-x: auto !important;
+        padding: 0 16px 10px 0 !important;
+        overflow-x: scroll !important;
         overflow-y: hidden !important;
         -webkit-overflow-scrolling: touch !important;
-        overscroll-behavior-x: contain !important;
+        overscroll-behavior-inline: contain !important;
         scroll-behavior: auto !important;
         scroll-snap-type: none !important;
-        scroll-padding-inline-end: 14px !important;
+        scroll-padding-inline-end: 16px !important;
         touch-action: pan-x pan-y !important;
         scrollbar-gutter: auto !important;
-        contain: inline-size !important;
         isolation: isolate !important;
       }
       .mobile-table-scroll > table {
@@ -55,11 +56,31 @@ function hardenEmbeddedTableScrolling(frame) {
       .mobile-table-scroll > table td:last-child {
         border-right-width: 2px !important;
       }
-      @media (max-width: 900px) {
-        .mobile-table-scroll { overflow-x: scroll !important; }
+      .mobile-table-scroll::after {
+        content: '';
+        display: block;
+        width: 16px;
+        height: 1px;
       }
     `
     doc.head.appendChild(style)
+  }
+
+  const syncWidths = () => {
+    const vv = view.visualViewport
+    const viewportWidth = vv?.width || doc.documentElement.clientWidth || view.innerWidth
+    const offsetLeft = vv?.offsetLeft || 0
+
+    doc.querySelectorAll('.mobile-table-scroll').forEach((wrapper) => {
+      const rect = wrapper.getBoundingClientRect()
+      const parentRect = wrapper.parentElement?.getBoundingClientRect()
+      const visibleLeft = Math.max(offsetLeft, rect.left)
+      const visibleRight = offsetLeft + viewportWidth
+      const viewportAvailable = Math.max(220, visibleRight - visibleLeft - 8)
+      const parentAvailable = Math.max(220, parentRect?.width || rect.width || viewportAvailable)
+      const resolved = Math.max(220, Math.min(viewportAvailable, parentAvailable))
+      wrapper.style.setProperty('--embedded-table-visible-width', `${resolved}px`)
+    })
   }
 
   const wrapTables = () => {
@@ -73,12 +94,25 @@ function hardenEmbeddedTableScrolling(frame) {
       parent.insertBefore(wrapper, table)
       wrapper.appendChild(table)
     })
+    syncWidths()
   }
 
   wrapTables()
-  frame.contentWindow?.requestAnimationFrame(wrapTables)
-  frame.contentWindow?.setTimeout(wrapTables, 120)
-  frame.contentWindow?.setTimeout(wrapTables, 500)
+  view.requestAnimationFrame(wrapTables)
+  view.setTimeout(wrapTables, 120)
+  view.setTimeout(wrapTables, 500)
+
+  if (!view.__publicLawTableViewportInstalled) {
+    view.__publicLawTableViewportInstalled = true
+    view.addEventListener('resize', syncWidths, { passive: true })
+    view.visualViewport?.addEventListener('resize', syncWidths, { passive: true })
+    view.visualViewport?.addEventListener('scroll', syncWidths, { passive: true })
+    if ('ResizeObserver' in view) {
+      const resizeObserver = new view.ResizeObserver(syncWidths)
+      resizeObserver.observe(doc.documentElement)
+      view.__publicLawTableResizeObserver = resizeObserver
+    }
+  }
 }
 
 export default function PublicLawPage({ onBack }) {
