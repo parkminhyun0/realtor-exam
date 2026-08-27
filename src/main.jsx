@@ -10,6 +10,7 @@ import './tax-law-exam-drill.css'
 import './table-layout.css'
 import './mobile-table-scroll-fix.css'
 import './mobile-table-viewport.js'
+import './exam-wording-standard.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
