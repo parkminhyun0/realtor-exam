@@ -28,6 +28,7 @@ import './civil-law-intensive-drill-layer.css'
 import './civil-law-intensive-drill-layer.js'
 import './civil-law-deep-study-layer.css'
 import './civil-law-deep-study-layer.js'
+import './civil-law-book-map-exam.js'
 import './subject-nav-auto-scroll.js'
 import './subject-sidebar-toggle.css'
 import './subject-sidebar-toggle.js'
@@ -36,6 +37,7 @@ import './text-overlap-guard.css'
 import './text-label-layout-fix.css'
 import './unified-study-ui-v2.css'
 import './inline-text-flow-fix.css'
+import './civil-law-book-map-exam.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
