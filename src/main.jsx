@@ -34,6 +34,7 @@ import './subject-sidebar-toggle.js'
 import './subject-ui-unified.css'
 import './text-overlap-guard.css'
 import './text-label-layout-fix.css'
+import './unified-study-ui-v2.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
