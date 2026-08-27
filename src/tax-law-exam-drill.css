@@ -77,10 +77,12 @@
 .tax-exam-drill__exceptions {
   display: grid;
   gap: 9px;
+  min-width: 0;
   padding: 14px;
   border: 1px solid #ead6d2;
   border-radius: 13px;
   background: #fff8f7;
+  container-type: inline-size;
 }
 
 .tax-exam-drill__subhead {
@@ -104,32 +106,50 @@
   display: grid;
   grid-template-columns: minmax(120px, .38fr) minmax(0, 1fr);
   gap: 12px;
+  min-width: 0;
   align-items: start;
   padding-top: 9px;
   border-top: 1px solid #f0dfdc;
 }
 
 .tax-exam-drill__exceptions article > b {
+  min-width: 0;
   color: #713631;
+  word-break: keep-all;
 }
 
 .tax-exam-drill__exceptions article > div {
   display: grid;
   gap: 6px;
+  min-width: 0;
 }
 
+/* HighlightTaxText는 하나의 문장을 여러 text/mark 노드로 나눈다.
+   p 자체를 grid로 두면 각 조각이 별도 grid item이 되어 모바일에서
+   한 글자씩 세로로 찢어지는 문제가 생긴다. 문장 흐름은 inline formatting
+   context로 유지하고 좌측 원칙/체크 배지만 float으로 고정한다. */
 .tax-exam-drill__exceptions p {
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
-  gap: 7px;
+  display: block;
+  min-width: 0;
   margin: 0;
   color: #566170;
   line-height: 1.65;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
-.tax-exam-drill__exceptions p > span {
+.tax-exam-drill__exceptions p::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.tax-exam-drill__exceptions p > span:first-child {
+  float: left;
   display: inline-flex;
+  width: 42px;
   height: 24px;
+  margin: 1px 7px 2px 0;
   align-items: center;
   justify-content: center;
   border-radius: 7px;
@@ -137,6 +157,14 @@
   color: #a12a21;
   font-size: 9px;
   font-weight: 900;
+  white-space: nowrap;
+}
+
+.tax-exam-drill__exceptions p .tax-exam-keyword,
+.tax-exam-drill__exceptions p .tax-exam-number {
+  display: inline;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .tax-exam-drill__calc {
@@ -242,8 +270,17 @@
   .tax-exam-drill__numbers {
     grid-template-columns: 1fr;
   }
+}
 
-  .tax-exam-drill__exceptions p {
-    grid-template-columns: 42px minmax(0, 1fr);
+/* 브라우저 확대/축소 시 viewport media query와 실제 카드 폭이 달라져도
+   카드 자체 폭을 기준으로 모바일 1열을 보장한다. */
+@container (max-width: 760px) {
+  .tax-exam-drill__exceptions article {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .tax-exam-drill__exceptions article > b {
+    margin-bottom: 2px;
   }
 }
