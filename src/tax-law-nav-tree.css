@@ -1,20 +1,80 @@
-/* 부동산세법 좌측 목차: PART → POINT(대분류) → 중분류 3단 트리 */
+/* 부동산세법 좌측 목차: PART → POINT(대분류) → 중분류 3단 토글 트리 */
 .tax-law-page .tax-nav-point {
   display: block;
   min-width: 0;
+  overflow: hidden;
 }
 
 .tax-law-page .tax-nav-point > .tax-nav-point__button {
+  position: relative;
   width: 100%;
+  padding-right: 31px !important;
+}
+
+.tax-law-page .tax-nav-point > .tax-nav-point__button::after {
+  content: '›';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  color: #91a3b7;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: center;
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+
+.tax-law-page .tax-nav-point > .tax-nav-point__button:hover::after,
+.tax-law-page .tax-nav-point > .tax-nav-point__button:focus-visible::after {
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+}
+
+.tax-law-page .tax-nav-point > .tax-nav-point__button.active::after {
+  color: #6b5833;
+}
+
+.tax-law-page .tax-nav-point > .tax-nav-point__button--expanded::after {
+  transform: translateY(-50%) rotate(90deg);
 }
 
 .tax-law-page .tax-nav-groups {
   display: grid;
   gap: 2px;
+  max-height: 0;
+  margin: 0 8px 0 18px !important;
+  padding: 0 0 0 11px !important;
+  overflow: hidden;
+  border-left: 2px solid transparent;
+  opacity: 0;
+  transform: translateY(-4px);
+  visibility: hidden;
+  list-style: none;
+  transition:
+    max-height .26s cubic-bezier(.2, .8, .2, 1),
+    margin .22s ease,
+    padding .22s ease,
+    opacity .18s ease,
+    transform .22s ease,
+    border-color .22s ease,
+    visibility 0s linear .26s;
+}
+
+.tax-law-page .tax-nav-groups.is-expanded {
+  max-height: 720px;
   margin: 2px 8px 9px 18px !important;
   padding: 5px 0 5px 11px !important;
-  border-left: 2px solid #d9cfb8;
-  list-style: none;
+  border-left-color: #d9cfb8;
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .tax-law-page .tax-nav-groups > li {
@@ -79,12 +139,23 @@
 }
 
 @media (max-width: 700px) {
-  .tax-law-page .tax-nav-groups {
+  .tax-law-page .tax-nav-groups,
+  .tax-law-page .tax-nav-groups.is-expanded {
     margin-left: 14px !important;
+  }
+
+  .tax-law-page .tax-nav-groups.is-expanded {
     padding-left: 9px !important;
   }
 
   .tax-law-page .tax-nav-groups > li > button {
     min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tax-law-page .tax-nav-point > .tax-nav-point__button::after,
+  .tax-law-page .tax-nav-groups {
+    transition: none !important;
   }
 }
