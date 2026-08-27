@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react'
 import LawTextViewer from './LawTextViewer'
-import { civilLawParts, civilLawPointCount } from './data/civilLaw'
+import { civilLawParts, civilLawPointCount, civilLawTopicCount } from './data/civilLawToc3Level'
 import { civilLawContent } from './data/civilLawContent'
 import { civilLawPart2Content } from './data/civilLawPart2Content'
 import { civilLawPart3Content } from './data/civilLawPart3Content'
 import { civilLawPart4Content } from './data/civilLawPart4Content'
 import './law-viewer.css'
 import './civil-law.css'
+import './civil-law-3level.css'
 
 const civilLawStudyContent = {
   ...civilLawContent,
@@ -25,9 +26,88 @@ const CIVIL_LAW_NAMES = [
 ]
 const INLINE_ARTICLE_PATTERN = new RegExp(`(?:(${CIVIL_LAW_NAMES.join('|')})\\s*)?(제\\s*\\d+\\s*조(?:의\\s*\\d+)?)`, 'g')
 const NUMBER_PATTERN = /(\d+(?:[.,]\d+)*(?:\s*(?:년|개월|일|명|개|회|%))?)/g
+const GENERIC_TOPIC_WORDS = new Set([
+  '일반', '의의', '효력', '법률관계', '종류', '범위', '적용범위', '계약', '권리', '법률', '관계', '경우',
+])
 
 function normalizeArticle(value = '') {
   return String(value).replace(/\s+/g, '')
+}
+
+function normalizeTopicText(value = '') {
+  return String(value)
+    .toLowerCase()
+    .replace(/[^0-9a-z가-힣]/g, '')
+}
+
+function getTopicKeywords(topic = '') {
+  return String(topic)
+    .split(/[\s·,()/]+/)
+    .map((token) => token.trim())
+    .filter((token) => token.length >= 2 && !GENERIC_TOPIC_WORDS.has(token))
+}
+
+function scoreTopicMatch(topic, candidate) {
+  const topicText = normalizeTopicText(topic)
+  const candidateText = normalizeTopicText(candidate)
+  if (!topicText || !candidateText) return 0
+
+  let score = 0
+  if (candidateText.includes(topicText) || topicText.includes(candidateText)) score += 12
+
+  getTopicKeywords(topic).forEach((keyword) => {
+    const normalizedKeyword = normalizeTopicText(keyword)
+    if (normalizedKeyword && candidateText.includes(normalizedKeyword)) {
+      score += normalizedKeyword.length >= 4 ? 4 : 2
+    }
+  })
+
+  return score
+}
+
+function buildTopicView(content, point, selectedTopicIndex) {
+  const topic = point.topics[selectedTopicIndex] || point.topics[0] || point.title
+  const entries = (content.sections || []).flatMap((section, sectionIndex) => (
+    (section.items || []).map(([term, body], itemIndex) => ({
+      sectionTitle: section.title,
+      sectionNote: section.note,
+      term,
+      body,
+      sectionIndex,
+      itemIndex,
+    }))
+  ))
+
+  const rankedEntries = entries
+    .map((entry) => ({
+      ...entry,
+      score: scoreTopicMatch(topic, `${entry.sectionTitle} ${entry.term} ${entry.body}`),
+    }))
+    .filter((entry) => entry.score > 0)
+    .sort((a, b) => b.score - a.score || a.sectionIndex - b.sectionIndex || a.itemIndex - b.itemIndex)
+
+  let relatedEntries = rankedEntries.slice(0, 6)
+  let usedFallback = false
+
+  if (!relatedEntries.length && entries.length) {
+    usedFallback = true
+    const topicCount = Math.max(point.topics.length, 1)
+    const start = Math.floor((selectedTopicIndex * entries.length) / topicCount)
+    const end = Math.max(start + 1, Math.floor(((selectedTopicIndex + 1) * entries.length) / topicCount))
+    relatedEntries = entries.slice(start, Math.min(end, entries.length))
+    if (!relatedEntries.length) relatedEntries = entries.slice(0, Math.min(3, entries.length))
+  }
+
+  const relatedTables = (content.tables || [])
+    .map((table) => ({
+      ...table,
+      score: scoreTopicMatch(topic, `${table.title} ${table.headers?.join(' ') || ''} ${table.rows?.flat().join(' ') || ''}`),
+    }))
+    .filter((table) => table.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 2)
+
+  return { topic, relatedEntries, relatedTables, usedFallback }
 }
 
 function HighlightNumbers({ children }) {
@@ -82,6 +162,7 @@ function CivilLawText({ children, onOpenLaw }) {
 
 export default function CivilLawPage({ onBack }) {
   const [selectedId, setSelectedId] = useState('p1s1')
+  const [selectedTopicIndex, setSelectedTopicIndex] = useState(0)
   const [lawTarget, setLawTarget] = useState(null)
 
   const selected = useMemo(() => {
@@ -92,6 +173,8 @@ export default function CivilLawPage({ onBack }) {
     return { part: civilLawParts[0], point: civilLawParts[0].points[0] }
   }, [selectedId])
 
+  const safeTopicIndex = Math.min(selectedTopicIndex, Math.max(selected.point.topics.length - 1, 0))
+  const selectedTopic = selected.point.topics[safeTopicIndex] || selected.point.title
   const content = civilLawStudyContent[selected.point.id]
 
   const openLawArticle = (lawName, article) => {
@@ -102,9 +185,10 @@ export default function CivilLawPage({ onBack }) {
     })
   }
 
-  const selectPoint = (id) => {
+  const selectPoint = (id, topicIndex = 0) => {
     setLawTarget(null)
     setSelectedId(id)
+    setSelectedTopicIndex(topicIndex)
   }
 
   return (
@@ -119,21 +203,21 @@ export default function CivilLawPage({ onBack }) {
           <div>
             <span className="eyebrow">CIVIL LAW · 2026</span>
             <h1>민법 및 민사특별법 핵심정리</h1>
-            <p>관련 법조문을 먼저 읽고, 핵심원칙·요건·효과·제3자·핵심 판례·시험함정을 같은 흐름에서 정리합니다. 본문 속 조문 번호를 누르면 해당 조문만 바로 확인할 수 있습니다.</p>
+            <p>새 목차를 PART → POINT → 세부항목의 3단계로 구성하고, 기존 법조문·해설·판례·시험함정을 선택한 세부항목과 연결해 학습할 수 있도록 재정리했습니다.</p>
           </div>
           <div className="public-law-hero__badges">
             <span>4개 PART</span>
             <span>{civilLawPointCount}개 POINT</span>
-            <span>전체 POINT 본문 공개</span>
-            <span>법조문 · 비교 · O/X</span>
+            <span>{civilLawTopicCount}개 세부항목</span>
+            <span>3단계 메뉴 · 관련내용 연결</span>
           </div>
         </section>
 
         <div className="public-law-layout" data-mobile-toc-layout>
-          <aside className="public-law-nav" aria-label="민법 및 민사특별법 목차" data-mobile-toc>
+          <aside className="public-law-nav" aria-label="민법 및 민사특별법 3단계 목차" data-mobile-toc>
             <div className="public-law-nav__title">
               <strong>민법 및 민사특별법</strong>
-              <span>PART → POINT → 법조문 → 핵심정리</span>
+              <span>PART → POINT → 세부항목</span>
             </div>
             {civilLawParts.map((part) => (
               <details key={part.id} open={part.points.some((item) => item.id === selectedId)}>
@@ -141,37 +225,52 @@ export default function CivilLawPage({ onBack }) {
                   <i style={{ background: part.color }} />
                   <span>PART {part.number} {part.title}</span>
                 </summary>
-                <ul>
-                  {part.points.map((point) => (
-                    <li key={point.id}>
-                      <button
-                        type="button"
-                        className={selectedId === point.id ? 'active' : ''}
-                        onClick={() => selectPoint(point.id)}
-                      >
-                        <span>POINT {point.number} · {point.title}</span>
-                        {civilLawStudyContent[point.id]
-                          ? <b className="civil-nav__ready">본문</b>
-                          : <small>목차</small>}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                <div className="civil-nav-point-list">
+                  {part.points.map((point) => {
+                    const isSelectedPoint = point.id === selectedId
+                    return (
+                      <details className="civil-nav-point" key={point.id} open={isSelectedPoint}>
+                        <summary onClick={() => {
+                          if (!isSelectedPoint) selectPoint(point.id, 0)
+                        }}>
+                          <span className="civil-nav-point__label">
+                            <span>POINT {point.number} · {point.title}</span>
+                            {civilLawStudyContent[point.id] && <b className="civil-nav__ready">본문</b>}
+                          </span>
+                        </summary>
+                        <ol className="civil-nav-topic-list">
+                          {point.topics.map((topic, topicIndex) => (
+                            <li key={`${point.id}-${topic}`}>
+                              <button
+                                type="button"
+                                className={`civil-nav-topic-button ${isSelectedPoint && safeTopicIndex === topicIndex ? 'active' : ''}`}
+                                onClick={() => selectPoint(point.id, topicIndex)}
+                              >
+                                <span className="civil-nav-topic-number">{String(topicIndex + 1).padStart(2, '0')}</span>
+                                <span>{topic}</span>
+                              </button>
+                            </li>
+                          ))}
+                        </ol>
+                      </details>
+                    )
+                  })}
+                </div>
               </details>
             ))}
           </aside>
 
           <article className="public-law-content" data-mobile-toc-content>
             <div className="public-law-breadcrumb">
-              PART {selected.part.number} {selected.part.title} <span>›</span> POINT {selected.point.number} · {selected.point.title}
+              PART {selected.part.number} {selected.part.title} <span>›</span> POINT {selected.point.number} · {selected.point.title} <span>›</span> {selectedTopic}
             </div>
 
             <header className="study-section-heading" style={{ '--chapter-color': selected.part.color }}>
               <div>
-                <span className="study-section-heading__number">{selected.point.number}</span>
+                <span className="study-section-heading__number">{selected.point.number}-{String(safeTopicIndex + 1).padStart(2, '0')}</span>
                 <div>
-                  <span className="study-section-heading__chapter">PART {selected.part.number} · {selected.part.title}</span>
-                  <h2>{selected.point.title}</h2>
+                  <span className="study-section-heading__chapter">PART {selected.part.number} · {selected.part.title} / POINT {selected.point.number} · {selected.point.title}</span>
+                  <h2>{selectedTopic}</h2>
                 </div>
               </div>
               <span className="law-reference">
@@ -184,6 +283,7 @@ export default function CivilLawPage({ onBack }) {
                 <CivilStudyContent
                   content={content}
                   point={selected.point}
+                  selectedTopicIndex={safeTopicIndex}
                   onOpenLaw={openLawArticle}
                 />
               )
@@ -192,6 +292,7 @@ export default function CivilLawPage({ onBack }) {
                   point={selected.point}
                   part={selected.part}
                   selectedId={selectedId}
+                  selectedTopicIndex={safeTopicIndex}
                   onSelectPoint={selectPoint}
                 />
               )}
@@ -216,51 +317,41 @@ export default function CivilLawPage({ onBack }) {
   )
 }
 
-function CivilStudyContent({ content, point, onOpenLaw }) {
+function CivilStudyContent({ content, point, selectedTopicIndex, onOpenLaw }) {
+  const topicView = buildTopicView(content, point, selectedTopicIndex)
+
   return (
     <>
       <CivilStatuteCards statutes={content.statutes} onOpenLaw={onOpenLaw} />
 
       <div className="study-tldr civil-study-tldr">
-        <span>📌 핵심 한줄</span>
+        <span>📌 POINT 핵심</span>
         <strong><CivilLawText onOpenLaw={onOpenLaw}>{content.headline}</CivilLawText></strong>
         <p><CivilLawText onOpenLaw={onOpenLaw}>{content.summary}</CivilLawText></p>
       </div>
 
-      <section className="study-block">
-        <div className="study-block__title"><span>01</span><h3>전체 흐름</h3></div>
-        <div className="hierarchy-flow" aria-label={`${point.title} 전체 흐름`}>
-          {content.sections.map((section, index) => (
-            <div className="hierarchy-flow__group" key={section.title}>
-              <div className="hierarchy-flow__step">
-                <small>STEP {index + 1}</small>
-                <strong>{section.title}</strong>
-              </div>
-              {index < content.sections.length - 1 && <span className="hierarchy-flow__arrow">→</span>}
-            </div>
+      <section className="study-block civil-topic-focus">
+        <div className="study-block__title">
+          <span>{String(selectedTopicIndex + 1).padStart(2, '0')}</span>
+          <h3>{topicView.topic}</h3>
+        </div>
+        <span className="civil-topic-focus__eyebrow">3단계 세부항목 · 관련 내용 재배치</span>
+        <p className="civil-topic-focus__meta">이 세부항목과 직접 연결되는 기존 POINT의 해설을 우선 모아서 표시합니다. 법조문·판례·O/X·함정은 같은 POINT의 공통 학습자료로 이어집니다.</p>
+        {topicView.usedFallback && (
+          <p className="civil-topic-fallback">현재 POINT의 기존 본문에 세부항목명이 그대로 쓰이지 않은 경우, 목차 순서와 가까운 핵심 해설을 연결해 표시합니다.</p>
+        )}
+        <div className="civil-topic-entry-grid">
+          {topicView.relatedEntries.map((entry) => (
+            <article className="civil-topic-entry-card" key={`${entry.sectionTitle}-${entry.term}`}>
+              <small>{entry.sectionTitle}</small>
+              <b><CivilLawText onOpenLaw={onOpenLaw}>{entry.term}</CivilLawText></b>
+              <p><CivilLawText onOpenLaw={onOpenLaw}>{entry.body}</CivilLawText></p>
+            </article>
           ))}
         </div>
       </section>
 
-      {content.sections.map((section, sectionIndex) => (
-        <section className="study-block" key={section.title}>
-          <div className="study-block__title">
-            <span>{String(sectionIndex + 2).padStart(2, '0')}</span>
-            <h3>{section.title}</h3>
-          </div>
-          <p className="study-note"><CivilLawText onOpenLaw={onOpenLaw}>{section.note}</CivilLawText></p>
-          <div className="understanding-grid civil-understanding-grid">
-            {section.items.map(([term, body]) => (
-              <div key={term}>
-                <b><CivilLawText onOpenLaw={onOpenLaw}>{term}</CivilLawText></b>
-                <p><CivilLawText onOpenLaw={onOpenLaw}>{body}</CivilLawText></p>
-              </div>
-            ))}
-          </div>
-        </section>
-      ))}
-
-      {content.tables?.map((table, index) => (
+      {topicView.relatedTables.map((table, index) => (
         <section className="study-block" key={table.title}>
           <div className="study-block__title"><span>표{index + 1}</span><h3>{table.title}</h3></div>
           <div className="table-wrap">
@@ -399,17 +490,17 @@ function CivilStatuteCards({ statutes, onOpenLaw }) {
   )
 }
 
-function CivilOutlineContent({ point, part, selectedId, onSelectPoint }) {
+function CivilOutlineContent({ point, part, selectedId, selectedTopicIndex, onSelectPoint }) {
   return (
     <>
       <section className="civil-outline-intro">
-        <span>다음 본문 확장 대상</span>
-        <strong>{point.title}의 세부 학습 항목</strong>
-        <p>목차는 확정되어 있습니다. 이 POINT도 동일하게 관련 법조문을 본문 첫 카드로 배치한 뒤 핵심원칙·요건·효과·제3자·판례·시험함정을 채웁니다.</p>
+        <span>3단계 세부항목</span>
+        <strong>{point.topics[selectedTopicIndex] || point.title}</strong>
+        <p>이 POINT는 새 3단계 목차에 맞춰 세부항목을 선택할 수 있도록 구성되어 있습니다. 본문 확장 시에도 같은 항목 아래에 법조문·핵심원칙·요건·효과·판례·시험함정을 배치합니다.</p>
       </section>
 
       <section className="study-block civil-outline-block">
-        <div className="study-block__title"><span>TOC</span><h3>세부 목차</h3></div>
+        <div className="study-block__title"><span>TOC</span><h3>POINT {point.number} 세부 목차</h3></div>
         <ol className="civil-outline-list">
           {point.topics.map((topic, index) => (
             <li key={topic}>
@@ -435,7 +526,7 @@ function CivilPartMap({ part, selectedId, onSelectPoint }) {
             key={point.id}
             type="button"
             className={point.id === selectedId ? 'active' : ''}
-            onClick={() => onSelectPoint(point.id)}
+            onClick={() => onSelectPoint(point.id, 0)}
           >
             <small>POINT {point.number}</small>
             <strong>{point.title}</strong>

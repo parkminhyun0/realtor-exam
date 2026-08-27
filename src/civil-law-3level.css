@@ -1,0 +1,203 @@
+.civil-law-page .public-law-nav__title span {
+  line-height: 1.45;
+}
+
+.civil-law-page .civil-nav-point-list {
+  display: grid;
+  gap: 6px;
+  padding: 7px 8px 11px;
+}
+
+.civil-law-page .civil-nav-point {
+  margin: 0;
+  border: 1px solid rgba(49, 95, 143, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+}
+
+.civil-law-page .civil-nav-point > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 10px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.civil-law-page .civil-nav-point > summary::-webkit-details-marker {
+  display: none;
+}
+
+.civil-law-page .civil-nav-point > summary::after {
+  content: '›';
+  flex: 0 0 auto;
+  color: #7b8794;
+  font-size: 16px;
+  line-height: 1;
+  transform: rotate(0deg);
+  transition: transform 0.16s ease;
+}
+
+.civil-law-page .civil-nav-point[open] > summary::after {
+  transform: rotate(90deg);
+}
+
+.civil-law-page .civil-nav-point[open] > summary {
+  background: rgba(49, 95, 143, 0.08);
+  color: #234b73;
+}
+
+.civil-law-page .civil-nav-point__label {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.civil-law-page .civil-nav-point__label span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.civil-law-page .civil-nav-topic-list {
+  display: grid !important;
+  gap: 3px;
+  margin: 0 !important;
+  padding: 4px 6px 7px 22px !important;
+  list-style: none;
+  border-top: 1px solid rgba(49, 95, 143, 0.08);
+}
+
+.civil-law-page .civil-nav-topic-list li {
+  margin: 0;
+}
+
+.civil-law-page .civil-nav-topic-button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr);
+  align-items: start;
+  gap: 6px;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #4b5663;
+  text-align: left;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.38;
+  cursor: pointer;
+}
+
+.civil-law-page .civil-nav-topic-button:hover {
+  background: rgba(49, 95, 143, 0.07);
+}
+
+.civil-law-page .civil-nav-topic-button.active {
+  background: #edf4fb;
+  color: #173f67;
+  font-weight: 800;
+  box-shadow: inset 3px 0 0 #315f8f;
+}
+
+.civil-law-page .civil-nav-topic-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 23px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(49, 95, 143, 0.1);
+  color: #315f8f;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.civil-law-page .civil-topic-focus {
+  border: 1px solid rgba(49, 95, 143, 0.18);
+  background: linear-gradient(180deg, rgba(49, 95, 143, 0.055), rgba(255, 255, 255, 0.96));
+}
+
+.civil-law-page .civil-topic-focus__eyebrow {
+  display: inline-flex;
+  margin-bottom: 7px;
+  color: #315f8f;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.civil-law-page .civil-topic-focus__meta {
+  margin: 0 0 12px;
+  color: #66717f;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.civil-law-page .civil-topic-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.civil-law-page .civil-topic-entry-card {
+  padding: 13px 14px;
+  border: 1px solid rgba(49, 95, 143, 0.13);
+  border-radius: 11px;
+  background: #fff;
+}
+
+.civil-law-page .civil-topic-entry-card small {
+  display: block;
+  margin-bottom: 5px;
+  color: #748190;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.civil-law-page .civil-topic-entry-card b {
+  display: block;
+  margin-bottom: 5px;
+  color: #23374b;
+  font-size: 12px;
+}
+
+.civil-law-page .civil-topic-entry-card p {
+  margin: 0;
+  color: #4f5d6a;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.civil-law-page .civil-topic-fallback {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #fff8e8;
+  color: #805d15;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+@media (max-width: 780px) {
+  .civil-law-page .civil-nav-point-list {
+    padding: 6px 6px 9px;
+  }
+
+  .civil-law-page .civil-nav-topic-list {
+    padding-left: 18px !important;
+  }
+
+  .civil-law-page .civil-nav-topic-button {
+    font-size: 11px;
+  }
+
+  .civil-law-page .civil-topic-entry-grid {
+    grid-template-columns: 1fr;
+  }
+}
