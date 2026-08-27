@@ -48,9 +48,7 @@ function openPopup() {
 
   const header = makeElement('header', 'law-article-popup__header')
   const headerCopy = makeElement('div')
-  headerCopy.append(
-    makeElement('span', 'law-article-popup__eyebrow', '법령조문'),
-  )
+  headerCopy.append(makeElement('span', 'law-article-popup__eyebrow', '법령조문'))
   const title = makeElement('h2', '', `${LAW_TITLE} 제56조 제3항 제2호`)
   title.id = 'registration-decree-popup-title'
   headerCopy.append(title)
@@ -109,42 +107,70 @@ function openPopup() {
   closeButton.focus()
 }
 
-function enhanceCitationButton(button) {
-  if (!(button instanceof HTMLButtonElement)) return
-  if (button.dataset.decreeCitationEnhanced === 'true') return
-
-  const text = button.textContent || ''
-  if (!text.includes(TARGET_CITATION)) return
-
-  const titleText = text
+function normalizeTargetTitle(text = '') {
+  return String(text)
     .replace(TARGET_CITATION, '')
     .replace('신규등록 밑 등록전환', '신규등록 및 등록전환')
     .trim()
+}
 
-  button.dataset.decreeCitationEnhanced = 'true'
-  button.classList.add('registration-toc-button--has-law-ref')
-  button.textContent = ''
+function enhanceBodyHeading(heading) {
+  if (!(heading instanceof HTMLElement)) return
+  if (heading.dataset.decreeBodyEnhanced === 'true') return
 
-  const titleSpan = makeElement('span', 'registration-toc-button__label', titleText)
-  const citationSpan = makeElement('span', 'registration-law-inline-ref', TARGET_CITATION)
-  citationSpan.setAttribute('role', 'button')
-  citationSpan.setAttribute('tabindex', '0')
-  citationSpan.setAttribute('aria-label', '공간정보관리법 시행령 제56조 제3항 제2호 보기')
-  citationSpan.setAttribute('title', '클릭하면 해당 시행령 조문만 확인합니다.')
-  citationSpan.dataset.registrationDecreeRef = '56-3-2'
+  const text = heading.textContent || ''
+  if (!text.includes(TARGET_CITATION)) return
 
-  button.append(titleSpan, citationSpan)
+  const titleText = normalizeTargetTitle(text)
+  heading.dataset.decreeBodyEnhanced = 'true'
+  heading.textContent = titleText
+
+  const citationRow = makeElement('div', 'registration-law-body-citation')
+  citationRow.dataset.registrationDecreeCitationRow = '56-3-2'
+  citationRow.append(makeElement('span', 'registration-law-body-citation__label', '근거 법령'))
+
+  const citationButton = makeElement('button', 'registration-law-body-ref', '영 제56조 제3항 제2호')
+  citationButton.type = 'button'
+  citationButton.dataset.registrationDecreeRef = '56-3-2'
+  citationButton.setAttribute('aria-label', '공간정보의 구축 및 관리 등에 관한 법률 시행령 제56조 제3항 제2호 보기')
+  citationButton.setAttribute('title', '클릭하면 해당 시행령 조문만 확인합니다.')
+  citationRow.append(citationButton)
+
+  heading.insertAdjacentElement('afterend', citationRow)
+}
+
+function cleanSecondaryBodyTitle(heading) {
+  if (!(heading instanceof HTMLElement)) return
+  const text = heading.textContent || ''
+  if (!text.includes(TARGET_CITATION)) return
+  heading.textContent = normalizeTargetTitle(text)
+}
+
+function correctNavigationTypo() {
+  document
+    .querySelectorAll('.registration-law-nav-v2 .registration-toc-node button span')
+    .forEach((label) => {
+      if (!(label instanceof HTMLElement)) return
+      if (!label.textContent?.includes('신규등록 밑 등록전환')) return
+      label.textContent = label.textContent.replace('신규등록 밑 등록전환', '신규등록 및 등록전환')
+    })
 }
 
 function enhanceAll() {
+  correctNavigationTypo()
+
   document
-    .querySelectorAll('.registration-law-nav-v2 .registration-toc-node button')
-    .forEach(enhanceCitationButton)
+    .querySelectorAll('.registration-law-page .public-law-content .study-section-heading h2')
+    .forEach(enhanceBodyHeading)
+
+  document
+    .querySelectorAll('.registration-law-page .public-law-content .registration-focus-panel .study-block__title h3')
+    .forEach(cleanSecondaryBodyTitle)
 }
 
 function isCitationTarget(target) {
   return target instanceof Element
-    ? target.closest('.registration-law-inline-ref[data-registration-decree-ref="56-3-2"]')
+    ? target.closest('.registration-law-body-ref[data-registration-decree-ref="56-3-2"]')
     : null
 }
 
@@ -154,22 +180,11 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     if (!citation) return
     event.preventDefault()
     event.stopPropagation()
-    event.stopImmediatePropagation?.()
     openPopup()
   }
 
   const onKeyDown = (event) => {
-    if (event.key === 'Escape' && activePopup) {
-      closePopup()
-      return
-    }
-
-    const citation = isCitationTarget(event.target)
-    if (!citation || (event.key !== 'Enter' && event.key !== ' ')) return
-    event.preventDefault()
-    event.stopPropagation()
-    event.stopImmediatePropagation?.()
-    openPopup()
+    if (event.key === 'Escape' && activePopup) closePopup()
   }
 
   document.addEventListener('click', onClick, true)
@@ -180,7 +195,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     const root = document.getElementById('root')
     if (!root) return
     const observer = new MutationObserver(enhanceAll)
-    observer.observe(root, { childList: true, subtree: true })
+    observer.observe(root, { childList: true, characterData: true, subtree: true })
   }
 
   if (document.readyState === 'loading') {
