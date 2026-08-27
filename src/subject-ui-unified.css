@@ -1,0 +1,440 @@
+/*
+ * 전 과목 공통 학습 UI 보정
+ * - 좌측 목차 패널을 동일한 네이비 계열 구조로 통일
+ * - 일반 본문/보조문구의 대비를 높여 밝은 화면에서 읽기 쉽게 조정
+ * - 민법·공시법·세법의 다단 트리도 같은 시각 언어를 사용
+ */
+
+:root {
+  --study-ink: #182235;
+  --study-body: #334155;
+  --study-muted: #536174;
+  --toc-bg: #14243a;
+  --toc-bg-raised: #1b304c;
+  --toc-bg-hover: #223b5b;
+  --toc-border: rgba(226, 236, 247, 0.14);
+  --toc-border-strong: rgba(226, 236, 247, 0.22);
+  --toc-text: #edf3f9;
+  --toc-text-secondary: #c7d3df;
+  --toc-text-muted: #aebed0;
+  --toc-active-bg: #ffffff;
+  --toc-active-text: #14243a;
+  --toc-ready: #9fe3c7;
+  --toc-accent: #91b9df;
+}
+
+/* 본문 가독성 */
+.public-law-content {
+  color: var(--study-ink);
+}
+
+.public-law-content .public-law-breadcrumb,
+.public-law-content .study-section-heading__chapter,
+.public-law-content .law-reference {
+  color: var(--study-muted);
+}
+
+.public-law-content .understanding-grid p,
+.public-law-content .source-note,
+.public-law-content .source-note p,
+.public-law-content .registration-focus-panel > p,
+.public-law-content .registration-focused-section > p,
+.public-law-content .civil-topic-focus__meta,
+.public-law-content .civil-topic-entry-card p,
+.public-law-content .tax-legal-basis__intro {
+  color: var(--study-body);
+}
+
+.public-law-content .source-note b,
+.public-law-content .understanding-grid b,
+.public-law-content .civil-topic-entry-card b {
+  color: var(--study-ink);
+}
+
+.public-law-content .study-table td {
+  color: var(--study-body);
+}
+
+.public-law-content .study-table th,
+.public-law-content .study-table thead th,
+.public-law-content .study-table tbody th {
+  color: var(--study-ink);
+}
+
+/* 어두운 핵심 카드의 텍스트는 별도로 높은 대비 유지 */
+.public-law-content .study-tldr,
+.public-law-content .study-tldr strong {
+  color: #ffffff;
+}
+
+.public-law-content .study-tldr p {
+  color: #e2ebf5;
+}
+
+.public-law-content .study-tldr > span {
+  color: #ffe08a;
+}
+
+/* 전 과목 좌측 목차 패널 공통 규격 */
+.public-law-layout {
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 22px;
+}
+
+.public-law-nav {
+  position: sticky;
+  top: 126px;
+  max-height: calc(100vh - 144px);
+  overflow: auto;
+  padding: 14px 12px 18px;
+  border: 1px solid rgba(8, 18, 31, 0.2);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #14243a 0%, #172a43 100%);
+  color: var(--toc-text);
+  box-shadow: 0 14px 38px rgba(18, 36, 59, 0.16);
+  scrollbar-width: thin;
+  scrollbar-color: #506985 transparent;
+}
+
+.public-law-nav::-webkit-scrollbar {
+  width: 8px;
+}
+
+.public-law-nav::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #506985;
+  background-clip: padding-box;
+}
+
+.public-law-nav__title {
+  margin-bottom: 9px;
+  padding: 7px 8px 14px;
+  border-bottom: 1px solid var(--toc-border-strong);
+}
+
+.public-law-nav__title strong {
+  display: block;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}
+
+.public-law-nav__title span {
+  display: block;
+  margin-top: 4px;
+  color: var(--toc-text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.public-law-nav > details {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--toc-border);
+}
+
+.public-law-nav > details:last-child {
+  border-bottom: 0;
+}
+
+.public-law-nav > details > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 9px;
+  border-radius: 10px;
+  color: var(--toc-text);
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.45;
+}
+
+.public-law-nav > details > summary:hover,
+.public-law-nav > details > summary:focus-visible {
+  background: var(--toc-bg-hover);
+  color: #ffffff;
+  outline: none;
+}
+
+.public-law-nav > details[open] > summary {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.public-law-nav summary i {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+}
+
+.public-law-nav > details > ul {
+  margin: 3px 0 8px;
+  padding: 0 0 0 12px;
+}
+
+.public-law-nav li button,
+.public-law-nav .registration-point-open {
+  color: var(--toc-text-secondary);
+}
+
+.public-law-nav li button:hover,
+.public-law-nav li button:focus-visible,
+.public-law-nav .registration-point-open:hover,
+.public-law-nav .registration-point-open:focus-visible {
+  background: var(--toc-bg-hover);
+  color: #ffffff;
+  outline: none;
+}
+
+.public-law-nav li button.active,
+.public-law-nav .registration-point-open.active {
+  background: var(--toc-active-bg);
+  color: var(--toc-active-text);
+  font-weight: 900;
+  box-shadow: inset 3px 0 0 #6f9fca;
+}
+
+.public-law-nav li button:not(.active) b,
+.public-law-nav li button:not(.active) .civil-nav__ready,
+.public-law-nav li button:not(.active) .theory-nav__ready,
+.public-law-nav li button:not(.active) .theory-nav__calc {
+  color: var(--toc-ready);
+}
+
+.public-law-nav li button.active b,
+.public-law-nav li button.active .civil-nav__ready,
+.public-law-nav li button.active .theory-nav__ready,
+.public-law-nav li button.active .theory-nav__calc {
+  color: #176a56;
+}
+
+.public-law-nav li small,
+.public-law-nav li button:not(.active) small {
+  color: var(--toc-text-muted);
+}
+
+.public-law-nav li button.active small {
+  color: #66758a;
+}
+
+/* 민법 3단계 트리 */
+.civil-law-page .civil-nav-point-list {
+  gap: 6px;
+  padding: 7px 6px 11px;
+}
+
+.civil-law-page .civil-nav-point {
+  border-color: var(--toc-border);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.civil-law-page .civil-nav-point > summary {
+  min-height: 44px;
+  color: var(--toc-text-secondary);
+}
+
+.civil-law-page .civil-nav-point > summary::after {
+  color: var(--toc-text-muted);
+}
+
+.civil-law-page .civil-nav-point > summary:hover,
+.civil-law-page .civil-nav-point > summary:focus-visible {
+  background: var(--toc-bg-hover);
+  color: #ffffff;
+  outline: none;
+}
+
+.civil-law-page .civil-nav-point[open] > summary {
+  background: rgba(255, 255, 255, 0.065);
+  color: #ffffff;
+}
+
+.civil-law-page .civil-nav-topic-list {
+  border-top-color: var(--toc-border);
+}
+
+.civil-law-page .civil-nav-topic-button {
+  min-height: 40px;
+  color: var(--toc-text-secondary);
+}
+
+.civil-law-page .civil-nav-topic-button:hover,
+.civil-law-page .civil-nav-topic-button:focus-visible {
+  background: var(--toc-bg-hover);
+  color: #ffffff;
+  outline: none;
+}
+
+.civil-law-page .civil-nav-topic-button.active {
+  background: #ffffff;
+  color: var(--toc-active-text);
+  box-shadow: inset 3px 0 0 #6f9fca;
+}
+
+.civil-law-page .civil-nav-topic-number {
+  background: rgba(145, 185, 223, 0.14);
+  color: #c7def2;
+}
+
+.civil-law-page .civil-nav-topic-button.active .civil-nav-topic-number {
+  background: #dceaf6;
+  color: #274e72;
+}
+
+/* 공시법 다단 상세 목차 */
+.registration-law-nav-v2 .registration-point-list {
+  gap: 7px;
+  padding: 7px 6px 12px;
+}
+
+.registration-law-nav-v2 .registration-point {
+  border-color: var(--toc-border);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.registration-law-nav-v2 .registration-point > summary {
+  min-height: 44px;
+  color: var(--toc-text-secondary);
+}
+
+.registration-law-nav-v2 .registration-point > summary:hover,
+.registration-law-nav-v2 .registration-point > summary:focus-visible {
+  background: var(--toc-bg-hover);
+  color: #ffffff;
+  outline: none;
+}
+
+.registration-law-nav-v2 .registration-point[open] > summary {
+  background: rgba(255, 255, 255, 0.065);
+  color: #ffffff;
+}
+
+.registration-law-nav-v2 .registration-point__summary b {
+  color: var(--toc-ready);
+  background: rgba(92, 189, 151, 0.12);
+}
+
+.registration-law-nav-v2 .registration-point__summary small {
+  color: var(--toc-text-muted);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.registration-law-nav-v2 .registration-detailed-toc {
+  border-top-color: var(--toc-border);
+}
+
+.registration-law-nav-v2 .registration-toc-node details > summary::before {
+  color: var(--toc-text-muted);
+}
+
+.registration-law-nav-v2 .registration-toc-node button,
+.registration-law-nav-v2 .registration-point-open {
+  min-height: 40px;
+  color: var(--toc-text-secondary);
+}
+
+.registration-law-nav-v2 .registration-toc-node button:hover,
+.registration-law-nav-v2 .registration-toc-node button:focus-visible,
+.registration-law-nav-v2 .registration-point-open:hover,
+.registration-law-nav-v2 .registration-point-open:focus-visible {
+  background: var(--toc-bg-hover);
+  color: #ffffff;
+  outline: none;
+}
+
+.registration-law-nav-v2 .registration-toc-node button.active,
+.registration-law-nav-v2 .registration-point-open.active {
+  background: #ffffff;
+  color: var(--toc-active-text);
+  box-shadow: inset 3px 0 0 #6f9fca;
+}
+
+/* OS 다크모드 여부와 상관없이 본문은 현재 사이트의 밝은 테마 대비를 유지 */
+@media (prefers-color-scheme: dark) {
+  .registration-law-nav-v2 .registration-point {
+    border-color: var(--toc-border);
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .registration-law-nav-v2 .registration-detailed-toc {
+    border-top-color: var(--toc-border);
+  }
+
+  .registration-law-nav-v2 .registration-toc-node button.active,
+  .registration-law-nav-v2 .registration-point-open.active {
+    background: #ffffff;
+    color: var(--toc-active-text);
+  }
+
+  .public-law-content .registration-focus-panel > p,
+  .public-law-content .registration-focus-path {
+    color: var(--study-body);
+  }
+}
+
+/* 세법 중분류 트리 */
+.tax-law-page .tax-nav-groups {
+  margin: 3px 7px 9px 18px !important;
+  padding: 5px 0 5px 10px !important;
+  border-left-color: #4d6987;
+}
+
+.tax-law-page .tax-nav-groups > li > button {
+  min-height: 40px;
+  color: var(--toc-text-secondary) !important;
+}
+
+.tax-law-page .tax-nav-groups > li > button:hover,
+.tax-law-page .tax-nav-groups > li > button:focus-visible {
+  background: var(--toc-bg-hover) !important;
+  color: #ffffff !important;
+}
+
+.tax-law-page .tax-nav-groups > li > button.active {
+  background: #ffffff !important;
+  color: var(--toc-active-text) !important;
+  box-shadow: inset 3px 0 0 #6f9fca !important;
+}
+
+.tax-law-page .tax-nav-group__index {
+  background: rgba(145, 185, 223, 0.14);
+  color: #c7def2;
+}
+
+.tax-law-page .tax-nav-groups > li > button.active .tax-nav-group__index {
+  background: #dceaf6;
+  color: #274e72;
+}
+
+/* 키보드 접근성 */
+.public-law-nav button:focus-visible,
+.public-law-nav summary:focus-visible {
+  outline: 2px solid #a8c9e8;
+  outline-offset: 2px;
+}
+
+@media (max-width: 980px) {
+  .public-law-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .public-law-nav {
+    position: static;
+    max-height: none;
+    width: 100%;
+  }
+
+  .public-law-nav li button,
+  .civil-law-page .civil-nav-topic-button,
+  .registration-law-nav-v2 .registration-toc-node button,
+  .registration-law-nav-v2 .registration-point-open,
+  .tax-law-page .tax-nav-groups > li > button {
+    min-height: 44px;
+  }
+}
