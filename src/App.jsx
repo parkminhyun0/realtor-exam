@@ -6,6 +6,7 @@ import PublicLawPage from './PublicLawPage'
 import RealEstateTheoryPage from './RealEstateTheoryPage'
 import RegistrationLawPage from './RegistrationLawPageV2'
 import TaxLawPage from './TaxLawPage'
+import Exam36QuestionSection from './Exam36QuestionSection'
 import './public-law.css'
 import './scroll-top.css'
 import './global-search.css'
@@ -111,11 +112,11 @@ function SubjectPlaceholder({ subject }) {
         </div>
       </section>
       <section className="placeholder-card">
-        <span>준비 중</span>
+        <span>본문 준비 중 · 제36회 기출 변형 공개</span>
         <h2>과목별 학습 콘텐츠를 순차적으로 추가합니다.</h2>
         <p>
-          최종 구조에서는 왼쪽에 과목 세부 목차가 표시되고, 선택한 장·절의 내용만 본문에 표시됩니다.
-          핵심정리·비교표·절차 인포그래픽·함정 선지·암기·확인문제를 동일한 규격으로 제공합니다.
+          정규 본문은 구축 중이지만, 아래에서 2025년 제36회 Q-Net 기출의 출제 논점을 유지해 재구성한
+          학습용 변형문제를 먼저 풀 수 있습니다.
         </p>
       </section>
     </main>
@@ -230,6 +231,7 @@ export default function App() {
         </nav>
       </header>
       {content}
+      <Exam36QuestionSection subjectId={route} />
       <button
         className={`scroll-top-button${showScrollTop ? ' visible' : ''}`}
         type="button"
