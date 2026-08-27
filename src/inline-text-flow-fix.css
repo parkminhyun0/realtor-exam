@@ -1,0 +1,100 @@
+/* 전과목 본문 인라인 흐름 보정
+   - 자동 숫자/페이지 강조 span이 block으로 떨어지지 않게 함
+   - 기존 RED/underline/highlight 자동 강조를 최종 레이어에서 중립화
+   - 사용자가 텍스트 편집 툴바로 적용한 .study-user-format 서식은 유지 */
+
+/* 공통 study-tldr의 광범위한 `.study-tldr span { display:block }` 규칙 때문에
+   본문 안 숫자 span까지 줄바꿈되는 문제를 최종 우선순위에서 교정한다. */
+body .study-tldr > span:first-child {
+  display: block !important;
+}
+
+body .public-law-page .public-law-content :is(p, li, td, dd, blockquote, strong) span:not(.study-user-format),
+body .public-law-page .study-tldr :is(p, strong) span:not(.study-user-format) {
+  display: inline !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: baseline !important;
+  white-space: normal !important;
+}
+
+/* 과목별 자동 숫자 강조를 전수 중립화.
+   theory-exam-number / civil-exam-number 등 현재·향후 `exam-number` 계열을 모두 포함한다. */
+body .public-law-page .public-law-content [class*='exam-number']:not(.study-user-format),
+body .exam36-shell [class*='exam-number']:not(.study-user-format) {
+  display: inline !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  font: inherit !important;
+  font-weight: inherit !important;
+  font-style: normal !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  text-shadow: none !important;
+  white-space: normal !important;
+  vertical-align: baseline !important;
+}
+
+/* 과목별 과거 자동 강조 클래스도 동일하게 제거한다. */
+body .public-law-page .public-law-content :is(
+  .theory-exam-number,
+  .civil-exam-number,
+  .tax-exam-number,
+  .registration-exam-number,
+  .public-law-exam-number,
+  .exam-word,
+  .number-highlight,
+  .text-highlight,
+  .exam-highlight,
+  .keyword-highlight
+):not(.study-user-format) {
+  display: inline !important;
+  color: inherit !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font-weight: inherit !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* `p. 1~3`, 조문 번호, 기간·수치가 문장과 같은 행에서 자연스럽게 흐르도록 한다. */
+body .public-law-page .public-law-content p,
+body .public-law-page .public-law-content li,
+body .public-law-page .public-law-content td,
+body .public-law-page .public-law-content dd {
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+  text-align: left !important;
+}
+
+/* 사용자가 직접 적용한 편집 서식은 최종적으로 다시 살린다. */
+body .study-user-format {
+  display: inline !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  vertical-align: baseline !important;
+}
