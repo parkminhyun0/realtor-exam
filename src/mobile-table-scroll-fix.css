@@ -1,67 +1,90 @@
-/* Mobile table scrolling hardening
-   Keep exactly one horizontal scroll surface around each React table.
-   This avoids iOS Safari stopping a swipe before the final columns become reachable. */
+/* Table scrolling hardening for mobile Safari and browser zoom
+   The scroll surface must stay narrower than the table even when page zoom changes
+   the media-query viewport. Keep these core constraints viewport-independent. */
+
+.public-law-page,
+.public-law-page .public-law-layout,
+.public-law-page .public-law-content,
+.public-law-page .public-law-content > *,
+.public-law-page .study-block,
+.public-law-page .tax-detail-section,
+.public-law-page .tax-rate-guide,
+.public-law-page .tax-rate-guide__sections,
+.public-law-page .tax-rate-guide__section {
+  min-width: 0 !important;
+}
+
+/* Grid/flex descendants that own a table must be allowed to shrink to the content card.
+   Without this, the grid item's automatic min-content width grows to the table width,
+   so the table escapes the card and there is nothing left for the inner scroller to scroll. */
+.public-law-page :where(section, article, div):has(> .table-wrap),
+.public-law-page :where(section, article, div):has(> h4 + .table-wrap) {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+.public-law-page .table-wrap {
+  position: relative;
+  display: block !important;
+  box-sizing: border-box;
+  inline-size: 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin-inline: 0 !important;
+  padding: 0 14px 10px 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  scroll-padding-inline-end: 14px;
+  touch-action: pan-x pan-y;
+  scrollbar-gutter: auto;
+  contain: inline-size;
+  isolation: isolate;
+}
+
+.public-law-page .table-wrap > table,
+.public-law-page table.study-table,
+.public-law-page table.tax-rate-table {
+  display: table !important;
+  box-sizing: border-box;
+  width: max(100%, var(--mobile-table-width, 720px)) !important;
+  min-width: var(--mobile-table-width, 720px) !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+.public-law-page table:has(> thead > tr > :nth-child(2):last-child) {
+  --mobile-table-width: 560px;
+}
+
+.public-law-page table:has(> thead > tr > :nth-child(3):last-child) {
+  --mobile-table-width: 720px;
+}
+
+.public-law-page table:has(> thead > tr > :nth-child(4):last-child) {
+  --mobile-table-width: 860px;
+}
+
+.public-law-page table:has(> thead > tr > :nth-child(5)) {
+  --mobile-table-width: 980px;
+}
+
+.public-law-page .table-wrap > table th:last-child,
+.public-law-page .table-wrap > table td:last-child {
+  border-right-width: 2px !important;
+}
 
 @media (max-width: 768px) {
-  .public-law-page,
-  .public-law-layout,
-  .public-law-content,
-  .public-law-content > *,
-  .public-law-page .study-block,
-  .public-law-page .tax-detail-section {
-    min-width: 0;
-  }
-
-  .public-law-page .study-block:has(.table-wrap),
-  .public-law-page .tax-detail-section:has(.table-wrap) {
-    overflow: visible !important;
-  }
-
   .public-law-page .table-wrap {
-    position: relative;
-    display: block;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-inline: 0 !important;
-    padding: 0 0 10px !important;
     overflow-x: scroll !important;
-    overflow-y: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    scroll-behavior: auto;
-    scroll-snap-type: none;
-    scroll-padding-inline: 12px;
-    touch-action: pan-x pan-y;
-    scrollbar-gutter: auto;
   }
 
-  .public-law-page .table-wrap > table,
-  .public-law-page table.study-table,
-  .public-law-page table.tax-rate-table {
-    display: table !important;
-    width: max(100%, var(--mobile-table-width, 720px)) !important;
-    max-width: none !important;
-    margin: 0 !important;
-  }
-
-  .public-law-page table:has(> thead > tr > :nth-child(2):last-child) {
-    --mobile-table-width: 560px;
-  }
-
-  .public-law-page table:has(> thead > tr > :nth-child(3):last-child) {
-    --mobile-table-width: 720px;
-  }
-
-  .public-law-page table:has(> thead > tr > :nth-child(4):last-child) {
-    --mobile-table-width: 860px;
-  }
-
-  .public-law-page table:has(> thead > tr > :nth-child(5)) {
-    --mobile-table-width: 980px;
-  }
-
-  .public-law-page .table-wrap > table th:last-child,
-  .public-law-page .table-wrap > table td:last-child {
-    border-right-width: 2px !important;
+  .public-law-page table th,
+  .public-law-page table td {
+    padding: 9px 10px !important;
   }
 }
