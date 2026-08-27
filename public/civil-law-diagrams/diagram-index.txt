@@ -1,0 +1,23 @@
+PART 2 물권법 법령 중심 SVG 목록
+- property-rights.svg: 물권·채권·물권법정주의
+- property-change.svg: 민법 제186조·제187조 부동산 물권변동
+- registration.svg: 등기·가등기·본등기
+- possession.svg: 점유 태양·보호청구권
+- acquisition-prescription.svg: 부동산 취득시효 20년·10년
+- coownership.svg: 공유·합유·총유
+- accession.svg: 부합·혼화·가공
+- usufruct.svg: 지상권·지역권·전세권
+- legal-superficies.svg: 제366조·관습법상 법정지상권
+- lien-mortgage.svg: 유치권·저당권
+- joint-mortgage.svg: 공동저당 동시·이시배당
+- mortgage-scope.svg: 저당권 효력범위
+- property-claims.svg: 소유권 물권적 청구권
+- property-delivery.svg: 동산 인도 4유형
+- property-loss.svg: 물권 소멸
+- property-overview.svg / property-flow-index.svg: 물권법 전체 흐름
+- mortgage-priority.svg: 저당권 사례 판단순서
+- leasehold-estate.svg: 전세권 흐름
+- lien-elements.svg: 유치권 성립 체크
+- superficies-duration.svg: 지상권 최단존속기간
+- ownership-neighbor.svg: 상린관계·주위토지통행권
+- possessor-recovery.svg: 점유자·회복자 관계
