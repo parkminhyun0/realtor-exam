@@ -1,0 +1,377 @@
+/* 민법 BOOK × MAP × EXAM · 교재 목차 유지형 연결 학습 UI */
+.civil-learning-layer {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 16px;
+  color: var(--study-text, #273142);
+  font-size: var(--study-body-size, 11pt);
+}
+
+.civil-learning-book-path {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-height: 38px;
+  padding: 9px 11px;
+  border: 1px solid var(--study-border, #dfe4ea);
+  border-radius: 10px;
+  background: #fafbfc;
+  line-height: 1.5;
+}
+.civil-learning-book-path > span {
+  margin-right: 3px;
+  font-size: 9pt;
+  color: #747f8e;
+  font-weight: 700;
+}
+.civil-learning-book-path strong,
+.civil-learning-book-path b {
+  font-size: 10pt;
+  color: #303946;
+  font-weight: 650;
+}
+.civil-learning-book-path i {
+  color: #a0a8b3;
+  font-style: normal;
+}
+
+.civil-learning-master {
+  border: 1px solid var(--study-border, #dfe4ea);
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+.civil-learning-master > summary {
+  min-height: 46px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  cursor: pointer;
+  list-style: none;
+  background: #f7f8fa;
+}
+.civil-learning-master > summary::-webkit-details-marker { display: none; }
+.civil-learning-master > summary > span {
+  padding: 3px 7px;
+  border: 1px solid #d7dde4;
+  border-radius: 6px;
+  font-size: 8.5pt;
+  color: #687383;
+}
+.civil-learning-master > summary > strong { font-size: 11pt; font-weight: 700; }
+.civil-learning-master > summary > small { font-size: 9pt; color: #7a8492; }
+.civil-learning-master__body { padding: 12px; display: grid; gap: 12px; }
+.civil-learning-master__parts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.civil-learning-master__parts section {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid #dfe4ea;
+  border-radius: 9px;
+  background: #fff;
+}
+.civil-learning-master__parts section.is-current {
+  border-width: 2px;
+  border-color: #737d8a;
+}
+.civil-learning-master__parts small { color: #7c8693; font-size: 8.5pt; }
+.civil-learning-master__parts strong { font-size: 10pt; }
+.civil-learning-master__parts span { color: #646f7d; font-size: 9pt; line-height: 1.6; }
+.civil-learning-master__hubs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.civil-learning-master__hubs > details {
+  border: 1px solid #e0e5ea;
+  border-radius: 9px;
+  background: #fbfcfd;
+  overflow: hidden;
+}
+.civil-learning-master__hubs > details > summary {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  list-style: none;
+}
+.civil-learning-master__hubs > details > summary::-webkit-details-marker { display: none; }
+.civil-learning-master__hubs > details > summary strong { font-size: 10pt; }
+.civil-learning-master__hubs > details > summary span { font-size: 8.5pt; color: #7a8491; }
+.civil-learning-master__hubs > details > p { margin: 0; padding: 0 10px 8px; color: #626d79; font-size: 9.5pt; line-height: 1.65; }
+.civil-learning-master__targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 8px 10px 10px;
+  border-top: 1px solid #e5e9ed;
+}
+.civil-learning-master__targets button {
+  border: 1px solid #dce2e7;
+  border-radius: 7px;
+  background: #fff;
+  padding: 5px 7px;
+  color: #36404d;
+  font-size: 9pt;
+  cursor: pointer;
+}
+.civil-learning-master__targets button:hover,
+.civil-learning-master__targets button:focus-visible { border-color: #9aa4b0; outline: none; }
+.civil-learning-master__targets button small { margin-right: 4px; color: #858e9a; }
+
+.civil-learning-map,
+.civil-learning-exam-card {
+  border: 1px solid var(--study-border, #dfe4ea);
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+.civil-learning-map > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e3e7eb;
+  background: #fafbfc;
+}
+.civil-learning-map > header small,
+.civil-learning-exam-card header small {
+  display: block;
+  color: #7b8491;
+  font-size: 8.5pt;
+  letter-spacing: .04em;
+}
+.civil-learning-map > header h3,
+.civil-learning-exam-card header h3 {
+  margin: 2px 0 0;
+  font-size: 12pt !important;
+  color: #2d3540 !important;
+  font-weight: 700 !important;
+}
+.civil-learning-map > header p {
+  max-width: 520px;
+  margin: 0;
+  color: #697481;
+  font-size: 9.5pt !important;
+  line-height: 1.6 !important;
+}
+.civil-learning-map__canvas {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, .72fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+  padding: 16px;
+  background-image: linear-gradient(#f2f4f6 1px, transparent 1px), linear-gradient(90deg, #f2f4f6 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.civil-learning-map__wing {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+}
+.civil-learning-map__wing > span,
+.civil-learning-map__cross > span {
+  color: #737d89;
+  font-size: 9pt;
+  font-weight: 700;
+}
+.civil-learning-map__wing > i { color: #9aa2ad; font-size: 9pt; font-style: normal; padding: 8px; }
+.civil-learning-map__center {
+  position: relative;
+  align-self: center;
+  min-height: 118px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
+  padding: 14px 12px;
+  border: 2px solid #596474;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 5px 16px rgba(44, 54, 68, .07);
+}
+.civil-learning-map__center::before,
+.civil-learning-map__center::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 13px;
+  border-top: 1px solid #aeb6c0;
+}
+.civil-learning-map__center::before { left: -14px; }
+.civil-learning-map__center::after { right: -14px; }
+.civil-learning-map__center small { font-size: 8.5pt; color: #808995; }
+.civil-learning-map__center strong { font-size: 11pt; color: #252e3a; }
+.civil-learning-map__center span { font-size: 9pt; color: #687380; line-height: 1.5; }
+.civil-learning-node {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+  padding: 9px 10px;
+  border: 1px solid #dce1e6;
+  border-radius: 9px;
+  background: rgba(255,255,255,.96);
+  color: #303946;
+  text-align: left;
+  cursor: pointer;
+}
+.civil-learning-node:hover,
+.civil-learning-node:focus-visible {
+  border-color: #8f99a5;
+  box-shadow: 0 3px 10px rgba(48, 58, 72, .06);
+  outline: none;
+}
+.civil-learning-node__status {
+  width: max-content;
+  padding: 2px 5px;
+  border-radius: 5px;
+  background: #eff2f4;
+  color: #68727e;
+  font-size: 8pt;
+  font-weight: 650;
+}
+.civil-learning-node strong { font-size: 10pt; font-weight: 700; }
+.civil-learning-node small { font-size: 8.5pt; color: #77818d; }
+.civil-learning-node em { font-size: 8.5pt; color: #596473; font-style: normal; font-weight: 650; }
+body .public-law-content .civil-learning-node p {
+  margin: 2px 0 0 !important;
+  color: #68737f !important;
+  font-size: 9pt !important;
+  line-height: 1.55 !important;
+}
+.civil-learning-map__cross {
+  padding: 0 16px 16px;
+  background: #fafbfc;
+}
+.civil-learning-map__cross > span { display: block; padding: 9px 0 6px; border-top: 1px solid #e3e7eb; }
+.civil-learning-map__cross > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.civil-learning-exam-card { padding: 14px; }
+.civil-learning-exam-card > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.civil-learning-exam-card > header > span {
+  flex: 0 0 auto;
+  padding: 4px 7px;
+  border: 1px solid #d9dfe5;
+  border-radius: 7px;
+  background: #f4f6f8;
+  color: #4e5966;
+  font-size: 9pt;
+  font-weight: 750;
+}
+body .public-law-content .civil-learning-exam-card__core {
+  margin: 0 0 10px !important;
+  padding: 10px 11px;
+  border-left: 3px solid #6d7784;
+  background: #f8f9fa;
+  color: #333d49 !important;
+  font-size: 10pt !important;
+  line-height: 1.65 !important;
+}
+.civil-learning-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 10px 9px;
+}
+.civil-learning-exam-card > .civil-learning-keywords { padding: 0 0 10px; }
+.civil-learning-keywords span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 3px 7px;
+  border: 1px solid #d9dfe5;
+  border-radius: 999px;
+  background: #fff;
+  color: #3f4955;
+  font-size: 9pt;
+  font-weight: 650;
+}
+.civil-learning-exam-card__checks {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 8px;
+  padding: 10px 0;
+  border-top: 1px solid #e3e7eb;
+  border-bottom: 1px solid #e3e7eb;
+}
+.civil-learning-exam-card__checks > strong { font-size: 9pt; color: #5e6875; }
+.civil-learning-exam-card__checks ul { margin: 0; padding-left: 18px; }
+body .public-law-content .civil-learning-exam-card__checks li {
+  margin: 2px 0 !important;
+  font-size: 10pt !important;
+  line-height: 1.6 !important;
+}
+.civil-learning-exam-card__hubs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-top: 10px;
+}
+.civil-learning-exam-card__hubs strong { margin-right: 3px; color: #5f6976; font-size: 9pt; }
+.civil-learning-exam-card__hubs span { padding: 3px 6px; border: 1px solid #dce1e6; border-radius: 6px; color: #4f5966; font-size: 9pt; }
+body .public-law-content .civil-learning-exam-card__note {
+  margin: 10px 0 0 !important;
+  color: #7b8490 !important;
+  font-size: 8.5pt !important;
+  line-height: 1.55 !important;
+}
+
+/* 새 MAP/EXAM 레이어가 대체하는 반복 UI는 숨기고 데이터는 DOM에 남겨 연결정보를 재사용합니다. */
+.civil-law-page [data-learning-superseded='true'],
+.civil-law-page [data-learning-superseded='generic-diagram'] {
+  display: none !important;
+}
+
+@media (max-width: 1050px) {
+  .civil-learning-master__parts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .civil-learning-map__canvas { grid-template-columns: 1fr; }
+  .civil-learning-map__center { order: -1; min-height: 94px; }
+  .civil-learning-map__center::before,
+  .civil-learning-map__center::after { display: none; }
+  .civil-learning-map__cross > div { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 700px) {
+  .civil-learning-book-path { align-items: flex-start; }
+  .civil-learning-master > summary { grid-template-columns: 1fr; gap: 3px; }
+  .civil-learning-master > summary > span { width: max-content; }
+  .civil-learning-master__parts,
+  .civil-learning-master__hubs,
+  .civil-learning-map__cross > div { grid-template-columns: 1fr; }
+  .civil-learning-map > header { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .civil-learning-map__canvas { padding: 11px; }
+  .civil-learning-map__cross { padding: 0 11px 11px; }
+  .civil-learning-exam-card__checks { grid-template-columns: 1fr; }
+  .civil-learning-node { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .civil-learning-layer * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
