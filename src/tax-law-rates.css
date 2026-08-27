@@ -1,0 +1,281 @@
+.tax-rate-guide {
+  border: 1px solid #ead8d2;
+  border-top: 5px solid #b42323;
+  background: linear-gradient(180deg, #fff7f4 0%, #fff 160px);
+  box-shadow: 0 12px 30px rgba(126, 47, 35, .07);
+}
+
+.tax-rate-guide__header {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+
+.tax-rate-guide__header > span,
+.tax-rate-guide__subhead > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #b42323;
+  color: #fff;
+  font-size: 12pt;
+  font-weight: 900;
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
+.tax-rate-guide__header h3 {
+  margin: 0;
+  color: #6f211c;
+  font-size: 14pt !important;
+}
+
+.tax-rate-guide__header p {
+  margin: 6px 0 0;
+  color: #5e5960;
+  line-height: 1.78;
+}
+
+.tax-rate-guide__alert {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border: 1px solid #e8d7b8;
+  border-radius: 12px;
+  background: #fffaf0;
+}
+
+.tax-rate-guide__alert b {
+  color: #7a5818;
+  font-weight: 900;
+}
+
+.tax-rate-guide__alert span {
+  color: #5a5141;
+  font-weight: 800;
+  line-height: 1.65;
+}
+
+.tax-rate-guide__sections {
+  display: grid;
+  gap: 18px;
+}
+
+.tax-rate-guide__section h4 {
+  margin: 0 0 9px;
+  color: #26384d;
+  font-size: 14pt !important;
+}
+
+.tax-rate-table th,
+.tax-rate-table td {
+  vertical-align: top;
+}
+
+.tax-rate-table th:first-child {
+  min-width: 150px;
+}
+
+.tax-rate-table th:nth-child(2) {
+  min-width: 210px;
+}
+
+.tax-rate-table th:nth-child(3),
+.tax-rate-table td:nth-child(3) {
+  min-width: 150px;
+  background: #fff7f5;
+}
+
+.tax-rate-table__rate {
+  color: #a01f1f;
+  font-weight: 900;
+}
+
+.tax-rate-token {
+  color: #c62828;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-color: rgba(198, 40, 40, .72);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.tax-rate-guide__examples {
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+  padding: 15px;
+  border: 1px solid #d8e1e9;
+  border-radius: 13px;
+  background: #f8fbfd;
+}
+
+.tax-rate-guide__subhead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
+.tax-rate-guide__subhead > span {
+  min-height: 28px;
+  padding: 3px 9px;
+  background: #385b70;
+  font-size: 11pt;
+}
+
+.tax-rate-guide__subhead strong {
+  color: #2f4b5d;
+  font-size: 14pt;
+}
+
+.tax-rate-guide__examples article {
+  display: grid;
+  grid-template-columns: minmax(140px, .8fr) minmax(240px, 1.6fr) minmax(170px, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.tax-rate-guide__examples article b {
+  color: #29465a;
+}
+
+.tax-rate-guide__examples code {
+  display: block;
+  padding: 0;
+  background: transparent;
+  color: #1f3444;
+  font-family: inherit;
+  font-weight: 800;
+  line-height: 1.65;
+  white-space: normal;
+}
+
+.tax-rate-guide__examples article p {
+  margin: 0;
+  color: #687482;
+  line-height: 1.65;
+}
+
+.tax-rate-guide__tips {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-left: 5px solid #c62828;
+  border-radius: 10px;
+  background: #fff3f1;
+}
+
+.tax-rate-guide__tips > strong {
+  color: #8c2620;
+  font-size: 14pt;
+}
+
+.tax-rate-guide__tips ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.tax-rate-guide__tips li {
+  color: #574b4b;
+  line-height: 1.75;
+}
+
+.tax-rate-guide__tips li + li {
+  margin-top: 4px;
+}
+
+.tax-rate-guide__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #eadfdc;
+}
+
+.tax-rate-guide__footer > div:first-child {
+  display: grid;
+  gap: 3px;
+}
+
+.tax-rate-guide__footer > div:first-child b {
+  color: #594a43;
+}
+
+.tax-rate-guide__footer > div:first-child span {
+  color: #7c7470;
+}
+
+.tax-rate-guide__laws {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  align-items: center;
+}
+
+.tax-rate-guide__laws > span {
+  color: #7a654e;
+  font-weight: 900;
+}
+
+.tax-rate-guide__laws button {
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #c62828;
+  font: inherit;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.tax-rate-guide__laws button:hover,
+.tax-rate-guide__laws button:focus-visible {
+  background: rgba(198, 40, 40, .08);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, .10);
+}
+
+@media (max-width: 980px) {
+  .tax-rate-guide__header,
+  .tax-rate-guide__alert {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-rate-guide__header > span {
+    justify-self: start;
+  }
+
+  .tax-rate-guide__examples article {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-rate-guide__footer {
+    flex-direction: column;
+  }
+
+  .tax-rate-guide__laws {
+    justify-content: flex-start;
+  }
+
+  .tax-rate-table {
+    min-width: 780px;
+  }
+}
