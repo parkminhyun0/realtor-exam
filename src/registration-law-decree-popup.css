@@ -1,44 +1,44 @@
-.registration-law-nav-v2 .registration-toc-button--has-law-ref {
+.registration-law-body-citation {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 6px;
+  align-items: center;
+  gap: 7px 9px;
+  margin-top: 8px;
 }
 
-.registration-law-nav-v2 .registration-toc-button__label {
-  min-width: 0;
-  flex: 1 1 140px;
-  white-space: normal;
-  word-break: keep-all;
-  overflow-wrap: anywhere;
+.registration-law-body-citation__label {
+  color: #5f6f80;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
 
-.registration-law-nav-v2 .registration-law-inline-ref {
-  flex: 0 1 auto;
+.registration-law-body-ref {
   display: inline-flex;
   align-items: center;
-  min-height: 24px;
-  padding: 2px 6px;
-  border-radius: 7px;
-  color: #b42323 !important;
+  min-height: 30px;
+  padding: 4px 9px;
+  border-radius: 8px;
+  border: 1px solid #efb5af;
   background: #fff3f2;
-  border: 1px solid #efc1bd;
-  font-size: 10.5px;
+  color: #b42323 !important;
+  font: inherit;
+  font-size: 11.5px;
   font-weight: 900;
   line-height: 1.35;
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
-  white-space: normal !important;
+  white-space: nowrap;
 }
 
-.registration-law-nav-v2 .registration-law-inline-ref:hover {
+.registration-law-body-ref:hover {
   color: #8f1717 !important;
   background: #ffe8e5;
   border-color: #dc8e86;
 }
 
-.registration-law-nav-v2 .registration-law-inline-ref:focus-visible {
+.registration-law-body-ref:focus-visible {
   outline: 3px solid rgba(180, 35, 35, 0.22);
   outline-offset: 2px;
 }
@@ -98,25 +98,24 @@
 }
 
 @media (max-width: 980px) {
-  .registration-law-nav-v2 .registration-toc-button--has-law-ref {
-    align-items: flex-start;
-  }
-
-  .registration-law-nav-v2 .registration-law-inline-ref {
-    min-height: 32px;
-    padding: 6px 8px;
+  .registration-law-body-ref {
+    min-height: 36px;
+    padding: 7px 10px;
   }
 }
 
 @media (max-width: 560px) {
-  .registration-law-nav-v2 .registration-toc-button__label,
-  .registration-law-nav-v2 .registration-law-inline-ref {
+  .registration-law-body-citation {
+    align-items: flex-start;
+  }
+
+  .registration-law-body-citation__label {
     flex-basis: 100%;
   }
 
-  .registration-law-nav-v2 .registration-law-inline-ref {
-    width: fit-content;
+  .registration-law-body-ref {
     max-width: 100%;
+    white-space: normal;
   }
 
   .registration-decree-popup__meaning,
