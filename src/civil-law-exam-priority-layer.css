@@ -1,0 +1,278 @@
+.civil-priority-mini {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  margin-left: auto;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  border: 1px solid rgba(15, 23, 42, .14);
+  background: #f8fafc;
+  color: #475569;
+}
+
+.civil-priority-mini[data-grade="A"] {
+  background: #fff1f2;
+  color: #be123c;
+  border-color: #fecdd3;
+}
+
+.civil-priority-mini[data-grade="B"] {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.civil-priority-mini[data-grade="C"] {
+  background: #f8fafc;
+  color: #64748b;
+  border-color: #e2e8f0;
+}
+
+.civil-exam-priority-banner {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin: 14px 0 20px;
+  padding: 16px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fff, #f8fafc);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, .04);
+}
+
+.civil-exam-priority-banner__grade {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  font-size: 28px;
+  font-weight: 900;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.civil-exam-priority-banner[data-grade="A"] .civil-exam-priority-banner__grade {
+  color: #be123c;
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+
+.civil-exam-priority-banner[data-grade="B"] .civil-exam-priority-banner__grade {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.civil-exam-priority-banner[data-grade="C"] .civil-exam-priority-banner__grade {
+  color: #64748b;
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.civil-exam-priority-banner small,
+.civil-exam-priority-banner strong,
+.civil-exam-priority-banner p,
+.civil-exam-priority-banner em {
+  display: block;
+}
+
+.civil-exam-priority-banner small {
+  margin-bottom: 3px;
+  color: #64748b;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.civil-exam-priority-banner strong {
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.civil-exam-priority-banner p {
+  margin: 5px 0 4px;
+  color: #334155;
+  line-height: 1.65;
+}
+
+.civil-exam-priority-banner em {
+  color: #64748b;
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.civil-exam-drills,
+.civil-related-topics {
+  margin-top: 18px;
+}
+
+.civil-exam-drills__grid,
+.civil-related-topics__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.civil-exam-drill-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.civil-exam-drill-card summary {
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  gap: 10px;
+  align-items: start;
+  cursor: pointer;
+  padding: 14px;
+  list-style: none;
+}
+
+.civil-exam-drill-card summary::-webkit-details-marker { display: none; }
+
+.civil-exam-drill-card summary b {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 12px;
+}
+
+.civil-exam-drill-card summary span {
+  color: #0f172a;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.civil-exam-drill-card summary i {
+  color: #64748b;
+  font-size: 11px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.civil-exam-drill-card > div {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 10px;
+  padding: 0 14px 14px 54px;
+}
+
+.civil-exam-drill-card > div strong {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.civil-exam-drill-card > div strong.is-o {
+  color: #047857;
+  background: #ecfdf5;
+}
+
+.civil-exam-drill-card > div strong.is-x {
+  color: #be123c;
+  background: #fff1f2;
+}
+
+.civil-exam-drill-card > div p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.65;
+}
+
+.civil-related-topic-button {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dbe4ee;
+  border-radius: 14px;
+  padding: 14px;
+  text-align: left;
+  background: #fff;
+  cursor: pointer;
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.civil-related-topic-button:hover,
+.civil-related-topic-button:focus-visible {
+  transform: translateY(-1px);
+  border-color: #94a3b8;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, .07);
+  outline: none;
+}
+
+.civil-related-topic-button small,
+.civil-related-topic-button strong,
+.civil-related-topic-button span,
+.civil-related-topic-button p {
+  display: block;
+}
+
+.civil-related-topic-button small {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.civil-related-topic-button strong {
+  margin-top: 5px;
+  color: #1d4ed8;
+  font-size: 13px;
+}
+
+.civil-related-topic-button span {
+  margin-top: 3px;
+  color: #0f172a;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.civil-related-topic-button p {
+  margin: 7px 0 0;
+  color: #64748b;
+  line-height: 1.55;
+  font-size: 11px;
+}
+
+@media (max-width: 780px) {
+  .civil-exam-priority-banner {
+    grid-template-columns: 50px 1fr;
+    gap: 12px;
+    padding: 13px;
+  }
+  .civil-exam-priority-banner__grade {
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
+    border-radius: 14px;
+  }
+  .civil-exam-drills__grid,
+  .civil-related-topics__grid {
+    grid-template-columns: 1fr;
+  }
+  .civil-exam-drill-card summary {
+    grid-template-columns: 28px 1fr;
+  }
+  .civil-exam-drill-card summary i {
+    grid-column: 2;
+  }
+  .civil-exam-drill-card > div {
+    padding-left: 14px;
+  }
+}
