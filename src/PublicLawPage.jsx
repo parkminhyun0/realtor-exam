@@ -6,6 +6,68 @@ import './public-law-integrated.css'
 
 const LAW_ARTICLE_PATTERN = /^제\s*\d+\s*조(?:의\s*\d+)?$/
 
+function hardenEmbeddedTableScrolling(frame) {
+  const doc = frame?.contentDocument
+  if (!doc?.head || !doc?.body) return
+
+  if (!doc.getElementById('public-law-mobile-table-scroll-fix')) {
+    const style = doc.createElement('style')
+    style.id = 'public-law-mobile-table-scroll-fix'
+    style.textContent = `
+      @media (max-width: 900px) {
+        .mobile-table-host { overflow-x: visible !important; min-width: 0 !important; }
+        .mobile-table-scroll {
+          position: relative !important;
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 0 10px !important;
+          padding: 0 0 10px !important;
+          overflow-x: scroll !important;
+          overflow-y: hidden !important;
+          -webkit-overflow-scrolling: touch !important;
+          overscroll-behavior-x: contain !important;
+          scroll-behavior: auto !important;
+          scroll-snap-type: none !important;
+          scroll-padding-inline: 12px !important;
+          touch-action: pan-x pan-y !important;
+          scrollbar-gutter: auto !important;
+        }
+        .mobile-table-scroll > table {
+          display: table !important;
+          width: max(100%, 720px) !important;
+          min-width: 720px !important;
+          max-width: none !important;
+          margin: 0 !important;
+        }
+        .mobile-table-scroll > table th:last-child,
+        .mobile-table-scroll > table td:last-child {
+          border-right-width: 2px !important;
+        }
+      }
+    `
+    doc.head.appendChild(style)
+  }
+
+  const wrapTables = () => {
+    doc.querySelectorAll('table').forEach((table) => {
+      if (table.parentElement?.classList.contains('mobile-table-scroll')) return
+      const parent = table.parentElement
+      if (!parent) return
+      parent.classList.add('mobile-table-host')
+      const wrapper = doc.createElement('div')
+      wrapper.className = 'mobile-table-scroll'
+      parent.insertBefore(wrapper, table)
+      wrapper.appendChild(table)
+    })
+  }
+
+  wrapTables()
+  frame.contentWindow?.requestAnimationFrame(wrapTables)
+  frame.contentWindow?.setTimeout(wrapTables, 120)
+  frame.contentWindow?.setTimeout(wrapTables, 500)
+}
+
 export default function PublicLawPage({ onBack }) {
   const [selectedId, setSelectedId] = useState('c1s1')
   const [frameHeight, setFrameHeight] = useState(900)
@@ -133,6 +195,7 @@ export default function PublicLawPage({ onBack }) {
               title={`부동산공법 ${selected.chapter.shortTitle} ${selected.section.title}`}
               style={{ height: `${frameHeight}px` }}
               scrolling="no"
+              onLoad={(event) => hardenEmbeddedTableScrolling(event.currentTarget)}
             />
           </article>
         </div>

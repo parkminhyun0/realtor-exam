@@ -8,6 +8,7 @@ import './registration-law-highlights.js'
 import './tax-law-nav-tree.js'
 import './tax-law-exam-drill.css'
 import './table-layout.css'
+import './mobile-table-scroll-fix.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
