@@ -9,8 +9,9 @@
     "verify:civil-law": "node scripts/verify-civil-law-leaf-coverage.mjs",
     "verify:civil-intensive": "node scripts/verify-civil-intensive-drills.mjs",
     "verify:civil-deep": "node scripts/verify-civil-deep-study.mjs",
+    "verify:civil-graph": "node scripts/verify-civil-learning-graph.mjs",
     "verify:exam36": "node scripts/verify-exam36-bank.mjs",
-    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && npm run verify:exam36 && vite build",
+    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && npm run verify:civil-graph && npm run verify:exam36 && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
