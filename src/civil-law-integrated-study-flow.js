@@ -46,7 +46,10 @@ const STEP_DEFS = [
     id: 'precedent',
     label: '판례',
     hint: '이 논점에 직접 연결된 판례',
-    selectors: ['[data-civil-law-leaf-precedents="true"]'],
+    selectors: [
+      '[data-civil-law-leaf-precedents="true"]',
+      '[data-civil-law-part2-extra-precedents="true"]',
+    ],
     required: false,
   },
   {
@@ -79,8 +82,10 @@ function firstMatch(page, selectors) {
 
 function exactLeafMatch(page, step, node) {
   if (step.id === 'precedent') {
-    return [...page.querySelectorAll('[data-civil-law-leaf-precedents="true"]')]
-      .find((item) => item.dataset.topic === node.topic) || null
+    return [...page.querySelectorAll([
+      '[data-civil-law-leaf-precedents="true"]',
+      '[data-civil-law-part2-extra-precedents="true"]',
+    ].join(', '))].find((item) => item.dataset.topic === node.topic) || null
   }
 
   if (step.id === 'practice') {

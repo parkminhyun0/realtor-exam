@@ -1,7 +1,7 @@
 import { civilLawParts } from './data/civilLawToc3Level.js'
-import { civilLawPart1Visuals } from './data/civilLawPart1Visuals.js'
+import { civilLawPart2Visuals } from './data/civilLawPart2Visuals.js'
 
-const visualByKey = new Map(civilLawPart1Visuals.map((item) => [item.key, item]))
+const visualByKey = new Map(civilLawPart2Visuals.map((item) => [item.key, item]))
 const flatLeaves = civilLawParts.flatMap((part) => (
   part.points.flatMap((point) => (
     point.topics.map((topic) => ({
@@ -20,7 +20,7 @@ function currentKey(page) {
   const active = buttons.find((button) => button.classList.contains('active'))
   if (!active) return null
   const node = flatLeaves[buttons.indexOf(active)]
-  return node?.partNumber === '1' ? node.key : null
+  return node?.partNumber === '2' ? node.key : null
 }
 
 function renderCheck(visual) {
@@ -30,10 +30,10 @@ function renderCheck(visual) {
       <div><b>${esc(group.label)}</b><p>${(group.nodes || []).map(esc).join(' → ')}</p></div>
     </li>`).join('')
 
-  return `<section class="civil-leaf-recall-check" data-civil-leaf-practice="true" data-civil-part="1" data-topic="${esc(visual.topic)}">
+  return `<section class="civil-leaf-recall-check" data-civil-leaf-practice="true" data-civil-part="2" data-topic="${esc(visual.topic)}">
     <header>
       <div><small>RECALL CHECK · 세부항목 자가진단</small><h3>${esc(visual.topic)}</h3></div>
-      <span>PART 1 · 52/52</span>
+      <span>PART 2 · 65/65</span>
     </header>
     <p class="civil-leaf-recall-check__question">${esc(visual.question)}</p>
     <details>
@@ -51,7 +51,7 @@ function sync() {
   const page = document.querySelector('.civil-law-page')
   if (!page) return
 
-  const existing = page.querySelector('[data-civil-leaf-practice="true"][data-civil-part="1"]')
+  const existing = page.querySelector('[data-civil-leaf-practice="true"][data-civil-part="2"]')
   const key = currentKey(page)
   const visual = key ? visualByKey.get(key) : null
 
