@@ -17,14 +17,117 @@
 }
 
 .brokerage-study-tldr,
-.brokerage-study-tldr * {
-  color: #fff;
-}
+.brokerage-study-tldr * { color: #fff; }
+.brokerage-study-tldr .brokerage-exam-number { color: #ff9a9a !important; text-decoration-color: #ff9a9a; }
 
-.brokerage-study-tldr .brokerage-exam-number {
-  color: #ff9a9a !important;
-  text-decoration-color: #ff9a9a;
+.brokerage-progress {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
 }
+.brokerage-progress > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #d9e5e2;
+  border-radius: 12px;
+  background: #f8fbfa;
+}
+.brokerage-progress span { color: #65736f; font-size: 10px; font-weight: 800; }
+.brokerage-progress strong { color: #214f48; line-height: 1.5; }
+
+.brokerage-law-nav .brokerage-category > summary {
+  min-height: 44px;
+  font-weight: 900;
+}
+.brokerage-category__body {
+  display: grid;
+  gap: 7px;
+  padding: 7px 8px 10px 19px;
+}
+.brokerage-major {
+  overflow: hidden;
+  border-left: 2px solid #d7e3e0;
+}
+.brokerage-major > summary {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 7px;
+  align-items: center;
+  min-height: 38px;
+  padding: 7px 8px;
+  cursor: pointer;
+  color: #40544f;
+  list-style: none;
+}
+.brokerage-major > summary::-webkit-details-marker { display: none; }
+.brokerage-major > summary > span {
+  padding: 2px 5px;
+  border-radius: 5px;
+  background: #e8f1ef;
+  color: #357068;
+  font-size: 9px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.brokerage-major > summary > b { font-size: 11px; line-height: 1.4; }
+.brokerage-major[open] > summary { background: #f6faf9; }
+
+.brokerage-middle-nav,
+.brokerage-leaf-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.brokerage-middle-nav { display: grid; gap: 3px; padding: 3px 5px 8px 9px; }
+.brokerage-middle-nav > li > button {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #455550;
+  text-align: left;
+  cursor: pointer;
+}
+.brokerage-middle-nav > li > button:hover,
+.brokerage-middle-nav > li > button.active { background: #e9f4f1; color: #184f47; }
+.brokerage-middle-nav > li > button > span { display: grid; gap: 2px; line-height: 1.35; font-weight: 800; }
+.brokerage-middle-nav > li > button small { color: #7b8b86; font-size: 8px; font-weight: 900; }
+
+.brokerage-leaf-nav {
+  display: grid;
+  gap: 1px;
+  margin: 2px 0 7px 15px;
+  padding-left: 8px;
+  border-left: 1px dashed #bdcfca;
+}
+.brokerage-leaf-nav button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 6px;
+  align-items: center;
+  min-height: 31px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #64716e;
+  text-align: left;
+  cursor: pointer;
+}
+.brokerage-leaf-nav button:hover { background: #f2f7f6; color: #245c54; }
+.brokerage-leaf-nav button > span { color: #76948e; font-size: 8px; font-weight: 900; }
+.brokerage-leaf-nav button > b { font-size: 10px; line-height: 1.45; font-weight: 700; }
 
 .brokerage-exam-core {
   border: 1px solid #cfe3df;
@@ -32,281 +135,76 @@
   background: linear-gradient(180deg, #f4fbf9 0%, #fff 190px);
   box-shadow: 0 10px 28px rgba(36, 104, 94, .07);
 }
+.brokerage-exam-core__heading { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 14px; align-items: start; margin-bottom: 14px; }
+.brokerage-exam-core__heading > span { display: inline-flex; min-height: 34px; align-items: center; padding: 5px 10px; border-radius: 999px; background: #2f766c; color: #fff; font-weight: 900; letter-spacing: .06em; white-space: nowrap; }
+.brokerage-exam-core__heading h3 { margin: 0; color: #1f594f; font-size: 14pt !important; }
+.brokerage-exam-core__heading p { margin: 5px 0 0; color: #4f6e69; line-height: 1.7; }
+.brokerage-exam-core__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.brokerage-exam-core__grid > article { min-width: 0; display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 11px; align-items: start; padding: 14px; border: 1px solid #d9e9e6; border-radius: 12px; background: #fff; }
+.brokerage-exam-core__grid > article > span { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: #e4f2ef; color: #24685e; font-weight: 900; }
+.brokerage-exam-core__grid strong { display: block; margin-bottom: 4px; color: #21574f; font-size: 14pt !important; }
+.brokerage-exam-core__grid p { margin: 0; color: #4f5968; line-height: 1.78; }
 
-.brokerage-exam-core__heading {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  gap: 14px;
-  align-items: start;
-  margin-bottom: 14px;
-}
+.brokerage-legal-basis { border-top: 4px solid #577a74; background: linear-gradient(180deg, #f6faf9 0%, #fff 140px); }
+.brokerage-legal-basis__intro { margin: -3px 0 14px; color: #596474; line-height: 1.75; }
+.brokerage-legal-basis__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.brokerage-legal-basis__grid article { min-width: 0; padding: 14px; border: 1px solid #dbe7e4; border-radius: 12px; background: #fff; }
+.brokerage-legal-basis__grid article > strong { display: block; margin-bottom: 4px; color: #294f49; font-size: 14pt !important; }
+.brokerage-legal-basis__grid article > p { margin: 0 0 9px; color: #62706e; }
+.brokerage-source-card p + p { padding-top: 7px; border-top: 1px dashed #dbe5e2; }
 
-.brokerage-exam-core__heading > span {
-  display: inline-flex;
-  min-height: 34px;
-  align-items: center;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: #2f766c;
-  color: #fff;
-  font-weight: 900;
-  letter-spacing: .06em;
-  white-space: nowrap;
-}
-
-.brokerage-exam-core__heading h3 {
-  margin: 0;
-  color: #1f594f;
-  font-size: 14pt !important;
-}
-
-.brokerage-exam-core__heading p {
-  margin: 5px 0 0;
-  color: #4f6e69;
-  line-height: 1.7;
-}
-
-.brokerage-exam-core__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.brokerage-exam-core__grid > article {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: 38px minmax(0, 1fr);
-  gap: 11px;
-  align-items: start;
-  padding: 14px;
-  border: 1px solid #d9e9e6;
-  border-radius: 12px;
-  background: #fff;
-}
-
-.brokerage-exam-core__grid > article > span {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: #e4f2ef;
-  color: #24685e;
-  font-weight: 900;
-}
-
-.brokerage-exam-core__grid strong {
-  display: block;
-  margin-bottom: 4px;
-  color: #21574f;
-  font-size: 14pt !important;
-}
-
-.brokerage-exam-core__grid p {
-  margin: 0;
-  color: #4f5968;
-  line-height: 1.78;
-}
-
-.brokerage-legal-basis {
-  border-top: 4px solid #577a74;
-  background: linear-gradient(180deg, #f6faf9 0%, #fff 140px);
-}
-
-.brokerage-legal-basis__intro {
-  margin: -3px 0 14px;
-  color: #596474;
-  line-height: 1.75;
-}
-
-.brokerage-legal-basis__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.brokerage-legal-basis__grid article {
-  min-width: 0;
-  padding: 14px;
-  border: 1px solid #dbe7e4;
-  border-radius: 12px;
-  background: #fff;
-}
-
-.brokerage-legal-basis__grid article > strong {
-  display: block;
-  margin-bottom: 4px;
-  color: #294f49;
-  font-size: 14pt !important;
-}
-
-.brokerage-legal-basis__grid article > p {
-  margin: 0 0 9px;
-  color: #62706e;
-}
-
-.brokerage-law-articles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-items: center;
-}
-
-.brokerage-law-articles > span {
-  margin-right: 2px;
-  color: #456b65;
-  font-weight: 900;
-}
-
-.brokerage-law-articles button {
-  min-height: 32px;
-  padding: 4px 8px;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  color: #a52121;
-  font: inherit;
-  font-weight: 900;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-  cursor: pointer;
-}
-
+.brokerage-law-articles { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.brokerage-law-articles > span { margin-right: 2px; color: #456b65; font-weight: 900; }
+.brokerage-law-articles button { min-height: 32px; padding: 4px 8px; border: 0; border-radius: 7px; background: transparent; color: #a52121; font: inherit; font-weight: 900; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; cursor: pointer; }
 .brokerage-law-articles button:hover,
-.brokerage-law-articles button:focus-visible {
-  background: rgba(165, 33, 33, .08);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(165, 33, 33, .10);
-}
+.brokerage-law-articles button:focus-visible { background: rgba(165, 33, 33, .08); outline: none; box-shadow: 0 0 0 2px rgba(165, 33, 33, .10); }
+.brokerage-law-articles--compact { justify-content: flex-end; }
 
-.brokerage-law-articles--compact {
-  justify-content: flex-end;
-}
+.brokerage-leaf-study { border-top: 4px solid #356e65; background: linear-gradient(180deg, #f6fbfa 0, #fff 130px); }
+.brokerage-leaf-study__head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
+.brokerage-leaf-study__head > div > span { color: #337067; font-size: 9px; font-weight: 900; letter-spacing: .05em; }
+.brokerage-leaf-study__head h3 { margin: 4px 0; color: #214d47; font-size: 14pt !important; }
+.brokerage-leaf-study__head p { margin: 0; color: #66736f; line-height: 1.7; }
+.brokerage-leaf-study__head > b { flex: 0 0 auto; padding: 6px 9px; border-radius: 999px; background: #dff0eb; color: #245f54; }
+.brokerage-leaf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.brokerage-leaf-card { min-width: 0; padding: 13px; border: 1px solid #dfe8e5; border-radius: 12px; background: #fff; scroll-margin-top: 180px; }
+.brokerage-leaf-card.is-target { outline: 3px solid rgba(47, 118, 108, .22); border-color: #2f766c; }
+.brokerage-leaf-card > header { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: start; margin-bottom: 10px; }
+.brokerage-leaf-card > header > span { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 9px; background: #e4f2ef; color: #24685e; font-weight: 900; }
+.brokerage-leaf-card small { color: #7c8d89; font-size: 8px; font-weight: 900; }
+.brokerage-leaf-card h4 { margin: 2px 0 0; color: #263d38; font-size: 12px; line-height: 1.45; }
+.brokerage-leaf-card dl { display: grid; gap: 6px; margin: 0 0 8px; }
+.brokerage-leaf-card dl > div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 8px; padding: 7px 8px; border-radius: 8px; background: #f8faf9; }
+.brokerage-leaf-card dt { color: #61716d; font-size: 9px; font-weight: 900; }
+.brokerage-leaf-card dd { margin: 0; color: #495653; line-height: 1.58; }
+.brokerage-leaf-card .is-trap { background: #fff6f4; }
+.brokerage-leaf-card .is-trap dt { color: #a23b2d; }
+.brokerage-leaf-card .is-memory { background: #f6f3fb; }
+.brokerage-leaf-card .is-memory dt { color: #6b4e88; }
+.brokerage-leaf-card .brokerage-law-articles button { font-size: 9px; min-height: 28px; }
 
-.brokerage-detail-section {
-  border-top: 4px solid #536b75;
-  background: linear-gradient(180deg, #f8fafc 0%, #fff 110px);
-}
+.brokerage-trap-memory .trap-card li + li { margin-top: 7px; }
+.brokerage-ox-panel { border-top: 4px solid #316d63; }
+.brokerage-ox-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.brokerage-ox-grid article { min-width: 0; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; padding: 13px; border: 1px solid #dce5e3; border-radius: 12px; background: #fff; }
+.brokerage-ox-grid article > span { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: #e7f2ef; color: #256858; font-weight: 900; }
+.brokerage-ox-grid b { color: #263b46; }
+.brokerage-ox-grid p { margin: 7px 0 0; color: #596677; line-height: 1.7; }
 
-.brokerage-detail-section__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.brokerage-detail-section__head > div:first-child {
-  display: grid;
-  grid-template-columns: 36px minmax(0, 1fr);
-  gap: 10px;
-  align-items: center;
-}
-
-.brokerage-detail-section__head > div:first-child > span {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: #e8eef3;
-  color: #3f5663;
-  font-weight: 900;
-}
-
-.brokerage-detail-section__head h3 {
-  margin: 0;
-  color: #263b46;
-  font-size: 14pt !important;
-}
-
-.brokerage-study-table th:first-child {
-  min-width: 150px;
-}
-
-.brokerage-trap-memory .trap-card li + li {
-  margin-top: 7px;
-}
-
-.brokerage-ox-panel {
-  border-top: 4px solid #316d63;
-}
-
-.brokerage-ox-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.brokerage-ox-grid article {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
-  gap: 10px;
-  padding: 13px;
-  border: 1px solid #dce5e3;
-  border-radius: 12px;
-  background: #fff;
-}
-
-.brokerage-ox-grid article > span {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 9px;
-  background: #e7f2ef;
-  color: #256858;
-  font-weight: 900;
-}
-
-.brokerage-ox-grid b {
-  color: #263b46;
-}
-
-.brokerage-ox-grid p {
-  margin: 7px 0 0;
-  color: #596677;
-  line-height: 1.7;
-}
-
-.brokerage-nav__status {
-  display: inline-flex;
-  align-items: center;
-  min-height: 20px;
-  padding: 2px 6px;
-  border-radius: 999px;
-  background: #dff0eb;
-  color: #245f54;
-  font-size: 9px;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
-.brokerage-nav__status--outline {
-  background: #eef1f4;
-  color: #6c7784;
-}
+.brokerage-nav__status { display: inline-flex; align-items: center; min-height: 20px; padding: 2px 6px; border-radius: 999px; background: #dff0eb; color: #245f54; font-size: 9px; font-weight: 900; white-space: nowrap; }
+.brokerage-nav__status--outline { background: #eef1f4; color: #6c7784; }
 
 @media (max-width: 980px) {
+  .brokerage-progress { grid-template-columns: 1fr; }
   .brokerage-exam-core__grid,
   .brokerage-legal-basis__grid,
-  .brokerage-ox-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .brokerage-detail-section__head {
-    flex-direction: column;
-  }
-
-  .brokerage-law-articles--compact {
-    justify-content: flex-start;
-  }
+  .brokerage-ox-grid,
+  .brokerage-leaf-grid { grid-template-columns: 1fr; }
+  .brokerage-category__body { padding-left: 10px; }
 }
 
 @media (max-width: 700px) {
-  .brokerage-exam-core__heading {
-    grid-template-columns: 1fr;
-  }
+  .brokerage-exam-core__heading { grid-template-columns: 1fr; }
+  .brokerage-leaf-study__head { flex-direction: column; }
+  .brokerage-leaf-card dl > div { grid-template-columns: 1fr; gap: 3px; }
 }
