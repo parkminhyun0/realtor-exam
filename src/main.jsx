@@ -48,6 +48,7 @@ import './civil-law-part3-visuals.css'
 import './civil-law-part4-visuals.css'
 import './civil-law-integrated-study-flow.css'
 import './mobile-subject-hero-gap-fix.css'
+import './mobile-study-heading-gap-fix.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
