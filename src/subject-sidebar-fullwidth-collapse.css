@@ -1,0 +1,94 @@
+/* 목차를 숨긴 경우 좌측 레일의 레이아웃 점유를 제거하고 본문을 전체 폭으로 확장합니다. */
+.public-law-layout.is-subject-toc-collapsed {
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+}
+
+.public-law-layout.is-subject-toc-collapsed > .public-law-content {
+  grid-column: 1 / -1;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+}
+
+.public-law-layout.is-subject-toc-collapsed > .public-law-nav {
+  position: fixed;
+  left: 8px;
+  top: 50%;
+  z-index: 70;
+  width: 44px !important;
+  height: 44px;
+  min-height: 44px;
+  max-height: 44px;
+  padding: 0 !important;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: translateY(-50%) !important;
+}
+
+.public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle {
+  position: static;
+  width: 44px !important;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  border-radius: 0 12px 12px 0;
+  border-color: rgba(226, 236, 247, .3);
+  background: rgba(18, 34, 54, .94);
+  box-shadow: 0 8px 22px rgba(4, 12, 24, .22);
+  backdrop-filter: blur(12px);
+}
+
+.public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle__label {
+  display: none !important;
+}
+
+.public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle__icon {
+  width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+  background: rgba(255, 255, 255, .12);
+}
+
+@media (max-width: 980px) {
+  .public-law-layout.is-subject-toc-collapsed {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+  }
+
+  .public-law-layout.is-subject-toc-collapsed > .public-law-nav {
+    left: 6px;
+    top: auto;
+    bottom: max(72px, calc(env(safe-area-inset-bottom) + 58px));
+    width: 42px !important;
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
+    transform: none !important;
+  }
+
+  .public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle {
+    width: 42px !important;
+    min-width: 42px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle__label {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-law-layout.is-subject-toc-collapsed > .public-law-content,
+  .public-law-layout.is-subject-toc-collapsed > .public-law-nav {
+    transition: none !important;
+  }
+}

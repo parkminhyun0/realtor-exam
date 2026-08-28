@@ -80,7 +80,6 @@ const expectedTotal = civilLawParts.reduce(
   0,
 )
 const errors = []
-const warnings = []
 
 if (civilLawTopicCount !== expectedTotal) {
   errors.push(`civilLawTopicCount(${civilLawTopicCount}) != calculated(${expectedTotal})`)
@@ -149,10 +148,19 @@ for (const [partNo, topics] of Object.entries(issueChecks)) {
   }
 }
 
-// PART 1의 아래 주제는 판례·해석론 비중이 커 후속 판례보강 대상임을 경고로 남깁니다.
-for (const topic of ['이중매매의 법률관계', '오표시무해의 원칙']) {
-  const segment = entrySegment(read(partFiles['1']), topic)
-  if (segment && !segment.includes('issue(')) warnings.push(`PART 1 '${topic}': precedent/theory source card should be strengthened in the next precedent pass`)
+// PART 1의 이중매매·오표시무해는 별도 판례·해석 source layer로 직접 근거를 표시합니다.
+const part1IssueSource = read('src/civil-law-part1-source-issue-layer.js')
+const part1IssueRequirements = [
+  '이중매매의 법률관계',
+  '2001다8097, 8103',
+  '오표시무해의 원칙',
+  '93다2629, 2636(병합)',
+  '93다3103',
+  'data-civil-part1-source-issue="true"',
+  'https://www.law.go.kr/LSW/precInfoP.do?precSeq=81471',
+]
+for (const required of part1IssueRequirements) {
+  if (!part1IssueSource.includes(required)) errors.push(`PART 1 precedent/theory source layer missing: ${required}`)
 }
 
 if (errors.length) {
@@ -168,4 +176,4 @@ const perPart = civilLawParts.map((part) => ({
 console.log(`Civil-law leaf audit PASS: ${expectedTotal} leaves covered.`)
 console.log(perPart.map(({ part, leaves }) => `PART ${part}: ${leaves}`).join(' / '))
 console.log('PART 4 duplicate labels are resolved through explicit POINT aliases.')
-warnings.forEach((warning) => console.warn(`WARN: ${warning}`))
+console.log('PART 1 precedent/theory source cards verified: 이중매매 + 오표시무해 2/2.')

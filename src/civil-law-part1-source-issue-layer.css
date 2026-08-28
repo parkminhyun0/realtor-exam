@@ -1,0 +1,20 @@
+.civil-law-first__law--issue {
+  border-color: #e2d6b8;
+  background: linear-gradient(180deg, #fffdf8 0%, #fffaf0 100%);
+}
+
+.civil-law-first__law--issue header > b {
+  background: #7a5b18;
+  color: #fff;
+}
+
+.civil-law-first__law--issue header > a {
+  color: #76560f;
+  font-weight: 800;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.civil-law-first__law--issue blockquote {
+  border-left-color: #c9aa64;
+}
