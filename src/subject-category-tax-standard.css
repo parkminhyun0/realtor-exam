@@ -1,0 +1,415 @@
+/*
+ * SUBJECT CATEGORY STANDARD v3
+ * UI/UX reference = 부동산세법 좌측 카테고리 트리
+ * 모든 과목은 같은 폭·색상·단계 들여쓰기·활성행·상태배지·모바일 터치 규격을 사용한다.
+ */
+:root {
+  --subject-toc-bg: #14243a;
+  --subject-toc-bg-2: #172a43;
+  --subject-toc-hover: #223b5b;
+  --subject-toc-row: rgba(255,255,255,.035);
+  --subject-toc-row-open: rgba(255,255,255,.065);
+  --subject-toc-line: rgba(226,236,247,.14);
+  --subject-toc-line-strong: rgba(226,236,247,.22);
+  --subject-toc-text: #edf3f9;
+  --subject-toc-subtext: #c7d3df;
+  --subject-toc-muted: #9fb1c4;
+  --subject-toc-active-bg: #fff;
+  --subject-toc-active-text: #14243a;
+  --subject-toc-active-line: #6f9fca;
+  --subject-toc-ready: #9fe3c7;
+  --subject-toc-index: #c7def2;
+}
+
+/* 세법 기준 패널 크기와 스크롤 동작을 전과목에 강제 */
+body .public-law-layout {
+  grid-template-columns: 300px minmax(0,1fr) !important;
+  gap: 22px !important;
+  align-items: start !important;
+}
+
+body .public-law-nav {
+  position: sticky !important;
+  top: 166px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-height: calc(100vh - 184px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  padding: 14px 12px 18px !important;
+  border: 1px solid rgba(8,18,31,.2) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg,var(--subject-toc-bg) 0%,var(--subject-toc-bg-2) 100%) !important;
+  color: var(--subject-toc-text) !important;
+  box-shadow: 0 14px 38px rgba(18,36,59,.16) !important;
+  scrollbar-width: thin;
+  scrollbar-color: #506985 transparent;
+}
+body .public-law-nav::-webkit-scrollbar { width: 8px; }
+body .public-law-nav::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #506985;
+  background-clip: padding-box;
+}
+
+body .public-law-nav__title {
+  margin: 0 0 9px !important;
+  padding: 7px 8px 14px !important;
+  border-bottom: 1px solid var(--subject-toc-line-strong) !important;
+}
+body .public-law-nav__title strong {
+  display: block !important;
+  color: #fff !important;
+  font-size: 13pt !important;
+  line-height: 1.35 !important;
+  font-weight: 900 !important;
+  letter-spacing: -.025em !important;
+}
+body .public-law-nav__title span {
+  display: block !important;
+  margin-top: 4px !important;
+  color: var(--subject-toc-muted) !important;
+  font-size: 9pt !important;
+  line-height: 1.5 !important;
+  font-weight: 700 !important;
+}
+
+/* 1단계: 카테고리/PART/편/장 */
+body .public-law-nav > details {
+  margin: 0 !important;
+  padding: 4px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--subject-toc-line) !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+body .public-law-nav > details:last-child { border-bottom: 0 !important; }
+body .public-law-nav > details > summary {
+  min-height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  padding: 8px 9px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: var(--subject-toc-text) !important;
+  font-size: 12pt !important;
+  font-weight: 900 !important;
+  line-height: 1.45 !important;
+  cursor: pointer !important;
+  list-style: none !important;
+}
+body .public-law-nav > details > summary::-webkit-details-marker { display: none; }
+body .public-law-nav > details > summary:hover,
+body .public-law-nav > details > summary:focus-visible {
+  background: var(--subject-toc-hover) !important;
+  color: #fff !important;
+  outline: none !important;
+}
+body .public-law-nav > details[open] > summary {
+  background: rgba(255,255,255,.06) !important;
+  color: #fff !important;
+}
+body .public-law-nav > details > summary i {
+  width: 9px !important;
+  height: 9px !important;
+  flex: 0 0 auto !important;
+  border-radius: 3px !important;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.12) !important;
+}
+
+/* 2단계 기본 목록: 세법 POINT와 동일 */
+body .public-law-nav > details > ul,
+body .public-law-nav > details > ol {
+  margin: 4px 0 8px !important;
+  padding: 0 0 0 12px !important;
+  list-style: none !important;
+}
+body .public-law-nav li { margin: 2px 0 !important; }
+body .public-law-nav li > button,
+body .public-law-nav .registration-point-open {
+  width: 100% !important;
+  min-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  padding: 7px 9px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: var(--subject-toc-subtext) !important;
+  font: inherit !important;
+  font-size: 11pt !important;
+  line-height: 1.45 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+body .public-law-nav li > button:hover,
+body .public-law-nav li > button:focus-visible,
+body .public-law-nav .registration-point-open:hover,
+body .public-law-nav .registration-point-open:focus-visible {
+  background: var(--subject-toc-hover) !important;
+  color: #fff !important;
+  outline: none !important;
+}
+body .public-law-nav li > button.active,
+body .public-law-nav .registration-point-open.active {
+  background: var(--subject-toc-active-bg) !important;
+  color: var(--subject-toc-active-text) !important;
+  font-weight: 900 !important;
+  box-shadow: inset 3px 0 0 var(--subject-toc-active-line) !important;
+}
+
+/* 상태 배지: 세법 공개 배지와 동일 */
+body .public-law-nav :is(.civil-nav__ready,.theory-nav__ready,.theory-nav__calc,.brokerage-nav__status,.registration-point__summary b),
+body .public-law-nav li > button > b {
+  flex: 0 0 auto !important;
+  min-height: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 2px 6px !important;
+  border-radius: 999px !important;
+  background: rgba(89,187,149,.12) !important;
+  color: var(--subject-toc-ready) !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+body .public-law-nav li > button.active :is(.civil-nav__ready,.theory-nav__ready,.theory-nav__calc,.brokerage-nav__status),
+body .public-law-nav li > button.active > b {
+  background: #dff4ea !important;
+  color: #176a56 !important;
+}
+body .public-law-nav :is(.civil-nav__ready--outline,.brokerage-nav__status--outline) {
+  background: rgba(255,255,255,.07) !important;
+  color: var(--subject-toc-muted) !important;
+}
+body .public-law-nav small { color: var(--subject-toc-muted) !important; }
+body .public-law-nav li > button.active small { color: #66758a !important; }
+
+/* 공통 2~4단계 트리 골격 */
+body .public-law-nav :is(
+  .civil-nav-point-list,
+  .registration-point-list,
+  .brokerage-category__body
+) {
+  display: grid !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 7px 6px 11px !important;
+}
+body .public-law-nav :is(.civil-nav-point,.registration-point,.brokerage-major) {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid var(--subject-toc-line) !important;
+  border-radius: 10px !important;
+  background: var(--subject-toc-row) !important;
+  overflow: hidden !important;
+}
+body .public-law-nav :is(.civil-nav-point,.registration-point,.brokerage-major) > summary {
+  min-height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 8px 9px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--subject-toc-subtext) !important;
+  font-size: 11pt !important;
+  font-weight: 800 !important;
+  line-height: 1.45 !important;
+  cursor: pointer !important;
+  list-style: none !important;
+}
+body .public-law-nav :is(.civil-nav-point,.registration-point,.brokerage-major) > summary::-webkit-details-marker { display:none; }
+body .public-law-nav :is(.civil-nav-point,.registration-point,.brokerage-major) > summary:hover,
+body .public-law-nav :is(.civil-nav-point,.registration-point,.brokerage-major) > summary:focus-visible {
+  background: var(--subject-toc-hover) !important;
+  color: #fff !important;
+  outline: none !important;
+}
+body .public-law-nav :is(.civil-nav-point,.registration-point,.brokerage-major)[open] > summary {
+  background: var(--subject-toc-row-open) !important;
+  color: #fff !important;
+}
+
+/* 세법 3단계 중분류 */
+body .tax-law-page .tax-nav-groups {
+  margin: 3px 7px 9px 18px !important;
+  padding: 5px 0 5px 10px !important;
+  border-left: 1px solid #4d6987 !important;
+  list-style: none !important;
+}
+body .tax-law-page .tax-nav-groups > li > button {
+  min-height: 40px !important;
+  color: var(--subject-toc-subtext) !important;
+}
+body .tax-law-page .tax-nav-group__index,
+body .civil-law-page .civil-nav-topic-number {
+  flex: 0 0 auto !important;
+  min-width: 28px !important;
+  min-height: 26px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 7px !important;
+  background: rgba(145,185,223,.14) !important;
+  color: var(--subject-toc-index) !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+}
+body .tax-law-page .tax-nav-groups > li > button.active .tax-nav-group__index,
+body .civil-law-page .civil-nav-topic-button.active .civil-nav-topic-number {
+  background: #dceaf6 !important;
+  color: #274e72 !important;
+}
+
+/* 세법 4단계 소분류: 이것이 전과목 leaf 기준 디자인 */
+body .tax-law-page .tax-nav-leaf-list,
+body .brokerage-law-page .brokerage-leaf-nav,
+body .civil-law-page .civil-nav-topic-list,
+body .registration-law-page .registration-detailed-toc {
+  margin: 4px 0 8px 12px !important;
+  padding: 5px 0 5px 10px !important;
+  border-top: 0 !important;
+  border-left: 1px solid rgba(145,185,223,.34) !important;
+  list-style: none !important;
+}
+body .tax-law-page .tax-nav-leaf-list li > button,
+body .brokerage-law-page .brokerage-leaf-nav li > button,
+body .civil-law-page .civil-nav-topic-button,
+body .registration-law-page .registration-toc-node button {
+  min-height: 38px !important;
+  padding: 6px 8px !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: var(--subject-toc-subtext) !important;
+  font-size: 10.5pt !important;
+  font-weight: 600 !important;
+}
+body .tax-law-page .tax-nav-leaf-list li > button:hover,
+body .brokerage-law-page .brokerage-leaf-nav li > button:hover,
+body .civil-law-page .civil-nav-topic-button:hover,
+body .registration-law-page .registration-toc-node button:hover {
+  background: var(--subject-toc-hover) !important;
+  color: #fff !important;
+}
+body .tax-law-page .tax-nav-leaf-list li > button:focus-visible,
+body .brokerage-law-page .brokerage-leaf-nav li > button:focus-visible,
+body .civil-law-page .civil-nav-topic-button:focus-visible,
+body .registration-law-page .registration-toc-node button:focus-visible {
+  outline: 2px solid #a8c9e8 !important;
+  outline-offset: 2px !important;
+}
+body .civil-law-page .civil-nav-topic-button.active,
+body .registration-law-page .registration-toc-node button.active {
+  background: #fff !important;
+  color: var(--subject-toc-active-text) !important;
+  box-shadow: inset 3px 0 0 var(--subject-toc-active-line) !important;
+}
+
+/* 중개사법 4단계도 세법의 line + active row 문법에 맞춘다 */
+body .brokerage-law-page .brokerage-category__body { padding-left: 8px !important; }
+body .brokerage-law-page .brokerage-major > summary {
+  display: grid !important;
+  grid-template-columns: max-content minmax(0,1fr) !important;
+  gap: 7px !important;
+}
+body .brokerage-law-page .brokerage-major > summary > span {
+  color: var(--subject-toc-muted) !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+}
+body .brokerage-law-page .brokerage-major > summary > b {
+  color: inherit !important;
+  font-size: 10.5pt !important;
+  font-weight: 800 !important;
+}
+body .brokerage-law-page .brokerage-middle-nav {
+  margin: 0 !important;
+  padding: 6px 7px 8px 12px !important;
+  list-style: none !important;
+}
+body .brokerage-law-page .brokerage-middle-nav > li > button.active {
+  background: #fff !important;
+  color: var(--subject-toc-active-text) !important;
+  box-shadow: inset 3px 0 0 var(--subject-toc-active-line) !important;
+}
+body .brokerage-law-page .brokerage-leaf-nav li > button {
+  justify-content: flex-start !important;
+  gap: 7px !important;
+}
+body .brokerage-law-page .brokerage-leaf-nav li > button > span {
+  flex: 0 0 auto !important;
+  color: var(--subject-toc-index) !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+}
+body .brokerage-law-page .brokerage-leaf-nav li > button > b {
+  min-height: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  font-size: 10pt !important;
+  font-weight: 600 !important;
+  white-space: normal !important;
+}
+
+/* 공시법 재귀 트리의 깊이도 세법과 동일하게 line으로 읽힌다 */
+body .registration-law-page .registration-toc-node details > summary {
+  min-height: 38px !important;
+  padding: 0 !important;
+  color: var(--subject-toc-subtext) !important;
+}
+body .registration-law-page .registration-toc-node ul {
+  margin: 3px 0 4px 10px !important;
+  padding: 2px 0 2px 9px !important;
+  border-left: 1px solid rgba(145,185,223,.28) !important;
+}
+
+/* 학개론·공법의 2단계도 같은 row 언어를 사용 */
+body .real-estate-theory-page .theory-nav__badges {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+/* 키보드/터치 */
+body .public-law-nav button:focus-visible,
+body .public-law-nav summary:focus-visible {
+  outline: 2px solid #a8c9e8 !important;
+  outline-offset: 2px !important;
+}
+
+@media (max-width: 980px) {
+  body .public-law-layout {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  body .public-law-nav {
+    position: static !important;
+    top: auto !important;
+    max-height: none !important;
+    width: 100% !important;
+  }
+  body .public-law-nav > details > summary,
+  body .public-law-nav li > button,
+  body .public-law-nav :is(.civil-nav-point,.registration-point,.brokerage-major) > summary,
+  body .tax-law-page .tax-nav-groups > li > button,
+  body .tax-law-page .tax-nav-leaf-list li > button,
+  body .brokerage-law-page .brokerage-leaf-nav li > button,
+  body .civil-law-page .civil-nav-topic-button,
+  body .registration-law-page .registration-toc-node button {
+    min-height: 44px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body .public-law-nav { padding: 12px 10px 15px !important; border-radius: 14px !important; }
+  body .public-law-nav__title { padding-left: 6px !important; padding-right: 6px !important; }
+  body .public-law-nav > details > ul,
+  body .public-law-nav > details > ol { padding-left: 8px !important; }
+}
