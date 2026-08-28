@@ -1,0 +1,114 @@
+.civil-leaf-recall-check {
+  margin-top: 14px;
+  padding: 17px 18px;
+  border: 1px solid var(--study-border, #dfe4ea);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--study-text, #273142);
+}
+
+.civil-leaf-recall-check > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.civil-leaf-recall-check > header small {
+  display: block;
+  margin-bottom: 3px;
+  color: #727d8b;
+  font-size: 9pt;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.civil-leaf-recall-check > header h3 {
+  margin: 0;
+  font-size: 12pt;
+}
+
+.civil-leaf-recall-check > header > span {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border: 1px solid #dfe4ea;
+  border-radius: 999px;
+  background: #f7f8fa;
+  color: #657080;
+  font-size: 9pt;
+  font-weight: 700;
+}
+
+.civil-leaf-recall-check__question {
+  margin: 13px 0 10px;
+  padding: 12px 13px;
+  border-left: 3px solid #6d7f95;
+  background: #f8fafc;
+  line-height: 1.65;
+}
+
+.civil-leaf-recall-check details {
+  overflow: hidden;
+  border: 1px solid #e2e6eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.civil-leaf-recall-check summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 9px 11px;
+  cursor: pointer;
+  color: #344154;
+  font-weight: 700;
+  list-style: none;
+}
+
+.civil-leaf-recall-check summary::-webkit-details-marker { display: none; }
+.civil-leaf-recall-check summary::after { content: '보기'; margin-left: auto; color: #7b8794; font-size: 9pt; }
+.civil-leaf-recall-check details[open] summary::after { content: '닫기'; }
+
+.civil-leaf-recall-check__answer {
+  padding: 12px;
+  border-top: 1px solid #e6e9ed;
+  background: #fbfcfd;
+}
+
+.civil-leaf-recall-check__answer ol {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.civil-leaf-recall-check__answer li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.civil-leaf-recall-check__answer li > span {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #edf1f5;
+  color: #586679;
+  font-size: 9pt;
+  font-weight: 800;
+}
+
+.civil-leaf-recall-check__answer b { display: block; margin-bottom: 2px; }
+.civil-leaf-recall-check__answer p { margin: 0; }
+.civil-leaf-recall-check__answer > p { margin-top: 11px; padding-top: 10px; border-top: 1px dashed #d9dfe6; }
+.civil-leaf-recall-check__answer > p b { margin-bottom: 4px; }
+
+@media (max-width: 700px) {
+  .civil-leaf-recall-check { padding: 14px; }
+  .civil-leaf-recall-check > header { flex-direction: column; gap: 7px; }
+  .civil-leaf-recall-check > header > span { align-self: flex-start; }
+}

@@ -45,13 +45,24 @@ for (const selector of [
   '.civil-learning-map',
   '.civil-learning-exam-card',
   '[data-civil-law-leaf-precedents="true"]',
-  '.civil-intensive-drill',
+  '[data-civil-leaf-practice="true"]',
+  '[data-civil-intensive="true"]',
 ]) {
   if (!source.includes(selector)) throw new Error(`통합 학습 대상 selector 누락: ${selector}`)
 }
 
-if (!source.includes('판례와 문제는 해당 세부항목에 직접 연결된 자료가 있을 때 활성화됩니다.')) {
-  throw new Error('선택적 판례/문제 자료에 대한 오인 방지 안내가 없습니다.')
+for (const forbidden of ['.civil-precedent-panel', '.civil-deep-study', '.civil-exam-checks']) {
+  if (source.includes(forbidden)) {
+    throw new Error(`POINT 공통자료가 leaf 직접자료처럼 오인될 수 있는 selector가 남아 있습니다: ${forbidden}`)
+  }
+}
+
+if (!source.includes("step.id === 'precedent'") || !source.includes('item.dataset.topic === node.topic')) {
+  throw new Error('판례 단계가 현재 세부항목 data-topic을 직접 확인하지 않습니다.')
+}
+
+if (!source.includes('개념·조문 중심 항목은 억지로 판례를 붙이지 않습니다.')) {
+  throw new Error('직접판례가 필요하지 않은 개념항목 안내가 없습니다.')
 }
 
 if (!css.includes('@media (max-width: 700px)') || !css.includes('grid-template-columns: repeat(2')) {
@@ -64,4 +75,4 @@ if (!main.includes(jsImport) || !main.includes(cssImport)) {
   throw new Error('main.jsx에 민법 통합 학습 레이어 import가 없습니다.')
 }
 
-console.log(`민법 통합 학습 흐름 검증 통과: ${leaves.length} leaves / ${visualKeys.size} visuals / 6 study steps`)
+console.log(`민법 통합 학습 흐름 검증 통과: ${leaves.length} leaves / ${visualKeys.size} visuals / leaf-specific optional steps`)
