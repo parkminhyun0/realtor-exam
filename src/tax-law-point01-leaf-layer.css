@@ -1,0 +1,308 @@
+/* 부동산세법 PART 1 · POINT 01 세부항목(leaf) 학습 레이어 */
+.tax-leaf-study {
+  border-top: 5px solid #75613a;
+  background: linear-gradient(180deg, #fbf8f0 0%, #fff 170px);
+}
+
+.tax-leaf-study__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.tax-leaf-study__head small {
+  display: block;
+  margin-bottom: 5px;
+  color: #75613a;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+
+.tax-leaf-study__head h3 {
+  margin: 0;
+  color: #3e321e;
+  font-size: 14pt !important;
+}
+
+.tax-leaf-study__head p {
+  max-width: 760px;
+  margin: 7px 0 0;
+  color: #5f6670;
+  line-height: 1.72;
+}
+
+.tax-leaf-study__head > span {
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  border: 1px solid #d9ccb0;
+  border-radius: 999px;
+  background: #fff;
+  color: #6a5631;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.tax-leaf-study__groups {
+  display: grid;
+  gap: 18px;
+}
+
+.tax-leaf-group {
+  min-width: 0;
+  padding-top: 14px;
+  border-top: 1px solid #e8dfce;
+}
+
+.tax-leaf-group__head {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) max-content;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tax-leaf-group__head > span {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #75613a;
+  color: #fff;
+  font-weight: 900;
+}
+
+.tax-leaf-group__head small {
+  display: block;
+  color: #8a7650;
+  font-weight: 900;
+}
+
+.tax-leaf-group__head h3 {
+  margin: 1px 0 0;
+  color: #403522;
+  font-size: 14pt !important;
+}
+
+.tax-leaf-group__head b {
+  color: #766b59;
+  font-size: 10.5pt !important;
+}
+
+.tax-leaf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tax-leaf-card {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #e4ddce;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 5px 16px rgba(62, 50, 30, .045);
+  scroll-margin-top: 96px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.tax-leaf-card.is-tax-leaf-target {
+  border-color: #b38c3f;
+  box-shadow: 0 0 0 3px rgba(179, 140, 63, .16), 0 8px 22px rgba(62, 50, 30, .08);
+  transform: translateY(-2px);
+}
+
+.tax-leaf-card > header {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tax-leaf-card > header > span {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #f2ecdf;
+  color: #75613a;
+  font-weight: 900;
+}
+
+.tax-leaf-card > header small {
+  display: block;
+  color: #96876c;
+  font-weight: 800;
+}
+
+.tax-leaf-card h4 {
+  margin: 1px 0 0;
+  color: #2e3540;
+  font-size: 13pt !important;
+}
+
+.tax-leaf-card dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.tax-leaf-card dl > div {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 8px;
+  padding: 8px 9px;
+  border-radius: 9px;
+  background: #f8f9fa;
+}
+
+.tax-leaf-card dt {
+  color: #52606d;
+  font-weight: 900;
+}
+
+.tax-leaf-card dd {
+  min-width: 0;
+  margin: 0;
+  color: #424b57;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.tax-leaf-card dl > .is-trap {
+  background: #fff4f2;
+}
+
+.tax-leaf-card dl > .is-trap dt {
+  color: #b42323;
+}
+
+.tax-leaf-card dl > .is-memory {
+  background: #f1f8f5;
+}
+
+.tax-leaf-card dl > .is-memory dt {
+  color: #286651;
+}
+
+.tax-leaf-card__basis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 9px;
+}
+
+.tax-leaf-basis {
+  min-height: 30px;
+  padding: 4px 8px;
+  border: 1px solid #e0d4bd;
+  border-radius: 999px;
+  background: #fffdf8;
+  color: #765f35;
+  font: inherit;
+  font-size: 9.5pt !important;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tax-leaf-basis:hover,
+.tax-leaf-basis:focus-visible {
+  background: #f2ead9;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(117, 97, 58, .13);
+}
+
+/* 기존 PART → POINT → 중분류 트리 아래에 POINT 01만 실제 소분류까지 한 단계 더 노출 */
+.tax-law-page #tax-nav-groups-p1s1[data-tax-leaf-tree="true"].is-expanded {
+  max-height: 1900px;
+}
+
+.tax-law-page .tax-nav-leaf-list {
+  display: grid;
+  gap: 1px;
+  margin: 2px 0 5px 18px !important;
+  padding: 2px 0 2px 8px !important;
+  border-left: 1px solid #e6ddcc;
+  list-style: none;
+}
+
+.tax-law-page .tax-nav-leaf-list > li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tax-law-page .tax-nav-leaf-list button {
+  width: 100%;
+  min-height: 32px;
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr);
+  gap: 5px;
+  align-items: start;
+  padding: 5px 6px !important;
+  border: 0 !important;
+  border-radius: 7px;
+  background: transparent !important;
+  color: #6a7078 !important;
+  text-align: left;
+  box-shadow: none !important;
+}
+
+.tax-law-page .tax-nav-leaf-list button > span {
+  color: #b29a6d;
+  font-weight: 900;
+}
+
+.tax-law-page .tax-nav-leaf-list button > strong {
+  min-width: 0;
+  font-size: 9.5pt !important;
+  font-weight: 700;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.tax-law-page .tax-nav-leaf-list button:hover,
+.tax-law-page .tax-nav-leaf-list button:focus-visible {
+  background: #faf6ed !important;
+  color: #4f4127 !important;
+  outline: none;
+}
+
+@media (max-width: 980px) {
+  .tax-leaf-study__head {
+    display: grid;
+  }
+
+  .tax-leaf-study__head > span {
+    justify-self: start;
+  }
+
+  .tax-leaf-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .tax-leaf-card dl > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .tax-leaf-group__head {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+
+  .tax-leaf-group__head b {
+    grid-column: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tax-leaf-card {
+    transition: none !important;
+  }
+}
