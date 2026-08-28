@@ -93,7 +93,7 @@ function buildLayer() {
   section.dataset.taxLeafStudy = 'true'
   section.dataset.taxPoint = 'p2s3'
   section.innerHTML = `<header class="tax-leaf-study__head">
-    <div><small>LEAF STUDY · 중분류 → 소분류</small><h3>PART 2 · POINT 03 재산세 완전분해</h3><p>제37회 프로젝트 기준에 따라 <b>2025년까지 개정된 규정</b>을 시험 본문으로 사용하고, 2026년 개정분은 비교 전용으로 둡니다. 과세대상 → 토지구분 → 6월 1일 납세자 → 과표 → 세율 → 부과·납기 순서로 34개 소분류를 연결합니다.</p></div>
+    <div><small>LEAF STUDY · 중분류 → 소분류</small><h3>PART 2 · POINT 03 재산세 완전분해</h3><p>제37회 프로젝트 기준에 따라 <b>2026.5.31까지 공포·개정된 규정</b>을 시험 본문으로 사용하고, <b>2026.6.1 이후 개정분</b>은 비교 전용으로 둡니다. 과세대상 → 토지구분 → 6월 1일 납세자 → 과표 → 세율 → 부과·납기 순서로 34개 소분류를 연결합니다.</p></div>
     <span>PART 2 · POINT 03 · ${taxLawPart2Point03LeafCount}/${taxLawPart2Point03LeafCount}</span>
   </header>
   <aside class="tax-leaf-exam-anchor" aria-label="재산세 출제축">
