@@ -38,15 +38,15 @@ export default function ExamLawRegimeNotice({ subjectId = 'all' }) {
       className={`exam-law-regime${isAll ? ' exam-law-regime--dashboard' : ''}`}
       data-exam-law-regime="37"
       data-subject-id={subjectId}
-      aria-label="제37회 시험 적용법령 안내"
+      aria-label="제37회 시험 적용법령 학습 기준 안내"
     >
       <div className="exam-law-regime__main">
         <div className="exam-law-regime__icon" aria-hidden="true">37</div>
         <div className="exam-law-regime__copy">
-          <span className="exam-law-regime__kicker">EXAM LAW BASELINE · {subject.title}</span>
+          <span className="exam-law-regime__kicker">SITE STUDY RULE · {subject.title}</span>
           <h2>{exam37LawRule.title}</h2>
           <p><strong>{exam37LawRule.examBasis}</strong> {exam37LawRule.amendmentBasis}</p>
-          <small>{exam37LawRule.scopeNote}</small>
+          <small><b>웹페이지 학습 운영기준:</b> {exam37LawRule.scopeNote}</small>
         </div>
         <div className="exam-law-regime__badges" aria-label="법령 적용 구분">
           <span className="is-exam">시험 정답 · 개정 전</span>
