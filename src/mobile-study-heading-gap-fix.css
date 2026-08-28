@@ -1,0 +1,55 @@
+/*
+ * 전과목 모바일 본문 헤더 공백 보정
+ *
+ * 원인:
+ * text-overlap-guard.css의 데스크톱용 flex-basis(제목 440px / 상태영역 100%)가
+ * 모바일에서 .study-section-heading이 column으로 바뀐 뒤 세로 높이로 해석되어,
+ * 제목과 법령 상태 사이에 수백 px의 빈 공간을 만들 수 있었습니다.
+ *
+ * 이 파일은 모든 과목 공통 .study-section-heading에만 적용하며 main.jsx에서
+ * 가장 마지막에 로드하여 과목별 스타일과 기존 겹침 방지 규칙을 안전하게 덮습니다.
+ */
+
+@media (max-width: 768px) {
+  body .public-law-page .study-section-heading {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    align-content: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+  }
+
+  body .public-law-page .study-section-heading > div {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: 0 1 auto !important;
+    flex-basis: auto !important;
+    margin: 0 !important;
+  }
+
+  body .public-law-page .study-section-heading .law-reference {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: 0 0 auto !important;
+    flex-basis: auto !important;
+    align-self: flex-start !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body .public-law-page .study-section-heading {
+    gap: 6px !important;
+  }
+}
