@@ -8,6 +8,8 @@ import { taxLawPart3Point01Leaves } from './data/taxLawPart3Point01Leaves.js'
 import { taxLawPart3Point02Leaves } from './data/taxLawPart3Point02Leaves.js'
 import { taxLawPart3Point03Leaves } from './data/taxLawPart3Point03Leaves.js'
 import { taxLawContent } from './data/taxLawContent.js'
+import { taxLawExamSupplement } from './data/taxLawExamSupplement.js'
+import { taxLawRateGuide } from './data/taxLawRateGuide.js'
 
 const pointLeafSets = [
   taxLawPart1Point01Leaves,
@@ -24,16 +26,20 @@ const pointLeafSets = [
 const replacements = [
   ['2025.12.31 개정분까지 반영한', '2026.5.31까지 공포·개정된 기준을 반영한'],
   ['2025년까지 개정된 규정', '2026.5.31까지 공포·개정된 규정'],
+  ['2026년 현행', '제37회 컷오프 범위의'],
+  ['현행 조문', '제37회 기준 조문'],
 ]
+
+function normalizeText(value) {
+  let normalized = String(value || '')
+  for (const [before, after] of replacements) normalized = normalized.replaceAll(before, after)
+  return normalized
+}
 
 for (const groups of pointLeafSets) {
   for (const group of groups) {
     for (const item of group.topics) {
-      for (const field of ['core', 'exam', 'trap', 'memory']) {
-        let value = String(item[field] || '')
-        for (const [before, after] of replacements) value = value.replaceAll(before, after)
-        item[field] = value
-      }
+      for (const field of ['core', 'exam', 'trap', 'memory']) item[field] = normalizeText(item[field])
     }
   }
 }
@@ -44,6 +50,13 @@ for (const content of Object.values(taxLawContent)) {
   content.lawVersion = examLawVersion
   content.source = examSourceNote
 }
+
+for (const supplement of Object.values(taxLawExamSupplement)) {
+  if (supplement.sourceNote) supplement.sourceNote = normalizeText(supplement.sourceNote)
+}
+
+const rateSourceDate = '제37회 시험 기준 · 2026.5.31 컷오프'
+for (const guide of Object.values(taxLawRateGuide)) guide.sourceDate = rateSourceDate
 
 const visibleLabels = new Map([
   ['REAL ESTATE TAX LAW · 2026', 'REAL ESTATE TAX LAW · 제37회 기준'],
