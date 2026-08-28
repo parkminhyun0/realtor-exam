@@ -1,0 +1,153 @@
+/* 부동산세법 PART 2 · POINT 01 취득세 전용 시각화 */
+
+.tax-law-page #tax-nav-groups-p2s1[data-tax-leaf-tree="true"].is-expanded {
+  max-height: 7200px;
+}
+
+.tax-acquisition-flow,
+.tax-acquisition-deadlines {
+  margin: 0 0 18px;
+  padding: 14px;
+  border: 1px solid #d7ddd8;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.tax-acquisition-flow > header,
+.tax-acquisition-deadlines > header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 11px;
+}
+
+.tax-acquisition-flow > header > span,
+.tax-acquisition-deadlines > header > span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #316d63;
+  color: #fff;
+  font-size: 9pt !important;
+  font-weight: 900;
+}
+
+.tax-acquisition-flow h4,
+.tax-acquisition-deadlines h4 {
+  margin: 0;
+  color: #284b45;
+  font-size: 13pt !important;
+}
+
+.tax-acquisition-flow > div {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr) 18px) minmax(0, 1fr);
+  gap: 5px;
+  align-items: stretch;
+}
+
+.tax-acquisition-flow article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 27px minmax(0, 1fr);
+  gap: 4px 7px;
+  align-content: start;
+  padding: 10px;
+  border: 1px solid #dce7e3;
+  border-radius: 11px;
+  background: #f7fbf9;
+}
+
+.tax-acquisition-flow article > b {
+  grid-row: 1 / span 2;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #316d63;
+  color: #fff;
+}
+
+.tax-acquisition-flow article > strong {
+  color: #304941;
+  font-size: 10.5pt !important;
+}
+
+.tax-acquisition-flow article > small {
+  color: #68746f;
+  line-height: 1.45;
+}
+
+.tax-acquisition-flow > div > i {
+  display: grid;
+  place-items: center;
+  color: #65a295;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.tax-acquisition-deadlines {
+  background: linear-gradient(180deg, #f7fbff 0%, #fff 100%);
+  border-color: #d6e2ee;
+}
+
+.tax-acquisition-deadlines > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.tax-acquisition-deadlines article {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #dce5ef;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.tax-acquisition-deadlines article small {
+  color: #6c7b8b;
+  font-weight: 850;
+}
+
+.tax-acquisition-deadlines article strong {
+  color: #344d66;
+}
+
+.tax-acquisition-deadlines article b {
+  width: max-content;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #fff0ee;
+  color: #b42323;
+  font-size: 12pt !important;
+}
+
+.tax-acquisition-deadlines article em {
+  color: #7a6949;
+  font-style: normal;
+  font-size: 9.5pt !important;
+}
+
+@media (max-width: 1180px) {
+  .tax-acquisition-flow > div {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-acquisition-flow > div > i {
+    min-height: 16px;
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .tax-acquisition-deadlines > div {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-law-page #tax-nav-groups-p2s1[data-tax-leaf-tree="true"].is-expanded {
+    max-height: 9000px;
+  }
+}
