@@ -1,0 +1,9 @@
+/* 4단계 공통 목차의 레벨별 grid/chevron 위치를 명시적으로 고정 */
+.unified-four-toc__summary {
+  position: relative !important;
+}
+
+.unified-four-toc__row--level-2,
+.unified-four-toc__row--level-3 {
+  grid-template-columns: max-content minmax(0, 1fr) max-content !important;
+}
