@@ -8,6 +8,7 @@ import RegistrationLawPage from './RegistrationLawPageV2'
 import TaxLawPage from './TaxLawPage'
 import Exam36QuestionSection from './Exam36QuestionSection'
 import StudyTextToolbar from './StudyTextToolbar'
+import ExamLawRegimeNotice from './ExamLawRegimeNotice'
 import './public-law.css'
 import './scroll-top.css'
 import './global-search.css'
@@ -247,6 +248,7 @@ export default function App() {
         </nav>
         <StudyTextToolbar active={Boolean(route)} />
       </header>
+      <ExamLawRegimeNotice subjectId={route || 'all'} />
       {content}
       <Exam36QuestionSection subjectId={route} />
       <button className={`scroll-top-button${showScrollTop ? ' visible' : ''}`} type="button" onClick={scrollToTop} aria-label="맨 위로 이동" title="맨 위로">
@@ -254,7 +256,7 @@ export default function App() {
       </button>
       <footer className="footer">
         <span>공인중개사 시험 핵심정리</span>
-        <span>과목별 현행 법령 기준일은 각 학습 페이지에 별도 표기합니다.</span>
+        <span>제37회 시험 본문은 2026년 개정 전 법령을 우선하고, 2026 개정법은 과목별 비교표에 별도 표시합니다.</span>
       </footer>
     </div>
   )
