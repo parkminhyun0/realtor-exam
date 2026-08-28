@@ -1,0 +1,204 @@
+.civil-study-flow {
+  margin: 0 0 16px;
+  padding: 14px;
+  border: 1px solid var(--study-border, #dfe4ea);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--study-text, #273142);
+}
+
+.civil-study-flow__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.civil-study-flow__head small {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 9pt;
+  color: #6e7886;
+  letter-spacing: .03em;
+}
+
+.civil-study-flow__head h3 {
+  margin: 0;
+  font-size: 12pt;
+  line-height: 1.4;
+  color: #273142;
+}
+
+.civil-study-flow__head > span {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border: 1px solid #d8dde4;
+  border-radius: 999px;
+  background: #f7f8fa;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #5c6674;
+}
+
+.civil-study-flow__intro {
+  margin: 8px 0 10px !important;
+  font-size: 10pt !important;
+  line-height: 1.55 !important;
+  color: #5f6977 !important;
+}
+
+.civil-study-flow__path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f7f8fa;
+  font-size: 9pt;
+  color: #667180;
+}
+
+.civil-study-flow__path i {
+  font-style: normal;
+  color: #9aa2ad;
+}
+
+.civil-study-flow__path strong {
+  color: #273142;
+}
+
+.civil-study-flow__steps {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.civil-study-flow__step {
+  min-width: 0;
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'num title'
+    'hint hint'
+    'status status';
+  align-content: start;
+  gap: 3px 7px;
+  padding: 9px;
+  border: 1px solid #dfe3e8;
+  border-radius: 9px;
+  background: #fff;
+  color: #273142;
+  text-align: left;
+  cursor: pointer;
+}
+
+.civil-study-flow__step > span {
+  grid-area: num;
+  font-size: 8.5pt;
+  color: #7a8491;
+}
+
+.civil-study-flow__step > strong {
+  grid-area: title;
+  min-width: 0;
+  font-size: 9.5pt;
+  line-height: 1.35;
+}
+
+.civil-study-flow__step > small {
+  grid-area: hint;
+  font-size: 8.5pt;
+  line-height: 1.4;
+  color: #6a7481;
+}
+
+.civil-study-flow__step > em {
+  grid-area: status;
+  margin-top: 2px;
+  font-size: 8.5pt;
+  font-style: normal;
+  font-weight: 700;
+  color: #51606f;
+}
+
+.civil-study-flow__step.is-ready:hover,
+.civil-study-flow__step.is-ready:focus-visible {
+  border-color: #aeb7c1;
+  background: #f8f9fa;
+  outline: none;
+}
+
+.civil-study-flow__step.is-pending {
+  background: #fafafa;
+  color: #8a929c;
+  cursor: default;
+}
+
+.civil-study-flow__step:disabled {
+  opacity: 1;
+}
+
+.civil-law-page :is(
+  [data-civil-law-first="true"],
+  .civil-statute-section,
+  .civil-topic-visual,
+  .civil-learning-map,
+  .civil-learning-exam-card,
+  [data-civil-law-leaf-precedents="true"],
+  .civil-precedent-panel,
+  .civil-precedent-section,
+  [data-civil-intensive-drill="true"],
+  .civil-intensive-drill,
+  .civil-deep-study,
+  .civil-exam-checks
+) {
+  scroll-margin-top: 190px;
+}
+
+@media (max-width: 1100px) {
+  .civil-study-flow__steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .civil-study-flow {
+    padding: 12px;
+  }
+
+  .civil-study-flow__head {
+    align-items: flex-start;
+  }
+
+  .civil-study-flow__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .civil-study-flow__step {
+    min-height: 82px;
+    padding: 8px;
+  }
+
+  .civil-study-flow__path {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 390px) {
+  .civil-study-flow__steps {
+    grid-template-columns: 1fr;
+  }
+
+  .civil-study-flow__step {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .civil-study-flow__step {
+    transition: none;
+  }
+}
