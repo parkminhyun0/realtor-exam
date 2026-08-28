@@ -1,0 +1,60 @@
+/* 전과목 모바일 과목 소개(hero) 공백 제거
+ * 원인 방어: 데스크톱의 space-between/높이 규칙이 세로 flex로 전환된 뒤
+ * 소개문과 배지 사이의 남는 세로 공간을 크게 분배하지 않도록 모바일에서 명시적으로 초기화합니다.
+ */
+@media (max-width: 980px) {
+  body .public-law-hero,
+  body .civil-law-hero,
+  body .tax-law-page .public-law-hero,
+  body .registration-law-page .public-law-hero,
+  body .real-estate-theory-page .public-law-hero,
+  body .subject-placeholder-page .public-law-hero,
+  body .subject-hero {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    align-content: flex-start !important;
+    gap: 14px !important;
+  }
+
+  body .public-law-hero > div,
+  body .civil-law-hero > div,
+  body .subject-hero > div {
+    flex: 0 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin-block: 0 !important;
+  }
+
+  body .public-law-hero__badges {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    align-self: flex-start !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 7px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body .public-law-hero,
+  body .civil-law-hero,
+  body .tax-law-page .public-law-hero,
+  body .registration-law-page .public-law-hero,
+  body .real-estate-theory-page .public-law-hero,
+  body .subject-placeholder-page .public-law-hero,
+  body .subject-hero {
+    padding: 18px !important;
+    gap: 12px !important;
+  }
+
+  body .public-law-hero__badges {
+    margin-top: 2px !important;
+  }
+}
