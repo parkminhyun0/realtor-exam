@@ -1,0 +1,308 @@
+.exam-law-regime {
+  width: min(1440px, calc(100% - 32px));
+  margin: 12px auto 0;
+  border: 1px solid #e3c4b5;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fff8f4 0%, #fff 100%);
+  box-shadow: 0 8px 24px rgba(107, 54, 29, .06);
+  overflow: hidden;
+}
+
+.exam-law-regime--dashboard {
+  margin-bottom: 10px;
+}
+
+.exam-law-regime__main {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) max-content;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.exam-law-regime__icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #9b3a27;
+  color: #fff;
+  font-size: 14pt !important;
+  font-weight: 950;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .1);
+}
+
+.exam-law-regime__copy {
+  min-width: 0;
+}
+
+.exam-law-regime__kicker {
+  display: block;
+  margin-bottom: 2px;
+  color: #9b3a27;
+  font-size: 9.5pt !important;
+  font-weight: 900;
+  letter-spacing: .045em;
+}
+
+.exam-law-regime__copy h2 {
+  margin: 0;
+  color: #33261f;
+  font-size: 14pt !important;
+}
+
+.exam-law-regime__copy p {
+  margin: 5px 0 0;
+  color: #5f4a40;
+  line-height: 1.6;
+}
+
+.exam-law-regime__copy p strong {
+  color: #842f21;
+}
+
+.exam-law-regime__copy small {
+  display: block;
+  margin-top: 4px;
+  color: #79665c;
+  line-height: 1.55;
+}
+
+.exam-law-regime__badges {
+  display: grid;
+  gap: 5px;
+  justify-items: end;
+}
+
+.exam-law-regime__badges span {
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: 9.5pt !important;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.exam-law-regime__badges .is-exam {
+  border: 1px solid #b95b49;
+  background: #fff0eb;
+  color: #8e2f20;
+}
+
+.exam-law-regime__badges .is-amended {
+  border: 1px solid #8fa8bc;
+  background: #eef6fb;
+  color: #315d7b;
+}
+
+.exam-law-regime__details {
+  border-top: 1px solid #ead7cc;
+  background: rgba(255, 255, 255, .76);
+}
+
+.exam-law-regime__details > summary {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 11px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.exam-law-regime__details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.exam-law-regime__details > summary > span {
+  color: #7a3528;
+  font-weight: 900;
+}
+
+.exam-law-regime__details > summary > span::before {
+  content: '＋ ';
+}
+
+.exam-law-regime__details[open] > summary > span::before {
+  content: '－ ';
+}
+
+.exam-law-regime__details > summary small {
+  min-width: 0;
+  color: #7a6d66;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.exam-law-regime__differences {
+  display: grid;
+  gap: 10px;
+  padding: 0 16px 16px;
+}
+
+.exam-law-diff-card {
+  border: 1px solid #e6ddd7;
+  border-radius: 13px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.exam-law-diff-card > header {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 11px 12px;
+  background: #faf8f6;
+  border-bottom: 1px solid #ece4df;
+}
+
+.exam-law-diff-card > header > div {
+  min-width: 0;
+}
+
+.exam-law-diff-card__law {
+  display: block;
+  color: #2f3941;
+  font-weight: 900;
+}
+
+.exam-law-diff-card > header strong {
+  display: block;
+  margin-top: 2px;
+  color: #9b3a27;
+  font-size: 10pt !important;
+}
+
+.exam-law-diff-card > header a {
+  flex: 0 0 auto;
+  color: #315d7b;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.exam-law-diff-card > header a:hover,
+.exam-law-diff-card > header a:focus-visible {
+  text-decoration: underline;
+}
+
+.exam-law-diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.exam-law-diff-grid section {
+  min-width: 0;
+  padding: 12px;
+}
+
+.exam-law-diff-grid section + section {
+  border-left: 1px solid #ece4df;
+}
+
+.exam-law-diff-grid span {
+  display: inline-block;
+  margin-bottom: 5px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-size: 9pt !important;
+  font-weight: 900;
+}
+
+.exam-law-diff-grid__before {
+  background: #fff8f5;
+}
+
+.exam-law-diff-grid__before span {
+  background: #ffe8e0;
+  color: #8b2e20;
+}
+
+.exam-law-diff-grid__after {
+  background: #f5f9fc;
+}
+
+.exam-law-diff-grid__after span {
+  background: #e4f0f7;
+  color: #315d7b;
+}
+
+.exam-law-diff-grid p,
+.exam-law-diff-card__impact p {
+  margin: 0;
+  color: #505b64;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.exam-law-diff-card__impact {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid #ece4df;
+  background: #fffdf5;
+}
+
+.exam-law-diff-card__impact b {
+  color: #765b1d;
+}
+
+@media (max-width: 980px) {
+  .exam-law-regime {
+    width: min(100% - 18px, 1440px);
+    margin-top: 8px;
+  }
+
+  .exam-law-regime__main {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .exam-law-regime__icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .exam-law-regime__badges {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: start;
+  }
+
+  .exam-law-regime__details > summary {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .exam-law-regime__details > summary small {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 620px) {
+  .exam-law-regime__main {
+    grid-template-columns: 1fr;
+  }
+
+  .exam-law-regime__icon {
+    display: none;
+  }
+
+  .exam-law-diff-card > header,
+  .exam-law-diff-grid,
+  .exam-law-diff-card__impact {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .exam-law-diff-grid section + section {
+    border-left: 0;
+    border-top: 1px solid #ece4df;
+  }
+
+  .exam-law-diff-card > header a {
+    justify-self: start;
+  }
+}

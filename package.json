@@ -17,6 +17,7 @@
     "verify:civil-flow": "node scripts/verify-civil-integrated-study-flow.mjs",
     "verify:mobile-gaps": "node scripts/verify-mobile-layout-gaps.mjs",
     "verify:toc-collapse": "node scripts/verify-subject-toc-collapse.mjs",
+    "audit:exam37-law": "node scripts/audit-exam37-law-regime.mjs",
     "audit:civil-part1-support": "node scripts/audit-civil-part1-leaf-support.mjs",
     "audit:civil-part2-support": "node scripts/audit-civil-part2-leaf-support.mjs",
     "audit:civil-part3-support": "node scripts/audit-civil-part3-leaf-support.mjs",
@@ -25,7 +26,7 @@
     "audit:tax-p1s1": "node scripts/audit-tax-part1-point01-leaves.mjs",
     "audit:tax-p1s2": "node scripts/audit-tax-part1-point02-leaves.mjs",
     "verify:exam36": "node scripts/verify-exam36-bank.mjs",
-    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && npm run verify:civil-graph && npm run verify:civil-part1-visuals && npm run verify:civil-part2-visuals && npm run verify:civil-part3-visuals && npm run verify:civil-part4-visuals && npm run verify:civil-flow && npm run verify:mobile-gaps && npm run verify:toc-collapse && npm run audit:civil-part1-support && npm run audit:civil-part2-support && npm run audit:civil-part3-support && npm run audit:civil-part4-support && npm run audit:civil-final && npm run audit:tax-p1s1 && npm run audit:tax-p1s2 && npm run verify:exam36 && vite build",
+    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && npm run verify:civil-graph && npm run verify:civil-part1-visuals && npm run verify:civil-part2-visuals && npm run verify:civil-part3-visuals && npm run verify:civil-part4-visuals && npm run verify:civil-flow && npm run verify:mobile-gaps && npm run verify:toc-collapse && npm run audit:exam37-law && npm run audit:civil-part1-support && npm run audit:civil-part2-support && npm run audit:civil-part3-support && npm run audit:civil-part4-support && npm run audit:civil-final && npm run audit:tax-p1s1 && npm run audit:tax-p1s2 && npm run verify:exam36 && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
