@@ -81,8 +81,8 @@ const esc = (value = '') => String(value).replace(/[&<>'"]/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;',
 }[char]))
 
-function renderPart4ExtraPrecedents(topic, items) {
-  return `<section class="study-block civil-precedent-section civil-leaf-precedents" data-civil-law-part4-extra-precedents="true" data-topic="${esc(topic)}">
+function renderPart4ExtraPrecedents(key, topic, items) {
+  return `<section class="study-block civil-precedent-section civil-leaf-precedents" data-civil-law-part4-extra-precedents="true" data-key="${esc(key)}" data-topic="${esc(topic)}">
     <div class="study-block__title"><span>⚖</span><h3>이 세부항목의 핵심 대법원 판례</h3></div>
     <p class="study-note">특별법 조문을 먼저 확인한 뒤, 판례가 결론을 좌우하는 요건·효과·제3자 관계만 직접 연결합니다.</p>
     <div class="civil-precedent-grid">${items.map((item) => `<article class="civil-precedent-card">
@@ -116,14 +116,14 @@ function syncPart4ExtraPrecedents() {
     old?.remove()
     return
   }
-  if (old?.dataset.topic === topic) return
+  if (old?.dataset.key === key) return
 
   old?.remove()
   const lawFirst = page.querySelector('[data-civil-law-part4-first="true"], [data-civil-law-first="true"]')
   if (!lawFirst) return
 
   const wrap = document.createElement('div')
-  wrap.innerHTML = renderPart4ExtraPrecedents(topic, items)
+  wrap.innerHTML = renderPart4ExtraPrecedents(key, topic, items)
   lawFirst.insertAdjacentElement('afterend', wrap.firstElementChild)
 }
 
