@@ -28,6 +28,18 @@ const leafSets = new Map([
   ['p3s3', taxLawPart3Point03Leaves],
 ])
 
+const layerByPoint = new Map([
+  ['p1s1', 'src/tax-law-point01-leaf-layer.js'],
+  ['p1s2', 'src/tax-law-point02-leaf-layer.js'],
+  ['p1s3', 'src/tax-law-point03-leaf-layer.js'],
+  ['p2s1', 'src/tax-law-point04-leaf-layer.js'],
+  ['p2s2', 'src/tax-law-point05-leaf-layer.js'],
+  ['p2s3', 'src/tax-law-point06-leaf-layer.js'],
+  ['p3s1', 'src/tax-law-point07-leaf-layer.js'],
+  ['p3s2', 'src/tax-law-point08-leaf-layer.js'],
+  ['p3s3', 'src/tax-law-point09-leaf-layer.js'],
+])
+
 const points = taxLawParts.flatMap((part) => part.points.map((point) => ({ part, point })))
 if (points.length !== 9) fail(`POINT 수 불일치: ${points.length}/9`)
 
@@ -108,12 +120,13 @@ const canonicalChecks = [
   ['p3s3', ['250만원', '12억원', '40%', '50%', '70%', '2개월']],
 ]
 for (const [pointId, markers] of canonicalChecks) {
-  const text = JSON.stringify([
-    leafSets.get(pointId),
-    taxLawContent[pointId],
-    taxLawExamSupplement[pointId],
-    taxLawRateGuide[pointId] || {},
-  ])
+  const text = [
+    JSON.stringify(leafSets.get(pointId)),
+    JSON.stringify(taxLawContent[pointId]),
+    JSON.stringify(taxLawExamSupplement[pointId]),
+    JSON.stringify(taxLawRateGuide[pointId] || {}),
+    read(layerByPoint.get(pointId)),
+  ].join('\n')
   for (const marker of markers) if (!text.includes(marker)) fail(`${pointId}: 핵심 숫자/기간 누락 ${marker}`)
 }
 
