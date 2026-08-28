@@ -1,0 +1,321 @@
+/* 전과목 좌측 목차: 카테고리 → 대분류 → 중분류 → 소분류 4단계 고정 */
+:root {
+  --four-toc-font: 11pt;
+  --four-toc-meta-font: 8pt;
+  --four-toc-bg: #14243a;
+  --four-toc-bg-2: #172a43;
+  --four-toc-hover: #223b5b;
+  --four-toc-line: #4d6987;
+  --four-toc-text: #edf3f9;
+  --four-toc-subtext: #c7d3df;
+  --four-toc-muted: #9fb0c2;
+  --four-toc-active-bg: #ffffff;
+  --four-toc-active-text: #14243a;
+  --four-toc-active-line: #6f9fca;
+}
+
+.public-law-layout:has(> .unified-four-toc) > .public-law-nav:not(.unified-four-toc),
+.public-law-layout > .unified-four-toc__source-nav {
+  display: none !important;
+}
+
+body .public-law-layout > .unified-four-toc {
+  width: 300px !important;
+  min-width: 300px !important;
+  padding: 14px 12px 18px !important;
+  border: 1px solid rgba(8, 18, 31, .2) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, var(--four-toc-bg) 0%, var(--four-toc-bg-2) 100%) !important;
+  color: var(--four-toc-text) !important;
+  box-shadow: 0 14px 38px rgba(18, 36, 59, .16) !important;
+  overflow: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: #506985 transparent;
+}
+
+body .public-law-layout > .unified-four-toc::-webkit-scrollbar { width: 8px; }
+body .public-law-layout > .unified-four-toc::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #506985;
+  background-clip: padding-box;
+}
+
+body .unified-four-toc .public-law-nav__title {
+  margin: 0 0 10px !important;
+  padding: 7px 8px 14px !important;
+  border-bottom: 1px solid rgba(226, 236, 247, .22) !important;
+}
+
+body .unified-four-toc .public-law-nav__title strong {
+  display: block;
+  color: #fff !important;
+  font-size: 12pt !important;
+  font-weight: 900 !important;
+  line-height: 1.4 !important;
+  letter-spacing: -.025em;
+}
+
+body .unified-four-toc .public-law-nav__title span {
+  display: block;
+  margin-top: 4px;
+  color: var(--four-toc-muted) !important;
+  font-size: 9pt !important;
+  font-weight: 700 !important;
+  line-height: 1.45 !important;
+}
+
+.unified-four-toc__tree {
+  display: grid;
+  gap: 4px;
+}
+
+.unified-four-toc__branch {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.unified-four-toc__summary {
+  display: block !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  list-style: none !important;
+  cursor: pointer;
+}
+
+.unified-four-toc__summary::-webkit-details-marker { display: none; }
+
+.unified-four-toc__summary:hover,
+.unified-four-toc__summary:focus-visible {
+  background: var(--four-toc-hover) !important;
+  outline: none !important;
+}
+
+.unified-four-toc__summary::after {
+  content: '›';
+  position: absolute;
+  right: 10px;
+  margin-top: -31px;
+  color: var(--four-toc-muted);
+  font-size: 10pt;
+  font-weight: 900;
+  transform: rotate(0deg);
+  transition: transform .14s ease;
+  pointer-events: none;
+}
+
+.unified-four-toc__branch[open] > .unified-four-toc__summary::after {
+  transform: rotate(90deg);
+}
+
+.unified-four-toc__row {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  display: grid;
+  grid-template-columns: max-content max-content minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 7px 28px 7px 8px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--four-toc-subtext);
+  text-align: left;
+  cursor: inherit;
+}
+
+button.unified-four-toc__row {
+  cursor: pointer;
+  grid-template-columns: max-content minmax(0, 1fr);
+  padding-right: 8px;
+}
+
+.unified-four-toc__row:hover,
+button.unified-four-toc__row:focus-visible {
+  background: var(--four-toc-hover);
+  color: #fff;
+  outline: none;
+}
+
+.unified-four-toc__row.is-active,
+.unified-four-toc__summary.is-active > .unified-four-toc__row,
+button.unified-four-toc__row.is-active {
+  background: var(--four-toc-active-bg) !important;
+  color: var(--four-toc-active-text) !important;
+  box-shadow: inset 3px 0 0 var(--four-toc-active-line) !important;
+}
+
+.unified-four-toc__label {
+  min-width: 0;
+  color: inherit !important;
+  font-size: var(--four-toc-font) !important;
+  font-weight: 700 !important;
+  line-height: 1.45 !important;
+  letter-spacing: -.015em;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+.unified-four-toc__branch--level-1 > .unified-four-toc__summary .unified-four-toc__label,
+.unified-four-toc__branch--level-2 > .unified-four-toc__summary .unified-four-toc__label {
+  font-weight: 900 !important;
+}
+
+.unified-four-toc__level {
+  min-width: 38px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 20px;
+  padding: 2px 5px;
+  border: 1px solid rgba(191, 211, 231, .18);
+  border-radius: 999px;
+  background: rgba(145, 185, 223, .10);
+  color: #bfd4e8 !important;
+  font-size: var(--four-toc-meta-font) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+}
+
+.unified-four-toc__row.is-active .unified-four-toc__level,
+.unified-four-toc__summary.is-active .unified-four-toc__level {
+  border-color: #d2e0ec;
+  background: #e8f0f7;
+  color: #315b7e !important;
+}
+
+.unified-four-toc__dot {
+  width: 8px;
+  height: 8px;
+  display: block;
+  border-radius: 3px;
+  background: var(--toc-dot, #6f9fca);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.12);
+}
+
+.unified-four-toc__count {
+  min-width: 24px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  color: var(--four-toc-muted) !important;
+  font-size: var(--four-toc-meta-font) !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  text-align: center;
+}
+
+.unified-four-toc__row.is-active .unified-four-toc__count,
+.unified-four-toc__summary.is-active .unified-four-toc__count {
+  background: #edf2f6;
+  color: #5c7085 !important;
+}
+
+.unified-four-toc__children {
+  margin: 2px 0 4px 12px !important;
+  padding: 3px 0 3px 10px !important;
+  border-left: 1px solid var(--four-toc-line) !important;
+}
+
+.unified-four-toc__children--level-3 {
+  margin-left: 14px !important;
+  border-left-color: #587595 !important;
+}
+
+.unified-four-toc__children--level-4 {
+  display: grid;
+  gap: 2px;
+  margin-left: 14px !important;
+  padding-left: 10px !important;
+  list-style: none;
+  border-left-color: #6885a3 !important;
+}
+
+.unified-four-toc__leaf {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.unified-four-toc__leaf .unified-four-toc__row {
+  min-height: 38px;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 7px;
+  padding: 6px 7px !important;
+  color: var(--four-toc-subtext);
+}
+
+/* 모든 과목에서 목차 글자 크기를 동일하게 잠금 */
+body .unified-four-toc :is(summary,button,span,strong,b,small) {
+  font-family: inherit !important;
+}
+
+body .unified-four-toc .unified-four-toc__label {
+  font-size: 11pt !important;
+}
+
+body .unified-four-toc .unified-four-toc__level,
+body .unified-four-toc .unified-four-toc__count {
+  font-size: 8pt !important;
+}
+
+/* 기존 과목별 nav 전용 규칙이 새 공통 목차에 침투하지 않도록 격리 */
+body .unified-four-toc .civil-nav-point,
+body .unified-four-toc .tax-nav-point,
+body .unified-four-toc .registration-point,
+body .unified-four-toc .brokerage-category,
+body .unified-four-toc .brokerage-major {
+  all: unset;
+}
+
+@media (max-width: 980px) {
+  body .public-law-layout > .unified-four-toc {
+    position: static !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-height: none !important;
+  }
+
+  .unified-four-toc__row,
+  .unified-four-toc__leaf .unified-four-toc__row {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 700px) {
+  body .public-law-layout > .unified-four-toc {
+    padding: 12px 10px 15px !important;
+    border-radius: 14px !important;
+  }
+
+  body .unified-four-toc .public-law-nav__title strong {
+    font-size: 12pt !important;
+  }
+
+  .unified-four-toc__row {
+    gap: 6px;
+    padding-left: 7px;
+  }
+
+  .unified-four-toc__level {
+    min-width: 36px;
+  }
+
+  .unified-four-toc__children,
+  .unified-four-toc__children--level-3,
+  .unified-four-toc__children--level-4 {
+    margin-left: 9px !important;
+    padding-left: 8px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unified-four-toc__summary::after { transition: none; }
+}
