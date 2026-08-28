@@ -45,6 +45,11 @@ for (const forbidden of ['한국공인중개사협회', '2026.8.18', '2026.8.28'
   if (joined.includes(forbidden)) fail(`6월 이후 개정내용이 중개사법 시험본문에 누출됨: ${forbidden}`)
 }
 
+// 세법 과목 고유 콘텐츠가 중개사법 데이터에 들어오는 것을 차단한다.
+for (const taxOnly of ['조세총론', '취득세', '등록면허세', '재산세', '종합부동산세', '종합소득세', '양도소득세']) {
+  if (joined.includes(taxOnly)) fail(`세법 전용 콘텐츠가 중개사법 데이터에 혼입됨: ${taxOnly}`)
+}
+
 if (!brokerageLawSource.version.includes('법률 제21024호') || !brokerageLawSource.version.includes('2026.2.15 시행')) {
   fail('업로드 공인중개사법 기준 버전 표기 누락')
 }
@@ -77,11 +82,32 @@ for (const marker of [
   'data-mobile-toc-content',
   '제37회 시험 기준 법령 바로보기',
   '상세 본문 {readyCount}개 공개',
+  'data-subject-page="brokerage-law"',
+  "import './brokerage-law.css'",
 ]) if (!page.includes(marker)) fail(`중개사법 페이지 연결 누락: ${marker}`)
+
+// 전역 세법/민법 DOM 확장 스크립트의 진입 selector를 절대로 공유하지 않는다.
+for (const crossSubjectMarker of [
+  'tax-law-page',
+  'civil-law-page',
+  'tax-law-hero',
+  'tax-nav-',
+  'tax-leaf-',
+  'tax-detail-section',
+  'tax-exam-core',
+  'tax-law-articles',
+]) {
+  if (page.includes(crossSubjectMarker)) fail(`중개사법 페이지가 타 과목 runtime selector를 공유함: ${crossSubjectMarker}`)
+}
+
+const brokerageCss = read('src/brokerage-law.css')
+if (!brokerageCss.includes('.brokerage-law-page')) fail('중개사법 전용 CSS root 누락')
+if (brokerageCss.includes('.tax-law-page') || brokerageCss.includes('.civil-law-page')) fail('중개사법 CSS에 타 과목 runtime root가 혼입됨')
 
 console.log('공인중개사법령 정규페이지 BASELINE AUDIT PASS')
 console.log('- 6 PART · 20 POINT 목차 구축')
 console.log('- PART 1~2 상세본문 7/7 POINT 공개 · 조문/EXAM CORE/표/함정/암기/OX 연결')
+console.log('- 세법/민법 runtime selector 완전 분리 · 세법 고유 콘텐츠 혼입 차단')
 console.log('- 핵심 숫자: 부정행위 5년 · 취소/형/벌금 3년 · 300만원 · 보조원 5배 · 이전 10일 · 휴업 3/6개월')
 console.log('- 업로드 공인중개사법 법률 제21024호(2026.2.15 시행) + 제37회 2026.5.31 컷오프 표기 확인')
 console.log('- 제36회 기출변형 40문항 · 법령 팝업 · 모바일 목차 연결 확인')
