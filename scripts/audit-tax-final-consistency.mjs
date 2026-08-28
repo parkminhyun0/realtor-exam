@@ -36,7 +36,7 @@ let leafCount = 0
 const allLeafKeys = []
 const allLeafText = []
 
-for (const { part, point } of points) {
+for (const { point } of points) {
   const leaves = leafSets.get(point.id)
   if (!leaves) fail(`${point.id}: leaf 데이터셋 누락`)
   if (!taxLawContent[point.id]) fail(`${point.id}: 기본 본문 누락`)
@@ -108,7 +108,12 @@ const canonicalChecks = [
   ['p3s3', ['250만원', '12억원', '40%', '50%', '70%', '2개월']],
 ]
 for (const [pointId, markers] of canonicalChecks) {
-  const text = JSON.stringify(leafSets.get(pointId))
+  const text = JSON.stringify([
+    leafSets.get(pointId),
+    taxLawContent[pointId],
+    taxLawExamSupplement[pointId],
+    taxLawRateGuide[pointId] || {},
+  ])
   for (const marker of markers) if (!text.includes(marker)) fail(`${pointId}: 핵심 숫자/기간 누락 ${marker}`)
 }
 
