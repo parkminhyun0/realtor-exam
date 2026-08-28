@@ -80,11 +80,12 @@ import './civil-law-part3-visuals.css'
 import './civil-law-part4-visuals.css'
 import './civil-law-part1-leaf-check.css'
 import './civil-law-integrated-study-flow.css'
-import './mobile-subject-hero-gap-fix.css'
-import './mobile-study-heading-gap-fix.css'
 /* 최종 시각 기준: 카테고리=세법 / 본문=민법 */
 import './subject-category-tax-standard.css'
 import './subject-body-civil-standard.css'
+/* 모바일 공백 보정은 최종 CSS guard로 유지 */
+import './mobile-subject-hero-gap-fix.css'
+import './mobile-study-heading-gap-fix.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
