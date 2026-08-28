@@ -4,6 +4,7 @@ import { gunzipSync } from 'node:zlib'
 
 const root = path.resolve(new URL('..', import.meta.url).pathname)
 const fail = (message) => { throw new Error(message) }
+const read = (file) => fs.readFileSync(path.join(root, file), 'utf8')
 
 const allowed = new Set([
   'src/data/examLawRegime.js',
@@ -12,7 +13,6 @@ const allowed = new Set([
 ])
 
 const textExt = new Set(['.js', '.jsx', '.mjs', '.html'])
-const scanRoots = ['src']
 const files = []
 
 function walk(dir) {
@@ -23,7 +23,7 @@ function walk(dir) {
   }
 }
 
-for (const rel of scanRoots) walk(path.join(root, rel))
+walk(path.join(root, 'src'))
 
 const sources = files
   .map((absolute) => ({
@@ -67,20 +67,38 @@ if (leaks.length) {
   fail(`2026 개정법 baseline leakage ${leaks.length}건`)
 }
 
-const pageGuards = [
-  ['src/RealEstateTheoryPage.jsx', '제37회 시험 기준'],
-  ['src/CivilLawPage.jsx', '제37회 시험 기준'],
-  ['src/PublicLawPage.jsx', '제37회 시험 기준'],
-  ['src/RegistrationLawPageV2.jsx', '제37회 시험 기준'],
-  ['src/TaxLawPage.jsx', '제37회 시험 기준'],
-  ['src/App.jsx', '제37회 시험 기준'],
-]
+const layer = read('src/exam37-baseline-content-layer.js')
+for (const marker of [
+  '.real-estate-theory-page',
+  '.civil-law-page:not(.tax-law-page)',
+  '.public-law-page:not(.real-estate-theory-page)',
+  '.registration-law-page',
+  '.tax-law-page',
+  '.subject-placeholder-page',
+  'data-exam37-inline-baseline',
+  '제37회 시험 기준 · 개정 전 법령으로 학습',
+  '2026 개정법 차이 보기',
+  "['REAL ESTATE TAX LAW · 2026', 'REAL ESTATE TAX LAW · 제37회 시험 기준']",
+  "['PUBLIC LAW · 2026', 'PUBLIC LAW · 제37회 시험 기준']",
+  "['근거법령 · 현행 조문', '근거법령 · 제37회 시험 기준 조문']",
+  "['현행 조세 법령 바로보기', '제37회 시험 기준 조세 법령 바로보기']",
+]) {
+  if (!layer.includes(marker)) fail(`제37회 본문 기준 레이어 누락: ${marker}`)
+}
 
-const missingGuards = pageGuards.filter(([file, marker]) => !fs.readFileSync(path.join(root, file), 'utf8').includes(marker))
-if (missingGuards.length) {
-  fail(`전과목 제37회 시험 기준 표지 누락: ${missingGuards.map(([file]) => file).join(', ')}`)
+const main = read('src/main.jsx')
+for (const requiredImport of [
+  "import './exam37-baseline-content-layer.css'",
+  "import './exam37-baseline-content-layer.js'",
+]) {
+  if (!main.includes(requiredImport)) fail(`main.jsx 제37회 baseline import 누락: ${requiredImport}`)
+}
+
+const css = read('src/exam37-baseline-content-layer.css')
+for (const marker of ['.exam37-inline-baseline', '@media (max-width: 700px)', 'grid-template-columns: 38px minmax(0, 1fr)']) {
+  if (!css.includes(marker)) fail(`제37회 baseline 반응형 CSS 누락: ${marker}`)
 }
 
 console.log('제37회 시험 본문 2026 개정법 누출 AUDIT PASS')
-console.log('6개 과목 페이지에 제37회 시험 기준 표지 확인')
+console.log('6개 과목에 본문 내부 EXAM BASELINE 표지 + 2026 혼동 라벨 정규화 확인')
 console.log('공법 압축 본문까지 디코드하여 2026 개정 전용 표현 격리 확인')
