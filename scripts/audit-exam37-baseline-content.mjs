@@ -78,6 +78,8 @@ for (const marker of [
   'data-exam37-inline-baseline',
   '제37회 시험 기준 · 개정 전 법령으로 학습',
   '2026 개정법 차이 보기',
+  "['CIVIL LAW · 2026', 'CIVIL LAW · 제37회 시험 기준']",
+  "['REGISTRATION & CADASTRE · 2026', 'REGISTRATION & CADASTRE · 제37회 시험 기준']",
   "['REAL ESTATE TAX LAW · 2026', 'REAL ESTATE TAX LAW · 제37회 시험 기준']",
   "['PUBLIC LAW · 2026', 'PUBLIC LAW · 제37회 시험 기준']",
   "['근거법령 · 현행 조문', '근거법령 · 제37회 시험 기준 조문']",
@@ -86,8 +88,28 @@ for (const marker of [
   if (!layer.includes(marker)) fail(`제37회 본문 기준 레이어 누락: ${marker}`)
 }
 
+const viewer = read('src/LawTextViewer.jsx')
+for (const marker of [
+  'const EXAM37_PROMULGATION_CUTOFF = 20251231',
+  'target=eflaw',
+  'nw=1,2,3',
+  "item['공포일자']",
+  'promulgationDate > EXAM37_PROMULGATION_CUTOFF',
+  '&MST=${encodeURIComponent(version.mst)}&efYd=${version.effectiveDate}&JO=${joCode}',
+  'data-exam37-law-popup="true"',
+  '2025년 12월 31일까지 공포된 마지막 법령 버전',
+  '해당 버전 원문 ↗',
+]) {
+  if (!viewer.includes(marker)) fail(`제37회 법령 팝업 historical baseline 누락: ${marker}`)
+}
+
+if (viewer.includes('target=law&type=JSON&ID=')) {
+  fail('법령 팝업에 현행법 ID 직접조회 경로가 남아 있습니다.')
+}
+
 const main = read('src/main.jsx')
 for (const requiredImport of [
+  "import './exam37-law-viewer-baseline.css'",
   "import './exam37-baseline-content-layer.css'",
   "import './exam37-baseline-content-layer.js'",
 ]) {
@@ -99,6 +121,12 @@ for (const marker of ['.exam37-inline-baseline', '@media (max-width: 700px)', 'g
   if (!css.includes(marker)) fail(`제37회 baseline 반응형 CSS 누락: ${marker}`)
 }
 
+const popupCss = read('src/exam37-law-viewer-baseline.css')
+for (const marker of ['.law-article-popup__exam-baseline', '.law-article-text__version', '@media (max-width: 620px)']) {
+  if (!popupCss.includes(marker)) fail(`제37회 법령팝업 CSS 누락: ${marker}`)
+}
+
 console.log('제37회 시험 본문 2026 개정법 누출 AUDIT PASS')
 console.log('6개 과목에 본문 내부 EXAM BASELINE 표지 + 2026 혼동 라벨 정규화 확인')
+console.log('법령 팝업은 2025-12-31까지 공포된 마지막 연혁(MST)으로 조회')
 console.log('공법 압축 본문까지 디코드하여 2026 개정 전용 표현 격리 확인')
