@@ -1,4 +1,4 @@
-/* 부동산세법 PART 1 · POINT 01 세부항목(leaf) 학습 레이어 */
+/* 부동산세법 PART 1 · POINT 01~02 세부항목(leaf) 공통 학습 레이어 */
 .tax-leaf-study {
   border-top: 5px solid #75613a;
   background: linear-gradient(180deg, #fbf8f0 0%, #fff 170px);
@@ -42,6 +42,40 @@
   color: #6a5631;
   font-weight: 900;
   white-space: nowrap;
+}
+
+.tax-leaf-exam-anchor {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 11px;
+  align-items: start;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border: 1px solid #efc8c3;
+  border-left: 5px solid #c62828;
+  border-radius: 12px;
+  background: #fff7f6;
+}
+
+.tax-leaf-exam-anchor > strong {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #c62828;
+  color: #fff;
+  font-size: 9.5pt !important;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+.tax-leaf-exam-anchor p {
+  margin: 0;
+  color: #633c3c;
+  line-height: 1.7;
+}
+
+.tax-leaf-exam-anchor b {
+  color: #9b1c1c;
+  font-weight: 900;
 }
 
 .tax-leaf-study__groups {
@@ -217,9 +251,10 @@
   box-shadow: 0 0 0 2px rgba(117, 97, 58, .13);
 }
 
-/* 기존 PART → POINT → 중분류 트리 아래에 POINT 01만 실제 소분류까지 한 단계 더 노출 */
-.tax-law-page #tax-nav-groups-p1s1[data-tax-leaf-tree="true"].is-expanded {
-  max-height: 1900px;
+/* PART → POINT → 중분류 아래에 완료된 POINT 01·02의 실제 소분류까지 한 단계 더 노출 */
+.tax-law-page #tax-nav-groups-p1s1[data-tax-leaf-tree="true"].is-expanded,
+.tax-law-page #tax-nav-groups-p1s2[data-tax-leaf-tree="true"].is-expanded {
+  max-height: 2300px;
 }
 
 .tax-law-page .tax-nav-leaf-list {
@@ -287,6 +322,14 @@
 }
 
 @media (max-width: 560px) {
+  .tax-leaf-exam-anchor {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-leaf-exam-anchor > strong {
+    justify-self: start;
+  }
+
   .tax-leaf-card dl > div {
     grid-template-columns: 1fr;
     gap: 3px;
