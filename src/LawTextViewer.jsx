@@ -6,7 +6,7 @@ const lawVersionCache = new Map()
 const lawArticleCache = new Map()
 const lawDocumentCache = new Map()
 const LAW_API_BASE = 'https://www.law.go.kr/DRF'
-const EXAM37_PROMULGATION_CUTOFF = 20251231
+const EXAM37_PROMULGATION_CUTOFF = 20260531
 
 function normalizeLawName(value = '') {
   return String(value).replace(/\s+/g, '').replace(/[·ㆍ]/g, '')
@@ -161,7 +161,7 @@ async function getExam37LawVersion(lawName, signal) {
   const searchUrl = `${LAW_API_BASE}/lawSearch.do?OC=test&target=eflaw&type=JSON&display=100&nw=1,2,3&sort=ddes&query=${encodeURIComponent(lawName)}`
   const payload = await fetchJson(searchUrl, signal)
   const version = findExam37Version(payload, lawName)
-  if (!version) throw new Error('제37회 시험 기준에 해당하는 개정 전 법령 버전을 찾지 못했습니다.')
+  if (!version) throw new Error('제37회 시험 기준에 해당하는 법령 버전을 찾지 못했습니다.')
 
   lawVersionCache.set(lawName, version)
   return version
@@ -173,7 +173,7 @@ function getHistoricalOfficialUrl(version, fallbackUrl) {
 }
 
 async function fetchLawArticle(lawName, article, signal) {
-  const cacheKey = `${lawName}::${article}::exam37-pre2026`
+  const cacheKey = `${lawName}::${article}::exam37-cutoff-20260531`
   if (lawArticleCache.has(cacheKey)) return lawArticleCache.get(cacheKey)
 
   const version = await getExam37LawVersion(lawName, signal)
@@ -190,7 +190,7 @@ async function fetchLawArticle(lawName, article, signal) {
 }
 
 async function fetchLawDocument(lawName, signal) {
-  const cacheKey = `${lawName}::exam37-pre2026`
+  const cacheKey = `${lawName}::exam37-cutoff-20260531`
   if (lawDocumentCache.has(cacheKey)) return lawDocumentCache.get(cacheKey)
 
   const version = await getExam37LawVersion(lawName, signal)
@@ -241,7 +241,7 @@ function formatDate(value) {
 }
 
 function versionLabel(version) {
-  if (!version) return '제37회 시험 기준 · 2026 공포·개정 전'
+  if (!version) return '제37회 시험 기준 · 2026.5.31 공포·개정 컷오프'
   return `공포 ${formatDate(version.promulgationDate)} · 시행 ${formatDate(version.effectiveDate)}${version.revisionType ? ` · ${version.revisionType}` : ''}`
 }
 
@@ -392,7 +392,7 @@ export default function LawTextViewer({ open, onClose, target }) {
 
         <div className="law-article-popup__exam-baseline" data-exam37-law-popup="true">
           <b>시험 정답 기준</b>
-          <span>2026년에 공포·개정된 버전은 제외하고, 2025년 12월 31일까지 공포된 마지막 법령 버전을 표시합니다.</span>
+          <span>2026년 5월 31일까지 공포·개정된 마지막 법령 버전을 표시합니다. 2026년 6월 1일 이후 개정분은 적용하지 않습니다.</span>
         </div>
 
         <div className="law-article-popup__body">
@@ -428,13 +428,13 @@ export default function LawTextViewer({ open, onClose, target }) {
           {status === 'error' && (
             <div className="law-article-popup__status" role="status">
               <strong>제37회 시험 기준 법령 텍스트를 불러오지 못했습니다.</strong>
-              <span>2026 개정법을 시험 정답으로 대체하지 않습니다. 국가법령정보센터 연혁 원문을 확인해 주세요.</span>
+              <span>6월 이후 개정법으로 시험 정답을 대체하지 않습니다. 국가법령정보센터 연혁 원문을 확인해 주세요.</span>
             </div>
           )}
         </div>
 
         <footer className="law-article-popup__footer">
-          <span>법제처 국가법령정보센터 · 제37회 시험용 2026 공포·개정 전 법령</span>
+          <span>법제처 국가법령정보센터 · 제37회 시험용 2026.5.31 공포·개정 컷오프</span>
           {firstOfficialUrl && <a href={firstOfficialUrl} target="_blank" rel="noreferrer">법령 연혁 원문 ↗</a>}
         </footer>
       </section>
