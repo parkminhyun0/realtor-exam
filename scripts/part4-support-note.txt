@@ -1,1 +1,0 @@
-PART 4 support gate: 31 leaf recall checks + selected precedent-dependent special-law issues. See audit-civil-part4-leaf-support.mjs for executable verification.
