@@ -1,6 +1,13 @@
 import fs from 'node:fs'
 import { allSubjects } from '../src/data/subjects.js'
-import { brokerageLawContent, brokerageLawPointCount } from '../src/data/brokerageLaw.js'
+import {
+  brokerageLawCategories,
+  brokerageMajorCount,
+  brokerageMiddleCount,
+  brokerageLeafCount,
+  brokerageReadyMiddleCount,
+  brokerageReadyLeafCount,
+} from '../src/data/brokerageLawHierarchy.js'
 import { taxLawParts } from '../src/data/taxLaw.js'
 import { civilLawParts } from '../src/data/civilLaw.js'
 
@@ -29,13 +36,17 @@ const civilPointCount = civilLawParts.reduce((sum, part) => sum + part.points.le
 const taxPointCount = taxLawParts.reduce((sum, part) => sum + part.points.length, 0)
 if (civilPointCount !== 23) fail(`민법 POINT 기준선 변경: ${civilPointCount}/23`)
 if (taxPointCount !== 9) fail(`세법 POINT 기준선 변경: ${taxPointCount}/9`)
-if (brokerageLawPointCount !== 20) fail(`중개사법 POINT 기준선 변경: ${brokerageLawPointCount}/20`)
-if (Object.keys(brokerageLawContent).length !== 7) fail('중개사법 1차 상세화 범위 변경')
+if (brokerageLawCategories.length !== 3) fail(`중개사법 카테고리 기준선 변경: ${brokerageLawCategories.length}/3`)
+if (brokerageMajorCount !== 16) fail(`중개사법 대분류 기준선 변경: ${brokerageMajorCount}/16`)
+if (brokerageMiddleCount !== 59) fail(`중개사법 중분류 기준선 변경: ${brokerageMiddleCount}/59`)
+if (brokerageLeafCount !== 344) fail(`중개사법 소분류 기준선 변경: ${brokerageLeafCount}/344`)
+if (brokerageReadyMiddleCount !== 36 || brokerageReadyLeafCount !== 231) fail(`중개사법 공인중개사법령 상세화 기준선 변경: ${brokerageReadyMiddleCount}/36 · ${brokerageReadyLeafCount}/231`)
 
 const subjectDataMarkers = [
   ['real-estate-theory', 'src/data/realEstateTheoryContent.js'],
   ['civil-law', 'src/data/civilLawContent.js'],
-  ['brokerage-law', 'src/data/brokerageLaw.js'],
+  ['brokerage-law', 'src/data/brokerageLawHierarchy.js'],
+  ['brokerage-law', 'src/data/brokerageLawExpandedContent.js'],
   ['public-law', 'src/data/publicLaw.js'],
   ['registration-law', 'src/data/registrationLawDeepDive.js'],
   ['tax-law', 'src/data/taxLawContent.js'],
@@ -45,7 +56,7 @@ for (const [subjectId, path] of subjectDataMarkers) {
 }
 
 console.log('전 과목 정규페이지 MATURITY AUDIT PASS: 6/6')
-console.log('- 기존 최저 성숙도 과목: brokerage-law = placeholder + 기출만 제공')
-console.log('- 현재: BrokerageLawPage + 6 PART/20 POINT 정규 목차 + PART 1~2 7 POINT 상세본문 확보')
-console.log(`- 비교 기준선: 민법 ${civilPointCount} POINT · 세법 ${taxPointCount} POINT · 중개사법 ${brokerageLawPointCount} POINT(상세 ${Object.keys(brokerageLawContent).length})`)
-console.log('- 다음 상세화 우선순위: 중개사법 PART 3 → PART 4 → 거래신고 → 중개실무')
+console.log('- 중개사법 4단계 구조: 3 카테고리 · 16 대분류 · 59 중분류 · 344 소분류')
+console.log('- 공인중개사법령 카테고리 상세화: 36/36 중분류 · 231/231 소분류 구조 연결')
+console.log(`- 비교 기준선: 민법 ${civilPointCount} POINT · 세법 ${taxPointCount} POINT · 중개사법 4단계 ${brokerageLeafCount} 소분류`)
+console.log('- 다음 상세화 우선순위: 거래신고법령 52 소분류 → 중개실무 61 소분류')

@@ -32,8 +32,8 @@ export const subjectGroups = [
         title: '공인중개사법령 및 중개실무',
         shortTitle: '중개사법',
         icon: '⌂',
-        description: '공인중개사 제도 · 개설등록·운영 · 중개계약·업무 · 교육·제재 · 거래신고 · 중개실무',
-        status: '공개 시작',
+        description: '공인중개사법령 · 거래신고법령 · 중개실무를 카테고리→대분류→중분류→소분류 4단계로 정리합니다.',
+        status: '공개 확장',
       },
       {
         id: 'public-law',
