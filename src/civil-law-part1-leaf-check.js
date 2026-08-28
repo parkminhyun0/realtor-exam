@@ -1,36 +1,26 @@
+import { civilLawParts } from './data/civilLawToc3Level.js'
 import { civilLawPart1Visuals } from './data/civilLawPart1Visuals.js'
 
 const visualByKey = new Map(civilLawPart1Visuals.map((item) => [item.key, item]))
+const flatLeaves = civilLawParts.flatMap((part) => (
+  part.points.flatMap((point) => (
+    point.topics.map((topic) => ({
+      key: `${point.id}|${topic}`,
+      partNumber: String(part.number),
+    }))
+  ))
+))
 
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[char]))
 
 function currentKey(page) {
-  const active = page.querySelector('.civil-nav-topic-button.active')
+  const buttons = [...page.querySelectorAll('.civil-nav-topic-button')]
+  const active = buttons.find((button) => button.classList.contains('active'))
   if (!active) return null
-
-  const point = active.closest('.civil-nav-point')
-  const pointDetails = [...page.querySelectorAll('.civil-nav-point')]
-  const pointIndex = pointDetails.indexOf(point)
-  if (pointIndex < 0) return null
-
-  const allPartPoints = [...page.querySelectorAll('.public-law-nav > details')]
-    .flatMap((part) => [...part.querySelectorAll(':scope .civil-nav-point')])
-  const pointIdIndex = allPartPoints.indexOf(point)
-  if (pointIdIndex < 0) return null
-
-  const pointOrder = [
-    'p1s1', 'p1s2', 'p1s3', 'p1s4', 'p1s5', 'p1s6',
-    'p2s1', 'p2s2', 'p2s3', 'p2s4', 'p2s5', 'p2s6',
-    'p3s1', 'p3s2', 'p3s3', 'p3s4', 'p3s5', 'p3s6',
-    'p4s1', 'p4s2', 'p4s3', 'p4s4', 'p4s5',
-  ]
-  const pointId = pointOrder[pointIdIndex]
-  if (!pointId?.startsWith('p1')) return null
-
-  const topic = active.querySelector('span:last-child')?.textContent?.trim()
-  return topic ? `${pointId}|${topic}` : null
+  const node = flatLeaves[buttons.indexOf(active)]
+  return node?.partNumber === '1' ? node.key : null
 }
 
 function renderCheck(visual) {
