@@ -90,10 +90,10 @@ for (const marker of [
   "const POINT_ID = 'p1s1'",
   "const POINT02_ID = 'p1s2'",
   'taxLawPart1Point02Leaves',
-  'data-tax-point-target',
   'button.dataset.taxPointTarget = pointId',
   "page.querySelectorAll('[data-tax-leaf-study=\"true\"]')",
   'item.dataset.taxPoint === pointId',
+  'scrollToLeaf(pointId, topic)',
   'scrollIntoView',
 ]) {
   if (!navLeaves.includes(marker)) fail(`POINT 01~02 소분류 nav 누락/비POINT-aware: ${marker}`)
