@@ -3,6 +3,7 @@ import { taxLawPart1Point02Leaves } from './data/taxLawPart1Point02Leaves.js'
 import { taxLawPart1Point03Leaves } from './data/taxLawPart1Point03Leaves.js'
 import { taxLawPart2Point01Leaves } from './data/taxLawPart2Point01Leaves.js'
 import { taxLawPart2Point02Leaves } from './data/taxLawPart2Point02Leaves.js'
+import { taxLawPart2Point03Leaves } from './data/taxLawPart2Point03Leaves.js'
 
 // POINT_ID 문자열은 POINT 01 audit의 하위호환 표지로 유지합니다.
 const POINT_ID = 'p1s1'
@@ -10,12 +11,14 @@ const POINT02_ID = 'p1s2'
 const POINT03_ID = 'p1s3'
 const POINT04_ID = 'p2s1'
 const POINT05_ID = 'p2s2'
+const POINT06_ID = 'p2s3'
 const pointLeafSets = [
   { pointId: POINT_ID, groups: taxLawPart1Point01Leaves },
   { pointId: POINT02_ID, groups: taxLawPart1Point02Leaves },
   { pointId: POINT03_ID, groups: taxLawPart1Point03Leaves },
   { pointId: POINT04_ID, groups: taxLawPart2Point01Leaves },
   { pointId: POINT05_ID, groups: taxLawPart2Point02Leaves },
+  { pointId: POINT06_ID, groups: taxLawPart2Point03Leaves },
 ]
 let queued = false
 
