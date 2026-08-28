@@ -83,6 +83,9 @@ import './civil-law-integrated-study-flow.css'
 /* 최종 시각 기준: 카테고리=세법 / 본문=민법 */
 import './subject-category-tax-standard.css'
 import './subject-body-civil-standard.css'
+/* 전과목 목차 구조는 4단계 공통 렌더러로 고정 */
+import './subject-four-level-nav.js'
+import './subject-four-level-nav-layout-fix.css'
 /* 모바일 공백 보정은 최종 CSS guard로 유지 */
 import './mobile-subject-hero-gap-fix.css'
 import './mobile-study-heading-gap-fix.css'
