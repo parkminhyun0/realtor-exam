@@ -8,6 +8,9 @@ const SUBJECT_PAGE_SELECTOR = [
 ].join(', ')
 
 const LABEL_REPLACEMENTS = new Map([
+  ['REAL ESTATE PRINCIPLES · 제37회 대비', 'REAL ESTATE PRINCIPLES · 제37회 시험 기준'],
+  ['CIVIL LAW · 2026', 'CIVIL LAW · 제37회 시험 기준'],
+  ['REGISTRATION & CADASTRE · 2026', 'REGISTRATION & CADASTRE · 제37회 시험 기준'],
   ['REAL ESTATE TAX LAW · 2026', 'REAL ESTATE TAX LAW · 제37회 시험 기준'],
   ['PUBLIC LAW · 2026', 'PUBLIC LAW · 제37회 시험 기준'],
   ['검증 본문 반영 · 2026 기준', '검증 본문 반영 · 제37회 시험 기준'],
@@ -19,8 +22,17 @@ function replaceKnownLabels(page) {
   const candidates = page.querySelectorAll('.eyebrow, .law-reference, .study-block__title h3')
   candidates.forEach((node) => {
     const current = node.textContent?.trim()
-    const next = LABEL_REPLACEMENTS.get(current)
-    if (!next) return
+    let next = LABEL_REPLACEMENTS.get(current)
+
+    if (!next && node.classList.contains('eyebrow') && current?.includes('2026')) {
+      next = current.replace(/\s*·\s*2026(?:\s*기준)?/g, ' · 제37회 시험 기준')
+    }
+
+    if (!next && node.classList.contains('law-reference') && current && /2026|현행/.test(current)) {
+      next = '제37회 시험 기준 · 2026 개정분 별도'
+    }
+
+    if (!next || next === current) return
     node.textContent = next
     node.dataset.exam37BaselineRelabeled = 'true'
   })
