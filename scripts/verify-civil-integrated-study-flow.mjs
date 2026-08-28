@@ -45,6 +45,7 @@ for (const selector of [
   '.civil-learning-map',
   '.civil-learning-exam-card',
   '[data-civil-law-leaf-precedents="true"]',
+  '[data-civil-law-part2-extra-precedents="true"]',
   '[data-civil-leaf-practice="true"]',
   '[data-civil-intensive="true"]',
 ]) {
