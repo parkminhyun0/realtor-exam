@@ -45,6 +45,7 @@ import './civil-law-book-map-exam.css'
 import './civil-law-part1-visuals.css'
 import './civil-law-part3-visuals.css'
 import './civil-law-part4-visuals.css'
+import './mobile-subject-hero-gap-fix.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
