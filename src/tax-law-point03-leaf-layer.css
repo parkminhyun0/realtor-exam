@@ -1,0 +1,175 @@
+/* 부동산세법 PART 1 · POINT 03 우선권·배당·불복 전용 시각화 */
+.tax-law-page #tax-nav-groups-p1s3[data-tax-leaf-tree="true"].is-expanded {
+  max-height: 2300px;
+}
+
+.tax-priority-flow,
+.tax-appeal-flow {
+  margin: 0 0 18px;
+  padding: 14px;
+  border: 1px solid #ded8cb;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.tax-priority-flow > header,
+.tax-appeal-flow > header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 11px;
+}
+
+.tax-priority-flow > header > span,
+.tax-appeal-flow > header > span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #75613a;
+  color: #fff;
+  font-size: 9pt !important;
+  font-weight: 900;
+}
+
+.tax-priority-flow h4,
+.tax-appeal-flow h4 {
+  margin: 0;
+  color: #3f3523;
+  font-size: 13pt !important;
+}
+
+.tax-priority-flow > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) 20px minmax(0, 1fr) 20px minmax(0, 1fr) 20px minmax(0, 1fr);
+  gap: 6px;
+  align-items: stretch;
+}
+
+.tax-priority-flow article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 4px 7px;
+  align-content: start;
+  padding: 10px;
+  border: 1px solid #e7e0d2;
+  border-radius: 11px;
+  background: #fbf9f4;
+}
+
+.tax-priority-flow article > b {
+  grid-row: 1 / span 2;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #75613a;
+  color: #fff;
+}
+
+.tax-priority-flow article > strong {
+  color: #3d4651;
+  font-size: 10.5pt !important;
+}
+
+.tax-priority-flow article > small {
+  color: #6b7178;
+  line-height: 1.45;
+}
+
+.tax-priority-flow > div > i,
+.tax-appeal-flow__track > i {
+  display: grid;
+  place-items: center;
+  color: #a58c5e;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.tax-appeal-flow {
+  border-color: #d7dce5;
+  background: linear-gradient(180deg, #f9fbfe 0%, #fff 100%);
+}
+
+.tax-appeal-flow__track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr) 28px);
+  align-items: center;
+}
+
+.tax-appeal-flow__track > article:nth-of-type(3) {
+  grid-column: 5;
+}
+
+.tax-appeal-flow__track > i:last-of-type {
+  grid-column: 4;
+}
+
+.tax-appeal-flow__track article {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #dfe5ed;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.tax-appeal-flow__track article small {
+  color: #7a8490;
+  font-weight: 800;
+}
+
+.tax-appeal-flow__track article strong {
+  color: #33475f;
+  font-size: 11pt !important;
+}
+
+.tax-appeal-flow__track article b {
+  width: max-content;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #fff0ee;
+  color: #b42323;
+  font-size: 11pt !important;
+}
+
+.tax-appeal-flow > p {
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #e5e9ef;
+  color: #596675;
+  line-height: 1.65;
+}
+
+.tax-appeal-flow > p b {
+  color: #2d4f77;
+}
+
+@media (max-width: 1100px) {
+  .tax-priority-flow > div {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-priority-flow > div > i {
+    transform: rotate(90deg);
+    min-height: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .tax-appeal-flow__track {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .tax-appeal-flow__track > article:nth-of-type(3),
+  .tax-appeal-flow__track > i:last-of-type {
+    grid-column: auto;
+  }
+
+  .tax-appeal-flow__track > i {
+    min-height: 18px;
+    transform: rotate(90deg);
+  }
+}
