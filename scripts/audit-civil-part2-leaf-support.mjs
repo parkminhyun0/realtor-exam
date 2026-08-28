@@ -73,8 +73,7 @@ if (badUrls.length) throw new Error(`국가법령정보센터가 아닌 판례 �
 
 const flowSource = read('src/civil-law-integrated-study-flow.js')
 for (const required of [
-  '[data-civil-law-leaf-precedents="true"]',
-  '[data-civil-law-part2-extra-precedents="true"]',
+  '.civil-leaf-precedents[data-topic]',
   'item.dataset.topic === node.topic',
 ]) {
   if (!flowSource.includes(required)) throw new Error(`PART 2 직접판례 학습흐름 연결 누락: ${required}`)

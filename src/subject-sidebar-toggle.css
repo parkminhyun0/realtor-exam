@@ -1,4 +1,96 @@
 /* 전과목 공통 좌측 패널 토글 스타일 */
+.public-law-layout {
+  transition: grid-template-columns .24s cubic-bezier(.2,.8,.2,1), gap .24s cubic-bezier(.2,.8,.2,1);
+}
+
+.public-law-nav {
+  min-width: 0;
+  transition: width .24s cubic-bezier(.2,.8,.2,1), padding .24s cubic-bezier(.2,.8,.2,1), opacity .18s ease, transform .24s cubic-bezier(.2,.8,.2,1);
+}
+
+.subject-toc-collapse-toggle {
+  position: sticky;
+  top: 0;
+  z-index: 7;
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 9px;
+  padding: 7px 10px;
+  border: 1px solid rgba(226,236,247,.16);
+  border-radius: 10px;
+  background: rgba(255,255,255,.075);
+  color: #edf3f9;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: -.01em;
+  box-shadow: 0 5px 16px rgba(4,12,24,.13);
+  backdrop-filter: blur(10px);
+  transition: background .16s ease, border-color .16s ease, transform .16s ease;
+}
+
+.subject-toc-collapse-toggle:hover {
+  background: rgba(255,255,255,.13);
+  border-color: rgba(226,236,247,.28);
+}
+
+.subject-toc-collapse-toggle:active {
+  transform: translateY(1px);
+}
+
+.subject-toc-collapse-toggle__icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.subject-toc-collapse-toggle__label {
+  min-width: 0;
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.public-law-layout.is-subject-toc-collapsed {
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.public-law-layout.is-subject-toc-collapsed > .public-law-nav {
+  width: 52px;
+  padding: 7px 4px 10px;
+  overflow: hidden;
+  transform: translateX(-2px);
+}
+
+.public-law-layout.is-subject-toc-collapsed > .public-law-nav > *:not(.subject-toc-collapse-toggle) {
+  display: none !important;
+}
+
+.public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle {
+  width: 42px;
+  min-width: 42px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 6px;
+}
+
+.public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle__label {
+  display: none;
+}
+
 .public-law-nav details {
   overflow: clip;
   border-bottom: 1px solid rgba(255,255,255,.07);
@@ -91,9 +183,36 @@
   .public-law-nav .civil-nav-point > summary {
     min-height: 44px;
   }
+
+  .public-law-layout.is-subject-toc-collapsed {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .public-law-layout.is-subject-toc-collapsed > .public-law-nav {
+    width: 100%;
+    max-height: 54px;
+    padding: 4px;
+    transform: translateY(-2px);
+  }
+
+  .public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 7px 10px;
+  }
+
+  .public-law-layout.is-subject-toc-collapsed .subject-toc-collapse-toggle__label {
+    display: inline;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .public-law-layout,
+  .public-law-nav,
+  .subject-toc-collapse-toggle,
   .public-law-nav details > summary,
   .public-law-nav details > summary::after,
   .public-law-nav details[open] > ul,
