@@ -68,7 +68,7 @@ function buildLayer() {
 function sync() {
   const page = document.querySelector('.tax-law-page')
   if (!page) return
-  const existing = page.querySelector('[data-tax-leaf-study="true"]')
+  const existing = page.querySelector('[data-tax-leaf-study="true"][data-tax-point="p1s1"]')
   if (!isTargetPoint(page)) {
     existing?.remove()
     return
@@ -92,7 +92,7 @@ function scheduleSync() {
 
 document.addEventListener('click', (event) => {
   const chip = event.target instanceof Element ? event.target.closest('[data-tax-leaf-law="true"]') : null
-  if (!chip) return
+  if (!chip || chip.closest('[data-tax-leaf-study]')?.dataset.taxPoint !== 'p1s1') return
   const page = chip.closest('.tax-law-page')
   if (!page) return
   const sourceButton = findLawButton(page, chip.dataset.lawName, chip.dataset.lawArticle)
