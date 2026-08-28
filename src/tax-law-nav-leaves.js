@@ -1,12 +1,15 @@
 import { taxLawPart1Point01Leaves } from './data/taxLawPart1Point01Leaves.js'
 import { taxLawPart1Point02Leaves } from './data/taxLawPart1Point02Leaves.js'
+import { taxLawPart1Point03Leaves } from './data/taxLawPart1Point03Leaves.js'
 
 // POINT_ID 문자열은 POINT 01 audit의 하위호환 표지로 유지합니다.
 const POINT_ID = 'p1s1'
 const POINT02_ID = 'p1s2'
+const POINT03_ID = 'p1s3'
 const pointLeafSets = [
   { pointId: POINT_ID, groups: taxLawPart1Point01Leaves },
   { pointId: POINT02_ID, groups: taxLawPart1Point02Leaves },
+  { pointId: POINT03_ID, groups: taxLawPart1Point03Leaves },
 ]
 let queued = false
 
