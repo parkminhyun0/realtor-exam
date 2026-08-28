@@ -46,14 +46,14 @@ const STEP_DEFS = [
     id: 'precedent',
     label: '판례',
     hint: '이 논점에 직접 연결된 판례',
-    selectors: ['[data-civil-law-leaf-precedents="true"]', '.civil-precedent-panel', '.civil-precedent-section'],
+    selectors: ['[data-civil-law-leaf-precedents="true"]'],
     required: false,
   },
   {
     id: 'practice',
     label: '문제 · 훈련',
-    hint: 'O/X·사례·기출/변형 연습',
-    selectors: ['[data-civil-intensive-drill="true"]', '.civil-intensive-drill', '.civil-deep-study', '.civil-exam-checks'],
+    hint: '세부항목 자가회상·O/X 집중훈련',
+    selectors: ['[data-civil-leaf-practice="true"]', '[data-civil-intensive="true"]'],
     required: false,
   },
 ]
@@ -77,16 +77,38 @@ function firstMatch(page, selectors) {
   return null
 }
 
-function buildSteps(page) {
+function exactLeafMatch(page, step, node) {
+  if (step.id === 'precedent') {
+    return [...page.querySelectorAll('[data-civil-law-leaf-precedents="true"]')]
+      .find((item) => item.dataset.topic === node.topic) || null
+  }
+
+  if (step.id === 'practice') {
+    const recall = [...page.querySelectorAll('[data-civil-leaf-practice="true"]')]
+      .find((item) => item.dataset.topic === node.topic)
+    if (recall) return recall
+    return page.querySelector('[data-civil-intensive="true"]')
+  }
+
+  return firstMatch(page, step.selectors)
+}
+
+function buildSteps(page, node) {
   return STEP_DEFS.map((step) => ({
     ...step,
-    target: firstMatch(page, step.selectors),
+    target: exactLeafMatch(page, step, node),
   }))
+}
+
+function pendingStatus(step) {
+  if (step.required) return '연결 확인 중'
+  if (step.id === 'precedent') return '조문·개념 중심'
+  return '추가 훈련 예정'
 }
 
 function renderStep(step, index) {
   const available = Boolean(step.target)
-  const status = available ? '바로 보기' : step.required ? '연결 확인 중' : '선택 보강'
+  const status = available ? '바로 보기' : pendingStatus(step)
   return `<button type="button" class="civil-study-flow__step ${available ? 'is-ready' : 'is-pending'}"
     data-civil-study-flow-target="${esc(step.id)}" ${available ? '' : 'disabled'}>
     <span>${String(index + 1).padStart(2, '0')}</span>
@@ -97,7 +119,7 @@ function renderStep(step, index) {
 }
 
 function render(page, node) {
-  const steps = buildSteps(page)
+  const steps = buildSteps(page, node)
   const readyCount = steps.filter((step) => step.target).length
   const fingerprint = `${node.key}|${steps.map((step) => step.target ? '1' : '0').join('')}`
   const existing = page.querySelector('[data-civil-study-flow="true"]')
@@ -116,7 +138,7 @@ function render(page, node) {
       </div>
       <span>${readyCount}/6 연결</span>
     </header>
-    <p class="civil-study-flow__intro">교재 목차 순서는 그대로 유지하면서 조문 → 시각화 → 연결 → 출제포인트 → 판례 → 문제 순으로 확인합니다. 판례와 문제는 해당 세부항목에 직접 연결된 자료가 있을 때 활성화됩니다.</p>
+    <p class="civil-study-flow__intro">교재 목차 순서는 그대로 유지하면서 조문 → 시각화 → 연결 → 출제포인트 → 판례 → 문제 순으로 확인합니다. 판례는 해당 세부항목에 직접 연결된 판례가 있을 때만 활성화하고, 개념·조문 중심 항목은 억지로 판례를 붙이지 않습니다.</p>
     <div class="civil-study-flow__path">
       <span>PART ${esc(node.partNumber)} ${esc(node.partTitle)}</span><i>›</i>
       <span>POINT ${esc(node.pointNumber)} ${esc(node.pointTitle)}</span><i>›</i>
@@ -129,9 +151,10 @@ function render(page, node) {
 }
 
 function scrollToStep(page, id) {
+  const node = currentNode(page)
   const step = STEP_DEFS.find((item) => item.id === id)
-  if (!step) return
-  const target = firstMatch(page, step.selectors)
+  if (!step || !node) return
+  const target = exactLeafMatch(page, step, node)
   if (!target) return
   target.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
