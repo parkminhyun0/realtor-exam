@@ -1,0 +1,484 @@
+/*
+ * SUBJECT BODY STANDARD v3
+ * 본문 reference = 민법 및 민사특별법
+ * 과목별 데이터/기능은 유지하고 표면·타이포·카드·표·강조·반응형만 동일하게 맞춘다.
+ */
+:root {
+  --civil-ref-navy: #16263e;
+  --civil-ref-blue: #315f8f;
+  --civil-ref-blue-soft: #eef4fb;
+  --civil-ref-ink: #182235;
+  --civil-ref-body: #3d4f64;
+  --civil-ref-muted: #68778a;
+  --civil-ref-line: #dfe5ec;
+  --civil-ref-soft: #f8fafc;
+  --civil-ref-danger: #c62828;
+  --civil-ref-green: #176849;
+}
+
+/* 히어로까지 민법의 시각 언어로 통일 */
+body .public-law-page .public-law-hero {
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: end !important;
+  justify-content: space-between !important;
+  gap: 30px !important;
+  padding: 28px 32px !important;
+  border: 0 !important;
+  border-radius: 20px !important;
+  background: linear-gradient(135deg,#1c2d46,#385f86 58%,#4e6b88) !important;
+  color: #fff !important;
+  box-shadow: 0 18px 48px rgba(25,45,72,.16) !important;
+}
+body .public-law-page .public-law-hero h1 {
+  margin: 7px 0 8px !important;
+  color: #fff !important;
+  font-family: Georgia,"Noto Serif KR",serif !important;
+  font-size: clamp(30px,4.3vw,46px) !important;
+  line-height: 1.15 !important;
+  letter-spacing: -.045em !important;
+}
+body .public-law-page .public-law-hero p {
+  margin: 0 !important;
+  max-width: 780px !important;
+  color: #dbe6f3 !important;
+  font-size: 11pt !important;
+  line-height: 1.75 !important;
+}
+body .public-law-page .public-law-hero .eyebrow {
+  display: inline-flex !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: #a9c1da !important;
+  font-size: 9pt !important;
+  font-weight: 900 !important;
+  letter-spacing: .06em !important;
+}
+body .public-law-page .public-law-hero__badges {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-end !important;
+  gap: 7px !important;
+}
+body .public-law-page .public-law-hero__badges span {
+  min-height: 30px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 5px 9px !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.08) !important;
+  color: #eff5fb !important;
+  font-size: 9pt !important;
+  font-weight: 800 !important;
+}
+
+/* 민법 기준 본문 외곽 */
+body .public-law-content {
+  min-width: 0 !important;
+  padding: 26px 28px 38px !important;
+  border: 1px solid var(--civil-ref-line) !important;
+  border-radius: 20px !important;
+  background: #fff !important;
+  color: var(--civil-ref-ink) !important;
+  box-shadow: none !important;
+  font-size: 11pt !important;
+  line-height: 1.72 !important;
+}
+body .public-law-breadcrumb {
+  margin: 0 0 22px !important;
+  padding: 0 0 15px !important;
+  border-bottom: 1px solid var(--civil-ref-line) !important;
+  color: var(--civil-ref-muted) !important;
+  font-size: 9pt !important;
+  font-weight: 800 !important;
+}
+body .public-law-breadcrumb span { color:#a3acb9 !important; margin:0 7px !important; }
+
+/* 민법 제목선/번호 */
+body .study-section-heading {
+  --chapter-color: var(--civil-ref-blue);
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 22px !important;
+  margin: 0 0 16px !important;
+  padding: 0 0 14px !important;
+  border-bottom: 3px solid var(--chapter-color) !important;
+}
+body .study-section-heading > div { display:flex !important; align-items:center !important; gap:13px !important; }
+body .study-section-heading__number {
+  color: var(--chapter-color) !important;
+  font-family: Georgia,serif !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+}
+body .study-section-heading__chapter {
+  color: var(--civil-ref-muted) !important;
+  font-size: 9pt !important;
+  font-weight: 900 !important;
+}
+body .study-section-heading h2 {
+  margin: 2px 0 0 !important;
+  color: var(--civil-ref-ink) !important;
+  font-size: 18pt !important;
+  line-height: 1.28 !important;
+  letter-spacing: -.035em !important;
+}
+body .law-reference { color:var(--civil-ref-muted) !important; font-size:9pt !important; }
+
+/* 민법 핵심 한줄 카드 */
+body .public-law-content .study-tldr,
+body .public-law-content .civil-study-tldr,
+body .public-law-content .tax-study-tldr,
+body .public-law-content .brokerage-study-tldr {
+  margin: 18px 0 !important;
+  padding: 18px 20px !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background: var(--civil-ref-navy) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+body .public-law-content .study-tldr > span {
+  display: block !important;
+  color: #ffd86b !important;
+  font-size: 10pt !important;
+  font-weight: 900 !important;
+}
+body .public-law-content .study-tldr strong {
+  display: block !important;
+  margin: 6px 0 !important;
+  color: #fff !important;
+  font-size: 14pt !important;
+  font-weight: 900 !important;
+  line-height: 1.5 !important;
+}
+body .public-law-content .study-tldr p,
+body .public-law-content .study-tldr p * {
+  margin: 0 !important;
+  color: #d5dfeb !important;
+  font-size: 11pt !important;
+  font-weight: 400 !important;
+  line-height: 1.72 !important;
+}
+
+/* 민법 카드 기본표면: 모든 과목 전용 패널까지 한 규격 */
+body .public-law-content :is(
+  .study-block,
+  .civil-topic-focus,
+  .civil-law-first-panel,
+  .civil-precedent-panel,
+  .civil-intensive-drill,
+  .civil-deep-study,
+  .tax-detail-section,
+  .tax-exam-core,
+  .tax-legal-basis,
+  .tax-ox-panel,
+  .tax-quiz-panel,
+  .registration-study-block,
+  .registration-focus-panel,
+  .registration-focused-section,
+  .brokerage-exam-core,
+  .brokerage-legal-basis,
+  .brokerage-leaf-study,
+  .brokerage-ox-panel,
+  .theory-basis-panel,
+  .theory-calculations
+) {
+  margin-top: 16px !important;
+  padding: 20px !important;
+  border: 1px solid var(--civil-ref-line) !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  color: var(--civil-ref-ink) !important;
+  box-shadow: none !important;
+}
+
+/* 시험핵심/법령/판례 계열은 민법처럼 얇은 상단 accent */
+body .public-law-content :is(
+  .civil-statute-section,
+  .civil-law-first-panel,
+  .tax-exam-core,
+  .tax-legal-basis,
+  .brokerage-exam-core,
+  .brokerage-legal-basis,
+  .registration-exam-core,
+  .registration-law-basis,
+  .theory-basis-panel
+) {
+  border-top: 4px solid var(--civil-ref-blue) !important;
+  background: linear-gradient(180deg,#f5f9fc 0,#fff 130px) !important;
+}
+
+body .study-block__title,
+body .public-law-content :is(.tax-detail-section__head,.brokerage-detail-section__head,.brokerage-leaf-study__head) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+}
+body .study-block__title > span,
+body .public-law-content :is(.tax-detail-section__head,.brokerage-detail-section__head) > div:first-child > span {
+  width: 30px !important;
+  min-width: 30px !important;
+  height: 30px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 9px !important;
+  background: #eef3f8 !important;
+  color: var(--civil-ref-blue) !important;
+  font-size: 9pt !important;
+  font-weight: 900 !important;
+}
+body .study-block__title h3,
+body .public-law-content :is(.tax-detail-section__head,.brokerage-detail-section__head) h3,
+body .public-law-content .brokerage-leaf-study__head h3 {
+  margin: 0 !important;
+  color: var(--civil-ref-ink) !important;
+  font-size: 13pt !important;
+  line-height: 1.4 !important;
+  letter-spacing: -.025em !important;
+}
+
+/* 본문 텍스트: 민법처럼 과도한 색 제거, 중요 숫자/조문은 예외 */
+body .public-law-content :is(p,li,td,dd,blockquote) {
+  color: var(--civil-ref-body) !important;
+  font-size: 11pt !important;
+  line-height: 1.72 !important;
+}
+body .public-law-content :is(b,strong,dt) {
+  color: var(--civil-ref-ink);
+}
+
+/* 민법 시험 숫자 규칙을 모든 과목에 적용 */
+body .public-law-content :is(
+  .civil-exam-number,
+  .tax-exam-number,
+  .brokerage-exam-number,
+  .theory-exam-number,
+  .exam-number
+) {
+  color: var(--civil-ref-danger) !important;
+  font-weight: 900 !important;
+  text-decoration: underline 2px var(--civil-ref-danger) !important;
+  text-underline-offset: 3px !important;
+  background: transparent !important;
+}
+body .public-law-content .study-tldr :is(.civil-exam-number,.tax-exam-number,.brokerage-exam-number,.theory-exam-number,.exam-number) {
+  color: #ff9393 !important;
+  text-decoration-color: #ff9393 !important;
+}
+
+/* 법조문 링크도 민법 inline reference 형태로 통일 */
+body .public-law-content :is(
+  .civil-law-inline-reference,
+  .tax-law-articles button,
+  .brokerage-law-articles button,
+  .registration-law-articles button,
+  [data-law-reference="true"]
+) {
+  color: var(--civil-ref-danger) !important;
+  font-weight: 900 !important;
+  text-decoration: underline 2px var(--civil-ref-danger) !important;
+  text-underline-offset: 3px !important;
+}
+body .public-law-content :is(.tax-law-articles button,.brokerage-law-articles button,.registration-law-articles button) {
+  min-height: 30px !important;
+  padding: 3px 7px !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+}
+body .public-law-content :is(.tax-law-articles button,.brokerage-law-articles button,.registration-law-articles button):hover,
+body .public-law-content :is(.tax-law-articles button,.brokerage-law-articles button,.registration-law-articles button):focus-visible {
+  background: rgba(198,40,40,.08) !important;
+  outline: none !important;
+}
+
+/* 민법 이해 카드 */
+body .public-law-content :is(
+  .understanding-grid,
+  .civil-topic-entry-grid,
+  .tax-exam-core__grid,
+  .brokerage-exam-core__grid,
+  .tax-legal-basis__grid,
+  .brokerage-legal-basis__grid,
+  .civil-statute-grid,
+  .brokerage-leaf-grid,
+  .tax-ox-grid,
+  .brokerage-ox-grid
+) {
+  gap: 10px !important;
+}
+body .public-law-content .understanding-grid > div,
+body .public-law-content :is(
+  .civil-topic-entry-card,
+  .tax-exam-core__grid > article,
+  .brokerage-exam-core__grid > article,
+  .tax-legal-basis__grid > article,
+  .brokerage-legal-basis__grid > article,
+  .brokerage-leaf-card,
+  .tax-ox-grid > article,
+  .brokerage-ox-grid > article
+) {
+  min-width: 0 !important;
+  padding: 13px !important;
+  border: 1px solid #e3e9ef !important;
+  border-radius: 12px !important;
+  background: var(--civil-ref-soft) !important;
+  box-shadow: none !important;
+}
+body .public-law-content .understanding-grid b,
+body .public-law-content :is(.civil-topic-entry-card,.tax-exam-core__grid > article,.brokerage-exam-core__grid > article) strong {
+  color: #2c3d53 !important;
+  font-size: 11pt !important;
+}
+body .public-law-content .understanding-grid p,
+body .public-law-content .civil-topic-entry-card p { color:#59677a !important; }
+
+/* 흐름도도 민법 카드 문법 */
+body .public-law-content .hierarchy-flow {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  overflow-x: auto !important;
+  padding: 3px 0 8px !important;
+}
+body .public-law-content .hierarchy-flow__step {
+  min-width: 150px !important;
+  padding: 12px !important;
+  border: 1.5px solid var(--civil-ref-blue) !important;
+  border-radius: 12px !important;
+  background: #f9fbfe !important;
+}
+body .public-law-content .hierarchy-flow__step small { color:#7f8da0 !important; font-size:8pt !important; font-weight:900 !important; }
+body .public-law-content .hierarchy-flow__step strong { color:#243b59 !important; font-size:11pt !important; }
+body .public-law-content .hierarchy-flow__arrow { color:#8390a0 !important; font-weight:900 !important; }
+
+/* 민법 표 기준 */
+body .public-law-content .table-wrap { width:100% !important; overflow-x:auto !important; }
+body .public-law-content table,
+body .public-law-content .study-table {
+  width: 100% !important;
+  min-width: 0;
+  border-collapse: collapse !important;
+  table-layout: auto !important;
+  background: #fff !important;
+  font-size: 11pt !important;
+}
+body .public-law-content table :is(th,td),
+body .public-law-content .study-table :is(th,td) {
+  width: auto;
+  padding: 9px 10px !important;
+  border: 1px solid #dde3ea !important;
+  vertical-align: top !important;
+  text-align: left !important;
+  overflow-wrap: break-word !important;
+}
+body .public-law-content table thead th,
+body .public-law-content .study-table thead th {
+  background: #eef2f7 !important;
+  color: #24344d !important;
+  font-weight: 900 !important;
+  white-space: nowrap;
+}
+body .public-law-content table tbody th,
+body .public-law-content .study-table tbody th {
+  background: #f8fafc !important;
+  color: #263950 !important;
+  font-weight: 900 !important;
+}
+
+/* 함정/암기 = 민법 색상 고정 */
+body .public-law-content .study-block--split {
+  display: grid !important;
+  grid-template-columns: 1.3fr .7fr !important;
+  gap: 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+body .public-law-content .trap-card,
+body .public-law-content .memory-card {
+  padding: 17px !important;
+  border-radius: 15px !important;
+  box-shadow: none !important;
+}
+body .public-law-content .trap-card {
+  border: 1px solid #f0c9c9 !important;
+  background: #fbefef !important;
+  color: #713737 !important;
+}
+body .public-law-content .memory-card {
+  border: 1px solid #bfe0d7 !important;
+  background: #e9f5f2 !important;
+  color: #276557 !important;
+}
+body .public-law-content .trap-card :is(span,li),
+body .public-law-content .memory-card :is(span,strong,p) { color:inherit !important; }
+body .public-law-content .trap-card > span,
+body .public-law-content .memory-card > span { font-size:10pt !important; font-weight:900 !important; }
+body .public-law-content .memory-card strong { display:block !important; margin:9px 0 5px !important; font-size:14pt !important; }
+
+/* note/source/OX/quiz도 민법의 차분한 표면 */
+body .public-law-content .study-note {
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: var(--civil-ref-blue-soft) !important;
+  color: #344e70 !important;
+}
+body .public-law-content .source-note {
+  margin-top: 18px !important;
+  padding: 14px 16px !important;
+  border: 1px dashed #bdc9d6 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: var(--civil-ref-muted) !important;
+}
+body .public-law-content :is(.tax-ox-grid,.brokerage-ox-grid) > article > span {
+  width: 30px !important;
+  height: 30px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 9px !important;
+  background: #eaf1f6 !important;
+  color: var(--civil-ref-blue) !important;
+  font-size: 9pt !important;
+  font-weight: 900 !important;
+}
+
+/* 과목 전용 진행상황/보조패널도 본문 밖에서 튀지 않게 */
+body .public-law-page :is(.brokerage-progress,.study-guide) {
+  margin-top: 14px !important;
+  padding: 12px 14px !important;
+  border: 1px solid var(--civil-ref-line) !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: var(--civil-ref-body) !important;
+  box-shadow: none !important;
+}
+body .public-law-page :is(.brokerage-progress,.study-guide) strong { color:var(--civil-ref-ink) !important; }
+
+@media (max-width:980px) {
+  body .public-law-page .public-law-hero { align-items:flex-start !important; flex-direction:column !important; }
+  body .public-law-page .public-law-hero__badges { justify-content:flex-start !important; }
+  body .public-law-content :is(.tax-exam-core__grid,.brokerage-exam-core__grid,.tax-legal-basis__grid,.brokerage-legal-basis__grid,.brokerage-leaf-grid,.tax-ox-grid,.brokerage-ox-grid) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width:700px) {
+  body .public-law-page .public-law-hero { padding:24px 20px !important; border-radius:18px !important; }
+  body .public-law-page .public-law-hero h1 { font-size:26px !important; }
+  body .public-law-content { padding:19px 14px 28px !important; border-radius:16px !important; }
+  body .study-section-heading { align-items:flex-start !important; flex-direction:column !important; }
+  body .study-section-heading h2 { font-size:17pt !important; }
+  body .public-law-content .study-block,
+  body .public-law-content :is(.tax-exam-core,.tax-legal-basis,.brokerage-exam-core,.brokerage-legal-basis,.brokerage-leaf-study) { padding:15px !important; }
+  body .public-law-content .study-block--split { grid-template-columns:1fr !important; }
+  body .public-law-content .hierarchy-flow__step { min-width:130px !important; }
+}
