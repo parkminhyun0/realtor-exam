@@ -20,8 +20,9 @@
     "audit:civil-part1-support": "node scripts/audit-civil-part1-leaf-support.mjs",
     "audit:civil-part2-support": "node scripts/audit-civil-part2-leaf-support.mjs",
     "audit:civil-part3-support": "node scripts/audit-civil-part3-leaf-support.mjs",
+    "audit:civil-part4-support": "node scripts/audit-civil-part4-leaf-support.mjs",
     "verify:exam36": "node scripts/verify-exam36-bank.mjs",
-    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && npm run verify:civil-graph && npm run verify:civil-part1-visuals && npm run verify:civil-part2-visuals && npm run verify:civil-part3-visuals && npm run verify:civil-part4-visuals && npm run verify:civil-flow && npm run verify:mobile-gaps && npm run verify:toc-collapse && npm run audit:civil-part1-support && npm run audit:civil-part2-support && npm run audit:civil-part3-support && npm run verify:exam36 && vite build",
+    "build": "npm run verify:theory && npm run verify:civil-law && npm run verify:civil-intensive && npm run verify:civil-deep && npm run verify:civil-graph && npm run verify:civil-part1-visuals && npm run verify:civil-part2-visuals && npm run verify:civil-part3-visuals && npm run verify:civil-part4-visuals && npm run verify:civil-flow && npm run verify:mobile-gaps && npm run verify:toc-collapse && npm run audit:civil-part1-support && npm run audit:civil-part2-support && npm run audit:civil-part3-support && npm run audit:civil-part4-support && npm run verify:exam36 && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
