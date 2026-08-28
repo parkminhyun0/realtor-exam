@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { allSubjects, subjectGroups } from './data/subjects'
 import GlobalSearch from './GlobalSearch'
 import CivilLawPage from './CivilLawPage'
+import BrokerageLawPage from './BrokerageLawPage'
 import PublicLawPage from './PublicLawPage'
 import RealEstateTheoryPage from './RealEstateTheoryPage'
 import RegistrationLawPage from './RegistrationLawPageV2'
@@ -69,8 +70,8 @@ function Dashboard() {
 
       <section className="study-guide" aria-label="학습 안내">
         <span className="study-guide__label">현재 구축 순서</span>
-        <strong>메인 대시보드 → 부동산공법 → 부동산공시법 → 부동산학개론 → 나머지 과목</strong>
-        <span>모든 과목을 동일한 공통 헤더·카드·목차·본문 디자인 시스템으로 확장합니다.</span>
+        <strong>전 과목 정규 페이지 확보 → 공인중개사법령 세부화 → 과목별 소분류 완성도 균질화</strong>
+        <span>세법·민법의 세부 학습 구조를 기준으로 다른 과목도 같은 밀도로 확장합니다.</span>
       </section>
 
       {subjectGroups.map((group) => (
@@ -217,6 +218,7 @@ export default function App() {
   let content = <Dashboard />
   if (route === 'real-estate-theory') content = <RealEstateTheoryPage onBack={() => navigate('')} />
   else if (route === 'civil-law') content = <CivilLawPage onBack={() => navigate('')} />
+  else if (route === 'brokerage-law') content = <BrokerageLawPage onBack={() => navigate('')} />
   else if (route === 'public-law') content = <PublicLawPage onBack={() => navigate('')} />
   else if (route === 'registration-law') content = <RegistrationLawPage onBack={() => navigate('')} />
   else if (route === 'tax-law') content = <TaxLawPage onBack={() => navigate('')} />
