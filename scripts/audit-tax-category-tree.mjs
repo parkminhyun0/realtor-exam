@@ -7,6 +7,7 @@ import { taxLawPart1Point03LeafCount } from '../src/data/taxLawPart1Point03Leave
 import { taxLawPart2Point01LeafCount } from '../src/data/taxLawPart2Point01Leaves.js'
 import { taxLawPart2Point02LeafCount } from '../src/data/taxLawPart2Point02Leaves.js'
 import { taxLawPart2Point03LeafCount } from '../src/data/taxLawPart2Point03Leaves.js'
+import { taxLawPart3Point01LeafCount } from '../src/data/taxLawPart3Point01Leaves.js'
 
 const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 const fail = (message) => { throw new Error(message) }
@@ -63,7 +64,9 @@ if (taxLawPart2Point02LeafCount !== 24) fail(`PART 2 POINT 02 등록면허세 le
 if (taxLawPart2Point03LeafCount !== 34) fail(`PART 2 POINT 03 재산세 leaf 완료 수 불일치: ${taxLawPart2Point03LeafCount}/34`)
 const part2LeafCount = taxLawPart2Point01LeafCount + taxLawPart2Point02LeafCount + taxLawPart2Point03LeafCount
 if (part2LeafCount !== 119) fail(`PART 2 지방세 leaf 완료 수 불일치: ${part2LeafCount}/119`)
-const completedLeafCount = part1LeafCount + part2LeafCount
+if (taxLawPart3Point01LeafCount !== 25) fail(`PART 3 POINT 01 종합부동산세 leaf 완료 수 불일치: ${taxLawPart3Point01LeafCount}/25`)
+const part3LeafCount = taxLawPart3Point01LeafCount
+const completedLeafCount = part1LeafCount + part2LeafCount + part3LeafCount
 
 const page = read('src/TaxLawPage.jsx')
 for (const marker of ['카테고리 → 대분류 → 중분류 → 소분류', 'taxLawParts.map', 'part.points.map', 'taxLawContent[point.id]']) {
@@ -76,13 +79,13 @@ for (const marker of ['point.groups.forEach', 'tax-nav-groups-', 'scrollToGroup'
 }
 
 const navLeaves = read('src/tax-law-nav-leaves.js')
-for (const pointId of ['p1s1', 'p1s2', 'p1s3', 'p2s1', 'p2s2', 'p2s3']) {
+for (const pointId of ['p1s1', 'p1s2', 'p1s3', 'p2s1', 'p2s2', 'p2s3', 'p3s1']) {
   if (!navLeaves.includes(pointId)) fail(`완료 leaf POINT nav 누락: ${pointId}`)
 }
 
 console.log(`세법 카테고리 AUDIT PASS: ${expected.parts} PART · ${expected.points} POINT · ${expected.groups} 중분류 · ${expected.topics} 소분류`)
 console.log(`PART 1 조세총론: ${expected.partGroups[0]} 중분류 · ${expected.partTopics[0]} 소분류 · leaf ${part1LeafCount}/${expected.partTopics[0]} 완료`)
 console.log(`PART 2 지방세: ${expected.partGroups[1]} 중분류 · ${expected.partTopics[1]} 소분류 · leaf ${part2LeafCount}/${expected.partTopics[1]} 완료 (취득세 61 + 등록면허세 24 + 재산세 34)`)
-console.log(`PART 3 국세: ${expected.partGroups[2]} 중분류 · ${expected.partTopics[2]} 소분류`)
+console.log(`PART 3 국세: ${expected.partGroups[2]} 중분류 · ${expected.partTopics[2]} 소분류 · leaf ${part3LeafCount}/${expected.partTopics[2]} 완료 (종합부동산세 25)`)
 console.log(`전체 세부 학습카드: ${completedLeafCount}/${expected.topics}`)
-console.log('POINT 본문: 9/9 존재 · 다음 leaf 확장 대상은 PART 3 POINT 01 종합부동산세')
+console.log('POINT 본문: 9/9 존재 · 다음 leaf 확장 대상은 PART 3 POINT 02 종합소득세')
