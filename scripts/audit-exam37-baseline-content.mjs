@@ -35,9 +35,9 @@ sources.push({ file: 'public/[decoded public-law baseline]', text: publicLawHtml
 
 // 2026.5.31까지 공포·개정된 법률은 제37회 본문에 적용한다.
 // 공인중개사법의 2026.2.27 개정(한국공인중개사협회 법정단체화)은 따라서 허용된다.
-// 아래는 2026.6.1 이후 개정에서만 나온 대표 표지로 본문에 섞이면 안 된다.
+// 중개사법 본문에서 컷오프 이후 시행령을 “비교 전용”이라고 설명하는 메모는 허용하되,
+// 이를 제37회 정답값으로 채택하는 문구는 별도로 금지한다.
 const forbidden = [
-  { subject: '중개사법', token: '2026.8.18', note: '시행령 후속정비 개정일 · 비교 전용' },
   { subject: '공법', token: '한국농어촌공사 등에 위탁·임대', note: '2026.6.16 농지법 개정 · 비교 전용' },
 ]
 
@@ -58,6 +58,12 @@ if (leaks.length) {
 const brokerageExpanded = read('src/data/brokerageLawExpandedContent.js')
 for (const marker of ['2026.2.27', '한국공인중개사협회', '법정단체화']) {
   if (!brokerageExpanded.includes(marker)) fail(`중개사법 컷오프 내 2026.2.27 개정 반영 누락: ${marker}`)
+}
+for (const wrongBaseline of [
+  '제37회 본문·문제 정답은 개정 전 명칭',
+  '제37회 본문에서는 공인중개사협회',
+]) {
+  if (brokerageExpanded.includes(wrongBaseline)) fail(`중개사법에 구 협회 기준이 제37회 정답으로 남음: ${wrongBaseline}`)
 }
 
 const layer = read('src/exam37-baseline-content-layer.js')
@@ -113,5 +119,6 @@ for (const marker of ['.law-article-popup__exam-baseline', '.law-article-text__v
 console.log('제37회 시험 본문 6월 이후 개정법 누출 AUDIT PASS')
 console.log('6개 과목에 2026.5.31 컷오프 표지 + 6월 이후 비교 전용 라벨 확인')
 console.log('중개사법 2026.2.27 법률 개정(한국공인중개사협회)은 컷오프 내 적용으로 확인')
+console.log('중개사법 6월 이후 시행령 언급은 비교메모만 허용하고 제37회 정답값 채택 문구는 차단')
 console.log('법령 팝업은 2026-05-31까지 공포·개정된 마지막 연혁(MST)으로 조회')
 console.log('공법 압축 본문까지 디코드하여 post-cutoff 표현 격리 확인')
