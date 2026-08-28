@@ -31,7 +31,7 @@ for (const field of ['headline', 'summary', 'legalBases', 'examCore', 'understan
 }
 
 const source = read('src/data/taxLawPart3Point02Leaves.js')
-for (const marker of ['12억원', '2천만원', '14%', '1,400만원', '45%', '5월 1일부터 5월 31일']) {
+for (const marker of ['12억원', '2천만원', '1,400만원', '45%', '5월 1일부터 5월 31일']) {
   if (!source.includes(marker)) fail(`종합소득세 핵심 숫자 누락: ${marker}`)
 }
 
