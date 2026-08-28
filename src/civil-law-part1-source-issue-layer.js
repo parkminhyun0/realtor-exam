@@ -30,7 +30,7 @@ const escPart1Issue = (value = '') => String(value).replace(/[&<>'"]/g, (char) =
 }[char]))
 
 function renderPart1IssueCard(topic, item) {
-  return `<article class="civil-law-first__law civil-law-first__law--issue" data-civil-part1-source-issue="true" data-topic="${escPart1Issue(topic)}">
+  return `<article class="civil-law-first__law civil-law-first__law--issue" data-civil-source-issue="true" data-civil-part1-source-issue="true" data-topic="${escPart1Issue(topic)}">
     <header>
       <b>판례·쟁점</b>
       <a href="${escPart1Issue(item.url)}" target="_blank" rel="noreferrer">대법원 ${escPart1Issue(item.caseNo)}</a>
