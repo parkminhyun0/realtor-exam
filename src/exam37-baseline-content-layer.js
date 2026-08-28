@@ -29,7 +29,7 @@ function replaceKnownLabels(page) {
     }
 
     if (!next && node.classList.contains('law-reference') && current && /2026|현행/.test(current)) {
-      next = '제37회 시험 기준 · 2026 개정분 별도'
+      next = '제37회 시험 기준 · 6월 이후 개정분 별도'
     }
 
     if (!next || next === current) return
@@ -46,8 +46,8 @@ function createInlineStamp() {
   stamp.innerHTML = `
     <div class="exam37-inline-baseline__badge">37</div>
     <div class="exam37-inline-baseline__copy">
-      <strong>제37회 시험 기준 · 개정 전 법령으로 학습</strong>
-      <p>본문 정답 기준에는 2026년에 공포·개정된 규정을 반영하지 않습니다. 2026 개정법은 상단의 <b>2026 개정법 차이 보기</b>에서 개정 전·후를 별도로 비교합니다.</p>
+      <strong>제37회 시험 기준 · 2026.5.31까지 개정법 적용</strong>
+      <p>본문 정답 기준에는 <b>2026년 5월 31일까지 공포·개정된 규정</b>을 적용합니다. <b>2026년 6월 1일 이후 개정분</b>은 상단의 <b>개정법 적용·차이 보기</b>에서 개정 전·후를 별도로 비교합니다.</p>
     </div>
     <span class="exam37-inline-baseline__state">EXAM BASELINE</span>
   `
