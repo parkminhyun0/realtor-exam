@@ -256,7 +256,7 @@ export default function App() {
       </button>
       <footer className="footer">
         <span>공인중개사 시험 핵심정리</span>
-        <span>제37회 시험 본문은 2026년 개정 전 법령을 우선하고, 2026 개정법은 과목별 비교표에 별도 표시합니다.</span>
+        <span>제37회 시험 본문은 2026.5.31까지 공포·개정된 법령을 적용하고, 2026.6.1 이후 개정법은 과목별 비교표에 별도 표시합니다.</span>
       </footer>
     </div>
   )
