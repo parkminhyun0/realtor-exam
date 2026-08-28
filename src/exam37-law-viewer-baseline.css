@@ -1,0 +1,40 @@
+.law-article-popup__exam-baseline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-top: 1px solid #e5dcc9;
+  border-bottom: 1px solid #e5dcc9;
+  background: #fff8e8;
+  color: #5e4b28;
+  font-size: 10.5pt !important;
+}
+
+.law-article-popup__exam-baseline b {
+  flex: 0 0 auto;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #655230;
+  color: #fff;
+  font-size: 9pt !important;
+}
+
+.law-article-text__heading > div {
+  min-width: 0;
+}
+
+.law-article-text__version {
+  display: block;
+  margin-top: 3px;
+  color: #786746;
+  font-size: 9pt !important;
+  font-weight: 800;
+}
+
+@media (max-width: 620px) {
+  .law-article-popup__exam-baseline {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 9px 12px;
+  }
+}

@@ -2,10 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { subjectLawSources } from './data/lawSources'
 
-const lawIdCache = new Map()
+const lawVersionCache = new Map()
 const lawArticleCache = new Map()
 const lawDocumentCache = new Map()
 const LAW_API_BASE = 'https://www.law.go.kr/DRF'
+const EXAM37_PROMULGATION_CUTOFF = 20251231
 
 function normalizeLawName(value = '') {
   return String(value).replace(/\s+/g, '').replace(/[·ㆍ]/g, '')
@@ -29,25 +30,6 @@ function walk(value, visitor) {
   if (!value || typeof value !== 'object') return
   visitor(value)
   Object.values(value).forEach((item) => walk(item, visitor))
-}
-
-function findLawId(payload, lawName) {
-  const wanted = normalizeLawName(lawName)
-  let exact = null
-  let fallback = null
-
-  walk(payload, (item) => {
-    const name = item['법령명한글'] ?? item['법령명_한글'] ?? item['법령명']
-    const id = item['법령ID'] ?? item['법령Id'] ?? item['법령id']
-    if (!name || id === undefined || id === null) return
-
-    const candidate = String(id).padStart(6, '0')
-    const normalized = normalizeLawName(name)
-    if (!fallback && (normalized.includes(wanted) || wanted.includes(normalized))) fallback = candidate
-    if (!exact && normalized === wanted) exact = candidate
-  })
-
-  return exact || fallback
 }
 
 function cleanLawText(value) {
@@ -140,42 +122,83 @@ async function fetchJson(url, signal) {
   return JSON.parse(text)
 }
 
-async function getLawId(lawName, signal) {
-  let lawId = lawIdCache.get(lawName)
-  if (lawId) return lawId
+function findExam37Version(payload, lawName) {
+  const wanted = normalizeLawName(lawName)
+  const exact = []
+  const fallback = []
 
-  const searchUrl = `${LAW_API_BASE}/lawSearch.do?OC=test&target=law&type=JSON&display=20&query=${encodeURIComponent(lawName)}`
-  const searchPayload = await fetchJson(searchUrl, signal)
-  lawId = findLawId(searchPayload, lawName)
-  if (!lawId) throw new Error('해당 법령의 식별정보를 찾지 못했습니다.')
-  lawIdCache.set(lawName, lawId)
-  return lawId
+  walk(payload, (item) => {
+    const name = item['법령명한글'] ?? item['법령명_한글'] ?? item['법령명']
+    const mst = item['법령일련번호'] ?? item['법령일련번호_'] ?? item['MST']
+    const promulgationDate = Number(item['공포일자'] ?? item['공포일'] ?? 0)
+    const effectiveDate = Number(item['시행일자'] ?? item['시행일'] ?? 0)
+    if (!name || !mst || !promulgationDate || promulgationDate > EXAM37_PROMULGATION_CUTOFF) return
+
+    const candidate = {
+      lawName: String(name),
+      mst: String(mst),
+      promulgationDate,
+      effectiveDate: effectiveDate || promulgationDate,
+      revisionType: String(item['제개정구분명'] ?? item['제개정구분'] ?? ''),
+    }
+    const normalized = normalizeLawName(name)
+    if (normalized === wanted) exact.push(candidate)
+    else if (normalized.includes(wanted) || wanted.includes(normalized)) fallback.push(candidate)
+  })
+
+  const candidates = exact.length ? exact : fallback
+  candidates.sort((a, b) => (
+    b.promulgationDate - a.promulgationDate
+    || b.effectiveDate - a.effectiveDate
+    || Number(b.mst) - Number(a.mst)
+  ))
+  return candidates[0] || null
+}
+
+async function getExam37LawVersion(lawName, signal) {
+  if (lawVersionCache.has(lawName)) return lawVersionCache.get(lawName)
+
+  const searchUrl = `${LAW_API_BASE}/lawSearch.do?OC=test&target=eflaw&type=JSON&display=100&nw=1,2,3&sort=ddes&query=${encodeURIComponent(lawName)}`
+  const payload = await fetchJson(searchUrl, signal)
+  const version = findExam37Version(payload, lawName)
+  if (!version) throw new Error('제37회 시험 기준에 해당하는 개정 전 법령 버전을 찾지 못했습니다.')
+
+  lawVersionCache.set(lawName, version)
+  return version
+}
+
+function getHistoricalOfficialUrl(version, fallbackUrl) {
+  if (!version?.mst) return fallbackUrl
+  return `https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=${encodeURIComponent(version.mst)}`
 }
 
 async function fetchLawArticle(lawName, article, signal) {
-  const cacheKey = `${lawName}::${article}`
+  const cacheKey = `${lawName}::${article}::exam37-pre2026`
   if (lawArticleCache.has(cacheKey)) return lawArticleCache.get(cacheKey)
 
-  const lawId = await getLawId(lawName, signal)
+  const version = await getExam37LawVersion(lawName, signal)
   const joCode = articleToJoCode(article)
   if (!joCode) throw new Error('조문 번호 형식을 확인할 수 없습니다.')
 
-  const articleUrl = `${LAW_API_BASE}/lawService.do?OC=test&target=law&type=JSON&ID=${encodeURIComponent(lawId)}&JO=${joCode}`
+  const articleUrl = `${LAW_API_BASE}/lawService.do?OC=test&target=eflaw&type=JSON&MST=${encodeURIComponent(version.mst)}&efYd=${version.effectiveDate}&JO=${joCode}`
   const payload = await fetchJson(articleUrl, signal)
-  const result = extractArticle(payload, article)
-  if (!result.lines.length) throw new Error('조문 본문을 찾지 못했습니다.')
+  const result = { ...extractArticle(payload, article), version }
+  if (!result.lines.length) throw new Error('제37회 시험 기준 조문 본문을 찾지 못했습니다.')
 
   lawArticleCache.set(cacheKey, result)
   return result
 }
 
 async function fetchLawDocument(lawName, signal) {
-  if (lawDocumentCache.has(lawName)) return lawDocumentCache.get(lawName)
-  const lawId = await getLawId(lawName, signal)
-  const url = `${LAW_API_BASE}/lawService.do?OC=test&target=law&type=JSON&ID=${encodeURIComponent(lawId)}`
+  const cacheKey = `${lawName}::exam37-pre2026`
+  if (lawDocumentCache.has(cacheKey)) return lawDocumentCache.get(cacheKey)
+
+  const version = await getExam37LawVersion(lawName, signal)
+  const url = `${LAW_API_BASE}/lawService.do?OC=test&target=eflaw&type=JSON&MST=${encodeURIComponent(version.mst)}&efYd=${version.effectiveDate}`
   const payload = await fetchJson(url, signal)
-  lawDocumentCache.set(lawName, payload)
-  return payload
+  const result = { payload, version }
+  lawDocumentCache.set(cacheKey, result)
+  return result
 }
 
 function normalizeReferences(target) {
@@ -211,6 +234,17 @@ function getOfficialUrl(reference, article = null) {
   return article ? `${base}/${article}` : base
 }
 
+function formatDate(value) {
+  const text = String(value || '')
+  if (!/^\d{8}$/.test(text)) return text
+  return `${text.slice(0, 4)}.${Number(text.slice(4, 6))}.${Number(text.slice(6, 8))}`
+}
+
+function versionLabel(version) {
+  if (!version) return '제37회 시험 기준 · 2026 공포·개정 전'
+  return `공포 ${formatDate(version.promulgationDate)} · 시행 ${formatDate(version.effectiveDate)}${version.revisionType ? ` · ${version.revisionType}` : ''}`
+}
+
 async function loadReference(reference, signal) {
   if (reference.articles?.length) {
     const sections = []
@@ -222,7 +256,8 @@ async function loadReference(reference, signal) {
           citation: article,
           title: data.title,
           lines: data.lines,
-          officialUrl: getOfficialUrl(reference, article),
+          version: data.version,
+          officialUrl: getHistoricalOfficialUrl(data.version, getOfficialUrl(reference, article)),
         })
       } catch (error) {
         if (error?.name === 'AbortError') throw error
@@ -230,7 +265,7 @@ async function loadReference(reference, signal) {
           lawName: reference.lawName,
           citation: article,
           lines: [],
-          error: '이 조문의 텍스트를 국가법령정보센터에서 불러오지 못했습니다.',
+          error: error?.message || '이 조문의 제37회 시험 기준 텍스트를 국가법령정보센터에서 불러오지 못했습니다.',
           officialUrl: getOfficialUrl(reference, article),
         })
       }
@@ -240,14 +275,15 @@ async function loadReference(reference, signal) {
 
   if (reference.reference) {
     try {
-      const payload = await fetchLawDocument(reference.lawName, signal)
+      const { payload, version } = await fetchLawDocument(reference.lawName, signal)
       const lines = extractNamedReference(payload, reference.reference)
       if (!lines.length) throw new Error('첨부표 텍스트 없음')
       return [{
         lawName: reference.lawName,
         citation: reference.reference,
         lines,
-        officialUrl: getOfficialUrl(reference),
+        version,
+        officialUrl: getHistoricalOfficialUrl(version, getOfficialUrl(reference)),
       }]
     } catch (error) {
       if (error?.name === 'AbortError') throw error
@@ -255,21 +291,22 @@ async function loadReference(reference, signal) {
         lawName: reference.lawName,
         citation: reference.reference,
         lines: [],
-        error: '이 별표의 텍스트를 법령정보 API에서 직접 추출하지 못했습니다.',
+        error: '이 별표의 제37회 시험 기준 텍스트를 법령정보 API에서 직접 추출하지 못했습니다.',
         officialUrl: getOfficialUrl(reference),
       }]
     }
   }
 
   try {
-    const payload = await fetchLawDocument(reference.lawName, signal)
+    const { payload, version } = await fetchLawDocument(reference.lawName, signal)
     const lines = extractFullLaw(payload)
     if (!lines.length) throw new Error('법령 본문 없음')
     return [{
       lawName: reference.lawName,
       citation: '전체 조문',
       lines,
-      officialUrl: getOfficialUrl(reference),
+      version,
+      officialUrl: getHistoricalOfficialUrl(version, getOfficialUrl(reference)),
     }]
   } catch (error) {
     if (error?.name === 'AbortError') throw error
@@ -277,7 +314,7 @@ async function loadReference(reference, signal) {
       lawName: reference.lawName,
       citation: '전체 조문',
       lines: [],
-      error: '이 법령의 텍스트를 국가법령정보센터에서 불러오지 못했습니다.',
+      error: '이 법령의 제37회 시험 기준 텍스트를 국가법령정보센터에서 불러오지 못했습니다.',
       officialUrl: getOfficialUrl(reference),
     }]
   }
@@ -297,7 +334,7 @@ export default function LawTextViewer({ open, onClose, target }) {
   const [sections, setSections] = useState([])
   const references = useMemo(() => normalizeReferences(target), [target])
   const dialogTitle = useMemo(() => getDialogTitle(references), [references])
-  const firstOfficialUrl = references[0] ? getOfficialUrl(references[0]) : null
+  const firstOfficialUrl = sections[0]?.officialUrl || (references[0] ? getOfficialUrl(references[0]) : null)
 
   useEffect(() => {
     if (!open || !references.length) return undefined
@@ -347,17 +384,22 @@ export default function LawTextViewer({ open, onClose, target }) {
       <section className="law-article-popup" role="dialog" aria-modal="true" aria-labelledby="law-article-title">
         <header className="law-article-popup__header">
           <div>
-            <span className="law-article-popup__eyebrow">법령조문</span>
+            <span className="law-article-popup__eyebrow">법령조문 · 제37회 시험 기준</span>
             <h2 id="law-article-title">{dialogTitle}</h2>
           </div>
           <button className="law-viewer__close" type="button" onClick={onClose} aria-label="법령 조문 닫기">×</button>
         </header>
 
+        <div className="law-article-popup__exam-baseline" data-exam37-law-popup="true">
+          <b>시험 정답 기준</b>
+          <span>2026년에 공포·개정된 버전은 제외하고, 2025년 12월 31일까지 공포된 마지막 법령 버전을 표시합니다.</span>
+        </div>
+
         <div className="law-article-popup__body">
           {status === 'loading' && (
             <div className="law-article-popup__status" role="status">
               <span className="law-article-popup__spinner" aria-hidden="true" />
-              <strong>법령 텍스트를 불러오는 중입니다.</strong>
+              <strong>제37회 시험 기준 법령 텍스트를 불러오는 중입니다.</strong>
             </div>
           )}
 
@@ -366,14 +408,17 @@ export default function LawTextViewer({ open, onClose, target }) {
               {sections.map((section, sectionIndex) => (
                 <section className="law-article-text__section" key={`${section.lawName}-${section.citation}-${sectionIndex}`}>
                   <div className="law-article-text__heading">
-                    <h3>
-                      {section.lawName} {section.citation}
-                      {section.title ? ` · (${section.title})` : ''}
-                    </h3>
-                    <a href={section.officialUrl} target="_blank" rel="noreferrer">원문 ↗</a>
+                    <div>
+                      <h3>
+                        {section.lawName} {section.citation}
+                        {section.title ? ` · (${section.title})` : ''}
+                      </h3>
+                      {section.version && <small className="law-article-text__version">{versionLabel(section.version)}</small>}
+                    </div>
+                    <a href={section.officialUrl} target="_blank" rel="noreferrer">해당 버전 원문 ↗</a>
                   </div>
                   {section.error
-                    ? <p className="law-article-text__error">{section.error} 하단 또는 우측의 원문 링크에서 국가법령정보센터 원문을 확인할 수 있습니다.</p>
+                    ? <p className="law-article-text__error">{section.error} 원문 링크에서 국가법령정보센터를 확인해 주세요.</p>
                     : section.lines.map((line, index) => <p key={`${index}-${line}`}>{line}</p>)}
                 </section>
               ))}
@@ -382,15 +427,15 @@ export default function LawTextViewer({ open, onClose, target }) {
 
           {status === 'error' && (
             <div className="law-article-popup__status" role="status">
-              <strong>법령 텍스트를 불러오지 못했습니다.</strong>
-              <span>국가법령정보센터 원문 링크를 이용해 주세요.</span>
+              <strong>제37회 시험 기준 법령 텍스트를 불러오지 못했습니다.</strong>
+              <span>2026 개정법을 시험 정답으로 대체하지 않습니다. 국가법령정보센터 연혁 원문을 확인해 주세요.</span>
             </div>
           )}
         </div>
 
         <footer className="law-article-popup__footer">
-          <span>법제처 국가법령정보센터 · 현행 법령 텍스트</span>
-          {firstOfficialUrl && <a href={firstOfficialUrl} target="_blank" rel="noreferrer">원문 ↗</a>}
+          <span>법제처 국가법령정보센터 · 제37회 시험용 2026 공포·개정 전 법령</span>
+          {firstOfficialUrl && <a href={firstOfficialUrl} target="_blank" rel="noreferrer">법령 연혁 원문 ↗</a>}
         </footer>
       </section>
     </div>,
