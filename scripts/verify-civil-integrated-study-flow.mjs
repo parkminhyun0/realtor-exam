@@ -44,8 +44,7 @@ for (const selector of [
   '.civil-topic-visual',
   '.civil-learning-map',
   '.civil-learning-exam-card',
-  '[data-civil-law-leaf-precedents="true"]',
-  '[data-civil-law-part2-extra-precedents="true"]',
+  '.civil-leaf-precedents[data-topic]',
   '[data-civil-leaf-practice="true"]',
   '[data-civil-intensive="true"]',
 ]) {
@@ -76,4 +75,4 @@ if (!main.includes(jsImport) || !main.includes(cssImport)) {
   throw new Error('main.jsx에 민법 통합 학습 레이어 import가 없습니다.')
 }
 
-console.log(`민법 통합 학습 흐름 검증 통과: ${leaves.length} leaves / ${visualKeys.size} visuals / leaf-specific optional steps`)
+console.log(`민법 통합 학습 흐름 검증 통과: ${leaves.length} leaves / ${visualKeys.size} visuals / direct precedent class + leaf-specific optional steps`)
