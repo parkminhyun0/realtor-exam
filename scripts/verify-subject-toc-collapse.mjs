@@ -25,7 +25,7 @@ const main = read('src/main.jsx')
 
 for (const required of [
   "document.querySelectorAll('.public-law-layout > .public-law-nav')",
-  'data-subject-toc-collapse-toggle',
+  'subjectTocCollapseToggle',
   '목차 숨기기',
   '목차 보기',
   "setAttribute('aria-expanded'",
