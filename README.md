@@ -42,3 +42,14 @@ npm run build
 ```
 
 GitHub Pages 배포용 Vite base는 `/realtor-exam/`으로 설정되어 있습니다.
+
+## AI 협업
+
+AI로 저장소를 수정할 때는 먼저 루트의 [`AGENTS.md`](AGENTS.md)를 읽게 하세요.
+Codex, Claude Code, Gemini CLI, Qwen Code, GitHub Copilot, Cursor, Windsurf,
+Cline, Roo Code, Continue, Amazon Q, JetBrains Junie, Aider용 연결 파일이
+포함되어 있어 어떤 도구로 들어와도 같은 작업·검증·배포 안전 기준을 사용합니다.
+연결 파일은 `AGENTS.md`를 가리키기만 하고 규칙을 따로 담지 않습니다.
+
+다른 AI에게 저장소를 넘기는 방법과 시작 프롬프트는
+[`docs/AI_COLLABORATION.md`](docs/AI_COLLABORATION.md)에 정리되어 있습니다.
