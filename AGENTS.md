@@ -29,6 +29,77 @@ Use the most specific authority for the work: this file for repository workflow,
 `.pipeline/ROLES.md` for managed pipeline roles. Ask the user when a conflict
 would change content truth, deployment, or a protected workflow.
 
+## Instruction precedence
+
+This repository's instructions outrank an agent's own global, user-level, or
+IDE-level configuration. The order is:
+
+1. An explicit, current instruction from the user in the active conversation.
+2. `AGENTS.md` (this file) and the specifications it points to.
+3. The agent's own tool-specific entry file in this repository.
+4. The agent's global or user-level configuration.
+
+If your global configuration tells you to do something this repository forbids,
+this repository wins. Two known cases:
+
+- Some global configurations grant standing authority to merge and deploy.
+  Here they do not. Merge to `main` and deployment always need explicit,
+  task-specific approval from the user.
+- Some global configurations require a `cmux-work-os` bootstrap, claim, or
+  checkpoint. This repository forbids it — `.pipeline/ROLES.md` documents that
+  the call fails outside the sandbox. Skip it and work from Git truth instead.
+
+Report the conflict in your handoff instead of silently choosing one side.
+
+## AI entry points
+
+Each supported tool gets a small pointer file. The pointer files carry no rules
+of their own; they exist only so the tool loads this document automatically.
+
+| Tool | File it reads first |
+|---|---|
+| Codex, Cursor, Jules, Zed, and other `AGENTS.md`-aware agents | `AGENTS.md` |
+| Claude Code | `CLAUDE.md` |
+| Gemini CLI | `GEMINI.md` |
+| Qwen Code | `QWEN.md` |
+| GitHub Copilot | `.github/copilot-instructions.md` |
+| Cursor | `.cursor/rules/agents.mdc` |
+| Windsurf | `.windsurf/rules/agents.md` |
+| Cline | `.clinerules/01-agents.md` |
+| Roo Code | `.roo/rules/01-agents.md` |
+| Continue | `.continue/rules/agents.md` |
+| Amazon Q Developer | `.amazonq/rules/agents.md` |
+| JetBrains Junie | `.junie/guidelines.md` |
+| Aider | `CONVENTIONS.md` |
+| Any other AI | Tell it to read `AGENTS.md` first |
+
+To support a new tool, add one pointer file in the location that tool reads and
+add a row here. Never restate a rule inside a pointer file: a copied rule is a
+rule that will only ever be half-updated.
+
+## Concurrent agents
+
+Several models may work on this repository at the same time, without shared
+memory. Coordinate through Git and GitHub only — there is no cross-agent lock
+file in this repository.
+
+Before you create a branch:
+
+1. `git fetch --prune` and read the latest `main`.
+2. List open pull requests and remote branches. If one already covers your task,
+   report it and stop instead of opening a second one.
+3. Pick a branch name that states the task, so another agent can see it is taken.
+
+While you work:
+
+- Touch only the files your task needs. Another agent's uncommitted or unmerged
+  work may sit next to yours.
+- Never push to, rebase, force-push, or reuse a branch you did not create.
+- Never run `git add -A`; stage each path explicitly.
+- Never run `git reset --hard` while `.pipeline/` holds uncommitted work.
+- Never overwrite an existing `.pipeline/task*` folder; create the next number.
+- Rebase or merge the latest `main` into your branch before asking for review.
+
 ## Non-negotiable rules
 
 - Never invent an article number, deadline, rate, amount, area, exception,

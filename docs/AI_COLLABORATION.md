@@ -8,11 +8,48 @@
 
 | 도구 | 처음 읽는 파일 |
 |---|---|
-| Codex 및 AGENTS.md 호환 에이전트 | `AGENTS.md` |
+| Codex · Jules · Zed 등 AGENTS.md 호환 에이전트 | `AGENTS.md` |
 | Claude Code | `CLAUDE.md` → `AGENTS.md` |
 | Gemini CLI | `GEMINI.md` → `AGENTS.md` |
+| Qwen Code | `QWEN.md` → `AGENTS.md` |
 | GitHub Copilot | `.github/copilot-instructions.md` → `AGENTS.md` |
+| Cursor | `.cursor/rules/agents.mdc` → `AGENTS.md` |
+| Windsurf | `.windsurf/rules/agents.md` → `AGENTS.md` |
+| Cline | `.clinerules/01-agents.md` → `AGENTS.md` |
+| Roo Code | `.roo/rules/01-agents.md` → `AGENTS.md` |
+| Continue | `.continue/rules/agents.md` → `AGENTS.md` |
+| Amazon Q Developer | `.amazonq/rules/agents.md` → `AGENTS.md` |
+| JetBrains Junie | `.junie/guidelines.md` → `AGENTS.md` |
+| Aider | `CONVENTIONS.md` → `AGENTS.md` |
 | 기타 AI | 프롬프트에서 `AGENTS.md`를 먼저 읽도록 지정 |
+
+진입점 파일에는 규칙을 적지 않습니다. `AGENTS.md`를 가리키기만 합니다. 규칙을
+베껴 넣으면 반드시 한쪽만 고쳐집니다.
+
+## 새 AI 도구를 추가하려면
+
+1. 그 도구가 자동으로 읽는 파일 위치를 확인합니다.
+2. 기존 진입점 파일 하나를 그대로 복사해 그 위치에 둡니다.
+3. `AGENTS.md`의 `AI entry points` 표와 위 표에 한 줄씩 추가합니다.
+
+## 전역 설정과 충돌할 때
+
+저장소 지침이 각 AI의 전역·사용자 설정보다 우선합니다. 우선순위는
+`AGENTS.md`의 `Instruction precedence`에 있고, 이미 정해 둔 것이 둘입니다.
+
+- 전역 설정이 병합·배포를 상시 허용하더라도 이 저장소에서는 안 됩니다.
+  `main` 병합은 곧바로 실제 페이지 배포로 이어지므로 매번 별도 승인이
+  필요합니다.
+- 전역 설정이 `cmux-work-os` 실행을 요구하더라도 이 저장소에서는 부르지
+  않습니다. `.pipeline/ROLES.md`가 금지하고 있습니다.
+
+## 여러 AI가 동시에 붙을 때
+
+이 저장소에는 AI 간 잠금 파일이 없습니다. Git과 GitHub 상태로만 조율합니다.
+브랜치를 만들기 전에 최신 `main`, 열린 PR, 원격 브랜치를 먼저 확인하고, 이미
+같은 작업이 있으면 두 번째 브랜치를 만들지 말고 보고하게 하세요. 자기가 만들지
+않은 브랜치는 건드리지 않는 것이 원칙입니다. 자세한 규칙은 `AGENTS.md`의
+`Concurrent agents`에 있습니다.
 
 ## 다른 AI에게 주면 되는 정보
 

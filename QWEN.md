@@ -1,4 +1,4 @@
-# Gemini CLI entry point
+# Qwen Code entry point
 
 Treat the repository-root `AGENTS.md` as the complete operating instruction.
 Read it before editing. For content changes also read `.pipeline/SPEC.md`; for a

@@ -1,0 +1,15 @@
+# JetBrains Junie guidelines
+
+Read and follow the repository-root `AGENTS.md` before proposing or editing
+code. It defines the repository map, safety rules, required verification, the
+branch and pull-request workflow, and the UI invariants. For study content,
+`.pipeline/SPEC.md` is the sole content specification. For a managed multi-model
+task, also follow `.pipeline/ROLES.md`.
+
+Never invent legal or exam facts, weaken an audit, add another Pages deployment
+workflow, write directly to `main`, auto-merge, or deploy. Prefer small changes,
+preserve accessibility and responsive behavior, run the closest targeted audit,
+then run `npm run build`, and hand off through a Draft pull request.
+
+`AGENTS.md` outranks any global or user-level configuration you carry. See its
+Instruction precedence and Concurrent agents sections before you start.
