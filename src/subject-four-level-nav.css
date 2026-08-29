@@ -2,16 +2,16 @@
 :root {
   --four-toc-font: 11pt;
   --four-toc-meta-font: 8pt;
-  --four-toc-bg: #14243a;
-  --four-toc-bg-2: #172a43;
-  --four-toc-hover: #223b5b;
-  --four-toc-line: #4d6987;
-  --four-toc-text: #edf3f9;
-  --four-toc-subtext: #c7d3df;
-  --four-toc-muted: #9fb0c2;
-  --four-toc-active-bg: #ffffff;
-  --four-toc-active-text: #14243a;
-  --four-toc-active-line: #6f9fca;
+  --four-toc-bg: var(--ds-toc-bg);
+  --four-toc-bg-2: var(--ds-toc-bg-2);
+  --four-toc-hover: var(--ds-toc-hover);
+  --four-toc-line: var(--ds-toc-line);
+  --four-toc-text: var(--ds-toc-text);
+  --four-toc-subtext: var(--ds-toc-subtext);
+  --four-toc-muted: var(--ds-toc-muted);
+  --four-toc-active-bg: var(--ds-toc-active-bg);
+  --four-toc-active-text: var(--ds-toc-active-text);
+  --four-toc-active-line: var(--ds-toc-active-line);
 }
 
 .public-law-layout:has(> .unified-four-toc) > .public-law-nav:not(.unified-four-toc),
@@ -24,7 +24,7 @@ body .public-law-layout > .unified-four-toc {
   min-width: 300px !important;
   padding: 14px 12px 18px !important;
   border: 1px solid rgba(8, 18, 31, .2) !important;
-  border-radius: 18px !important;
+  border-radius: var(--ds-r-lg) !important;
   background: linear-gradient(180deg, var(--four-toc-bg) 0%, var(--four-toc-bg-2) 100%) !important;
   color: var(--four-toc-text) !important;
   box-shadow: 0 14px 38px rgba(18, 36, 59, .16) !important;
@@ -36,7 +36,7 @@ body .public-law-layout > .unified-four-toc {
 body .public-law-layout > .unified-four-toc::-webkit-scrollbar { width: 8px; }
 body .public-law-layout > .unified-four-toc::-webkit-scrollbar-thumb {
   border: 2px solid transparent;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: #506985;
   background-clip: padding-box;
 }
@@ -82,7 +82,7 @@ body .unified-four-toc .public-law-nav__title span {
   min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
-  border-radius: 10px !important;
+  border-radius: var(--ds-r-md) !important;
   list-style: none !important;
   cursor: pointer;
 }
@@ -123,7 +123,7 @@ body .unified-four-toc .public-law-nav__title span {
   margin: 0;
   padding: 7px 28px 7px 8px;
   border: 0;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: transparent;
   color: var(--four-toc-subtext);
   text-align: left;
@@ -175,7 +175,7 @@ button.unified-four-toc__row.is-active {
   min-height: 20px;
   padding: 2px 5px;
   border: 1px solid rgba(191, 211, 231, .18);
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: rgba(145, 185, 223, .10);
   color: #bfd4e8 !important;
   font-size: var(--four-toc-meta-font) !important;
@@ -195,7 +195,7 @@ button.unified-four-toc__row.is-active {
   width: 8px;
   height: 8px;
   display: block;
-  border-radius: 3px;
+  border-radius: var(--ds-r-xs);
   background: var(--toc-dot, #6f9fca);
   box-shadow: 0 0 0 2px rgba(255,255,255,.12);
 }
@@ -203,7 +203,7 @@ button.unified-four-toc__row.is-active {
 .unified-four-toc__count {
   min-width: 24px;
   padding: 2px 5px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: rgba(255,255,255,.06);
   color: var(--four-toc-muted) !important;
   font-size: var(--four-toc-meta-font) !important;
@@ -292,7 +292,7 @@ body .unified-four-toc .brokerage-major {
 @media (max-width: 700px) {
   body .public-law-layout > .unified-four-toc {
     padding: 12px 10px 15px !important;
-    border-radius: 14px !important;
+    border-radius: var(--ds-r-lg) !important;
   }
 
   body .unified-four-toc .public-law-nav__title strong {

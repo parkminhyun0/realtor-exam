@@ -21,7 +21,7 @@
   margin: 0 0 9px;
   padding: 7px 10px;
   border: 1px solid rgba(226,236,247,.16);
-  border-radius: 10px;
+  border-radius: var(--ds-r-md);
   background: rgba(255,255,255,.075);
   color: #edf3f9;
   cursor: pointer;
@@ -48,7 +48,7 @@
   flex: 0 0 28px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   background: rgba(255,255,255,.1);
   color: #fff;
   font-size: 20px;
@@ -141,14 +141,14 @@
 .public-law-nav .civil-nav-point {
   margin: 3px 0;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: var(--ds-r-md);
 }
 
 .public-law-nav .civil-nav-point > summary {
   min-height: 42px;
   margin: 0;
   padding: 7px 34px 7px 9px;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   color: #bdcbd9;
 }
 

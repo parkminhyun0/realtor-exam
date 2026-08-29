@@ -18,7 +18,7 @@
   min-height: 34px;
   align-items: center;
   padding: 5px 10px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: #a56b20;
   color: #fff;
   font-weight: 900;
@@ -49,7 +49,7 @@
   min-width: 0;
   padding: 13px;
   border: 1px solid #eadfcf;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -80,7 +80,7 @@
   min-width: 0;
   padding: 14px;
   border: 1px solid #ead6d2;
-  border-radius: 13px;
+  border-radius: var(--ds-r-md);
   background: #fff8f7;
   container-type: inline-size;
 }
@@ -152,7 +152,7 @@
   margin: 1px 7px 2px 0;
   align-items: center;
   justify-content: center;
-  border-radius: 7px;
+  border-radius: var(--ds-r-sm);
   background: #f3e5e2;
   color: #a12a21;
   font-size: 9px;
@@ -173,7 +173,7 @@
   gap: 12px;
   margin-top: 14px;
   padding: 14px;
-  border-radius: 13px;
+  border-radius: var(--ds-r-md);
   background: #17283c;
   color: #fff;
 }
@@ -192,7 +192,7 @@
 .tax-exam-drill__calc code {
   display: block;
   padding: 9px 10px;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: rgba(255, 255, 255, .09);
   color: #f9e5b1;
   font-family: inherit;

@@ -15,7 +15,7 @@
 }
 .public-law-topline .back-button { margin: 0; }
 .public-law-hero {
-  border-radius: 24px;
+  border-radius: var(--ds-r-lg);
   padding: 34px 38px;
   background: linear-gradient(135deg, #13233a, #2e5e8c);
   color: #fff;
@@ -38,7 +38,7 @@
   display: inline-flex;
   align-items: center;
   padding: 5px 10px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(255,255,255,.08);
   color: #eff5fb;
@@ -57,7 +57,7 @@
   top: 126px;
   max-height: calc(100vh - 144px);
   overflow: auto;
-  border-radius: 18px;
+  border-radius: var(--ds-r-lg);
   padding: 16px 12px 18px;
   background: #17273f;
   color: #dce5ef;
@@ -75,20 +75,20 @@
   align-items: center;
   gap: 9px;
   padding: 7px 8px;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   font-size: 12px;
   font-weight: 900;
 }
 .public-law-nav summary::-webkit-details-marker { display: none; }
 .public-law-nav summary:hover { background: rgba(255,255,255,.07); }
-.public-law-nav summary i { width: 9px; height: 9px; border-radius: 3px; flex: 0 0 auto; }
+.public-law-nav summary i { width: 9px; height: 9px; border-radius: var(--ds-r-xs); flex: 0 0 auto; }
 .public-law-nav ul { list-style: none; margin: 2px 0 8px; padding: 0 0 0 12px; }
 .public-law-nav li { margin: 2px 0; }
 .public-law-nav li button {
   width: 100%;
   min-height: 36px;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   background: transparent;
   color: #bdcbd9;
   text-align: left;
@@ -109,7 +109,7 @@
   min-width: 0;
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius: var(--ds-r-lg);
   padding: 26px 28px 38px;
 }
 .public-law-breadcrumb {
@@ -137,7 +137,7 @@
 .study-section-heading h2 { margin: 2px 0 0; font-size: 27px; letter-spacing: -.04em; }
 .law-reference { color: var(--muted); font-size: 10px; }
 .study-tldr {
-  border-radius: 14px;
+  border-radius: var(--ds-r-lg);
   padding: 18px 20px;
   background: #16263e;
   color: #fff;
@@ -150,7 +150,7 @@
   margin-top: 16px;
   padding: 20px;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: var(--ds-r-lg);
   background: #fff;
 }
 .study-block__title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
@@ -159,7 +159,7 @@
   height: 30px;
   display: grid;
   place-items: center;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: #eef3f8;
   color: #2e5e8c;
   font-size: 10px;
@@ -167,16 +167,16 @@
 }
 .study-block__title h3 { margin: 0; font-size: 17px; letter-spacing: -.035em; }
 .understanding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.understanding-grid > div { border: 1px solid #e6ebf1; border-radius: 12px; padding: 13px; background: #f8fafc; }
+.understanding-grid > div { border: 1px solid #e6ebf1; border-radius: var(--ds-r-md); padding: 13px; background: #f8fafc; }
 .understanding-grid b { display: block; margin-bottom: 4px; font-size: 12px; }
 .understanding-grid p { margin: 0; color: #59677a; font-size: 11px; line-height: 1.7; }
 .hierarchy-flow { display: flex; align-items: stretch; gap: 8px; overflow-x: auto; padding: 3px 0 8px; }
 .hierarchy-flow__group { display: flex; align-items: center; gap: 8px; flex: 1 0 auto; }
-.hierarchy-flow__step { min-width: 150px; border: 1.5px solid #2e5e8c; border-radius: 12px; padding: 12px; background: #f9fbfe; }
+.hierarchy-flow__step { min-width: 150px; border: 1.5px solid #2e5e8c; border-radius: var(--ds-r-md); padding: 12px; background: #f9fbfe; }
 .hierarchy-flow__step small { display: block; color: #7f8da0; font-size: 8px; font-weight: 900; }
 .hierarchy-flow__step strong { display: block; margin-top: 3px; color: #243b59; font-size: 12px; }
 .hierarchy-flow__arrow { color: #8390a0; font-weight: 900; }
-.study-note { margin-top: 9px; padding: 10px 12px; border-radius: 10px; background: #eef4fb; color: #344e70; font-size: 11px; }
+.study-note { margin-top: 9px; padding: 10px 12px; border-radius: var(--ds-r-md); background: #eef4fb; color: #344e70; font-size: 11px; }
 .table-wrap { width: 100%; overflow-x: auto; }
 .study-table {
   width: 100%;
@@ -210,20 +210,20 @@
   color: #48586c;
 }
 .study-block--split { display: grid; grid-template-columns: 1.3fr .7fr; gap: 12px; border: 0; padding: 0; background: transparent; }
-.trap-card, .memory-card { border-radius: 15px; padding: 17px; }
+.trap-card, .memory-card { border-radius: var(--ds-r-lg); padding: 17px; }
 .trap-card { border: 1px solid #f0c9c9; background: #fbefef; color: #713737; }
 .memory-card { border: 1px solid #bfe0d7; background: #e9f5f2; color: #276557; }
 .trap-card > span, .memory-card > span { display: block; font-size: 11px; font-weight: 900; }
 .trap-card ul { margin: 10px 0 0; padding-left: 18px; font-size: 11px; line-height: 1.75; }
 .memory-card strong { display: block; margin: 9px 0 5px; font-size: 22px; }
 .memory-card p { margin: 0; font-size: 11px; line-height: 1.7; }
-.source-note { margin-top: 18px; padding: 14px 16px; border: 1px dashed #bdc9d6; border-radius: 12px; color: #68778a; font-size: 10px; line-height: 1.7; }
+.source-note { margin-top: 18px; padding: 14px 16px; border: 1px dashed #bdc9d6; border-radius: var(--ds-r-md); color: #68778a; font-size: 10px; line-height: 1.7; }
 .source-note b { color: #35475c; }
 .source-note p { margin: 4px 0 0; }
 .importing-section {
   min-height: 430px;
   border-left: 5px solid var(--chapter-color);
-  border-radius: 16px;
+  border-radius: var(--ds-r-lg);
   padding: 32px;
   background: linear-gradient(180deg, #f8fafc, #fff);
   display: flex;
@@ -234,7 +234,7 @@
 .importing-section h2 { margin: 8px 0 9px; font-size: 30px; letter-spacing: -.045em; }
 .importing-section p { margin: 0; color: var(--muted); line-height: 1.8; }
 .importing-section__steps { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 22px; }
-.importing-section__steps span { padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: #5e6a79; font-size: 10px; font-weight: 800; }
+.importing-section__steps span { padding: 7px 9px; border: 1px solid var(--line); border-radius: var(--ds-r-pill); background: #fff; color: #5e6a79; font-size: 10px; font-weight: 800; }
 @media (max-width: 980px) {
   .public-law-layout { grid-template-columns: 1fr; }
   .public-law-nav { position: static; max-height: none; }
@@ -245,8 +245,8 @@
 @media (max-width: 700px) {
   .public-law-page { width: calc(100% - 20px); padding-top: 18px; }
   .public-law-topline > span { display: none; }
-  .public-law-hero { border-radius: 18px; padding: 25px 20px; }
-  .public-law-content { padding: 19px 14px 28px; border-radius: 16px; }
+  .public-law-hero { border-radius: var(--ds-r-lg); padding: 25px 20px; }
+  .public-law-content { padding: 19px 14px 28px; border-radius: var(--ds-r-lg); }
   .study-section-heading { align-items: flex-start; flex-direction: column; }
   .study-section-heading__number { font-size: 29px; }
   .study-section-heading h2 { font-size: 23px; }

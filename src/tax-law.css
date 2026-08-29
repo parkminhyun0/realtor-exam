@@ -18,7 +18,7 @@
 
 .tax-law-page .tax-exam-keyword {
   padding: 0 .1em;
-  border-radius: 3px;
+  border-radius: var(--ds-r-xs);
   background: rgba(255, 222, 89, .72);
   color: #594000;
   font-weight: 900;
@@ -29,7 +29,7 @@
 }
 
 .tax-study-tldr {
-  border-radius: 14px;
+  border-radius: var(--ds-r-lg);
   background: #16263e;
   color: #fff;
 }
@@ -75,7 +75,7 @@
   min-height: 34px;
   align-items: center;
   padding: 5px 10px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: #c62828;
   color: #fff;
   font-weight: 900;
@@ -85,8 +85,8 @@
 
 .tax-exam-core__heading h3 {
   margin: 0;
-  color: #7f1d1d;
-  font-size: 14pt !important;
+  color: var(--ds-ink);
+  font-size: var(--ds-fs-xl) !important;
 }
 
 .tax-exam-core__heading p {
@@ -109,7 +109,7 @@
   align-items: start;
   padding: 14px;
   border: 1px solid #ecdada;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -118,7 +118,7 @@
   height: 34px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
+  border-radius: var(--ds-r-md);
   background: #fdecec;
   color: #b42323;
   font-weight: 900;
@@ -158,7 +158,7 @@
   min-width: 0;
   padding: 14px;
   border: 1px solid #e7dfce;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -191,7 +191,7 @@
   min-height: 32px;
   padding: 4px 8px;
   border: 0;
-  border-radius: 7px;
+  border-radius: var(--ds-r-sm);
   background: transparent;
   color: #c62828;
   font: inherit;
@@ -238,7 +238,7 @@
   height: 34px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
+  border-radius: var(--ds-r-md);
   background: #e8eef3;
   color: #3f5663;
   font-weight: 900;
@@ -275,7 +275,7 @@
   gap: 10px;
   padding: 13px;
   border: 1px solid #dce5e3;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -284,7 +284,7 @@
   height: 30px;
   display: grid;
   place-items: center;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: #e7f2ef;
   color: #256858;
   font-weight: 900;
@@ -312,7 +312,7 @@
 .tax-quiz-list details {
   overflow: hidden;
   border: 1px solid #e2e5e9;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -336,7 +336,7 @@
   margin: 5px 14px 14px;
   padding: 12px 13px;
   border-left: 4px solid #76588f;
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 var(--ds-r-md) var(--ds-r-md) 0;
   background: #f6f2f9;
 }
 
@@ -374,7 +374,7 @@
   gap: 6px;
   padding: 12px 13px;
   border: 1px solid #e6dfcf;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -411,7 +411,7 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid #e3e6e9;
-  border-radius: 13px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -463,7 +463,7 @@
   height: 26px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   background: #f1ede3;
   color: #75613a;
   font-size: 9px;

@@ -14,7 +14,7 @@
 .civil-nav__ready {
   flex: 0 0 auto;
   padding: 2px 6px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: #dff4ea;
   color: #176849 !important;
   font-size: 9px !important;
@@ -62,7 +62,7 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid #d8e1eb;
-  border-radius: 13px;
+  border-radius: var(--ds-r-md);
   background: #fff;
   box-shadow: 0 4px 14px rgba(30, 58, 89, .04);
 }
@@ -80,7 +80,7 @@
   flex: 0 0 auto;
   padding: 4px 7px;
   border: 1px solid #ebc9c9;
-  border-radius: 7px;
+  border-radius: var(--ds-r-sm);
   background: #fff5f5;
   color: #b42323;
   font-size: 11px;
@@ -155,7 +155,7 @@
   padding: 13px 14px;
   border: 1px solid #dfd7eb;
   border-left: 4px solid #76588f;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -168,7 +168,7 @@
 
 .civil-precedent-card__meta span {
   padding: 3px 7px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: #eee8f7;
   color: #674c82;
   font-size: 9px;
@@ -221,7 +221,7 @@
 .civil-exam-check-list details {
   overflow: hidden;
   border: 1px solid #dbe4ec;
-  border-radius: 11px;
+  border-radius: var(--ds-r-md);
   background: #fff;
 }
 
@@ -243,7 +243,7 @@
   height: 27px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   background: #eaf1f6;
   color: #315f8f;
   font-size: 9px;
@@ -271,7 +271,7 @@
   height: 34px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
+  border-radius: var(--ds-r-md);
   font-size: 16px;
   font-weight: 900;
 }
@@ -311,7 +311,7 @@
   align-items: center;
   padding: 9px 10px;
   border: 1px solid #dfe5ec;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: #fff;
   color: inherit;
   text-decoration: none;
@@ -322,7 +322,7 @@
   display: inline-flex;
   justify-content: center;
   padding: 4px 6px;
-  border-radius: 7px;
+  border-radius: var(--ds-r-sm);
   background: #eaf0f6;
   color: #40566f;
   font-size: 9px;
@@ -347,7 +347,7 @@
 .civil-outline-intro {
   margin-bottom: 18px;
   padding: 18px 20px;
-  border-radius: 14px;
+  border-radius: var(--ds-r-lg);
   background: #16263e;
   color: #fff;
 }
@@ -388,7 +388,7 @@
   gap: 10px;
   padding: 10px 12px;
   border: 1px solid #e3e9ef;
-  border-radius: 11px;
+  border-radius: var(--ds-r-md);
   background: #f8fafc;
 }
 
@@ -398,7 +398,7 @@
   height: 27px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   background: #eaf0f7;
   color: #315f8f;
   font-size: 9px;
@@ -421,7 +421,7 @@
   min-height: 72px;
   padding: 11px 12px;
   border: 1px solid #dce4ec;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: #fff;
   color: #384b62;
   text-align: left;
@@ -452,7 +452,7 @@
   display: inline-flex;
   margin-top: 7px;
   padding: 2px 6px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: #dff4ea;
   color: #176849;
   font-size: 9px;
