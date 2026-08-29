@@ -14,7 +14,7 @@
 
 .real-estate-theory-page .theory-exam-number[data-law-reference] {
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: var(--ds-r-xs);
   transition: background .14s ease, box-shadow .14s ease;
 }
 
@@ -47,7 +47,7 @@
 .theory-nav__calc {
   flex: 0 0 auto;
   padding: 2px 6px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   font-size: 9px !important;
   font-weight: 900;
   line-height: 1.35;
@@ -99,7 +99,7 @@
   justify-content: center;
   padding: 7px 10px;
   border: 1px solid #dfe5ec;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: #f8fafc;
   color: #405166;
   font-weight: 800;
@@ -121,7 +121,7 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid #d8e1e9;
-  border-radius: 14px;
+  border-radius: var(--ds-r-lg);
   background: #fff;
   box-shadow: 0 5px 16px rgba(37, 57, 78, .045);
 }
@@ -142,7 +142,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   background: #334d65;
   color: #fff;
   font-size: 10px;
@@ -177,7 +177,7 @@
 .theory-calc-formula > span {
   width: max-content;
   padding: 3px 7px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: rgba(255,255,255,.11);
   color: #dbe7f1;
   font-size: 9px;
@@ -216,7 +216,7 @@
 .theory-calc-trap,
 .theory-calc-tip {
   border: 1px solid #e1e7ed;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   padding: 9px 10px;
   background: #fff;
 }
@@ -267,7 +267,7 @@
   margin: 8px 12px 0;
   padding: 10px 11px;
   border: 1px solid #ead69c;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: #fff8e5;
 }
 
@@ -334,7 +334,7 @@
   min-height: 142px;
   border: 1px solid #dfe5ec;
   border-left: 4px solid #c7a650;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   padding: 13px 14px;
   background: #fff;
   color: #263950;
@@ -360,7 +360,7 @@
   align-items: center;
   min-height: 22px;
   padding: 3px 7px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
   background: #f7efd9;
   color: #80631f;
   font-size: 9px;
@@ -403,7 +403,7 @@
   align-items: center;
   padding: 9px 10px;
   border: 1px solid #dfe5ec;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: #fff;
 }
 
@@ -428,7 +428,7 @@ a.theory-source-item:focus-visible {
   display: inline-flex;
   justify-content: center;
   padding: 4px 6px;
-  border-radius: 7px;
+  border-radius: var(--ds-r-sm);
   background: #eaf0f6;
   color: #40566f;
   font-size: 9px;

@@ -604,7 +604,16 @@ function renderNode(node, level, page) {
 }
 
 function ensureCollapseControl(nav, layout) {
-  if (nav.querySelector(':scope > [data-subject-toc-toggle]')) return
+  // subject-sidebar-toggle.js 도 같은 토글을 만든다. 속성 이름이 서로 달라
+  // (이쪽 data-subject-toc-toggle, 저쪽 data-subject-toc-collapse-toggle)
+  // 서로의 버튼을 못 보고 중개사법에서 두 개가 겹쳐 떴다.
+  //
+  // 그 모듈이 먼저 돌면 아직 숨겨지기 전의 원본 nav 에 버튼을 넣는다.
+  // 그 버튼은 곧 숨는 자리에 있으므로 걷어내고, 보이는 이 목차에 하나만 둔다.
+  layout.querySelectorAll('.subject-toc-collapse-toggle').forEach((existing) => {
+    if (!nav.contains(existing)) existing.remove()
+  })
+  if (nav.querySelector(':scope > .subject-toc-collapse-toggle')) return
   const button = document.createElement('button')
   button.type = 'button'
   button.className = 'subject-toc-collapse-toggle'

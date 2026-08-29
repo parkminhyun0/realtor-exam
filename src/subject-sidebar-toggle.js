@@ -41,6 +41,19 @@ function setCollapsed(layout, button, collapsed, persist = true) {
 function installCollapseControl(nav) {
   const layout = nav.closest('.public-law-layout')
   if (!layout || layout.dataset.subjectTocCollapseInstalled === 'true') return
+
+  // 목차 토글을 만드는 곳이 여기 말고 subject-four-level-nav.js 에도 있다.
+  // 두 곳의 가드가 서로 달라서(이쪽은 layout 단위 + data-subject-toc-collapse-toggle,
+  // 저쪽은 nav 단위 + data-subject-toc-toggle) 서로의 버튼을 못 보고
+  // 중개사법에서 "목차 숨기기" 가 두 개 겹쳐 떴다. 클래스 하나로 같이 본다.
+  //
+  // 숨겨진 원본 nav 에는 만들지 않는다. 4단계 목차가 뜬 뒤에는 그쪽이 보이는
+  // 목차이고, 토글은 보이는 쪽에 하나만 있어야 한다.
+  if (nav.classList.contains('unified-four-toc__source-nav')) return
+  if (layout.querySelector('.subject-toc-collapse-toggle')) {
+    layout.dataset.subjectTocCollapseInstalled = 'true'
+    return
+  }
   layout.dataset.subjectTocCollapseInstalled = 'true'
 
   const button = document.createElement('button')

@@ -6,7 +6,7 @@
 
 .registration-law-nav-v2 .registration-point {
   border: 1px solid rgba(70, 86, 103, 0.14);
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: rgba(255, 255, 255, 0.5);
   overflow: hidden;
 }
@@ -36,7 +36,7 @@
   flex: 0 0 auto;
   font-size: 10px;
   padding: 2px 6px;
-  border-radius: 999px;
+  border-radius: var(--ds-r-pill);
 }
 
 .registration-point__summary b {
@@ -93,7 +93,7 @@
   color: inherit;
   text-align: left;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   transition: background 0.15s ease, color 0.15s ease;
 }
 
@@ -149,7 +149,7 @@
 .registration-focus-path {
   margin-top: 10px;
   padding: 9px 11px;
-  border-radius: 10px;
+  border-radius: var(--ds-r-md);
   background: rgba(46, 94, 140, 0.08);
   color: #315a7e;
   font-weight: 700;
@@ -178,7 +178,7 @@
   gap: 5px;
   margin-top: 14px;
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: var(--ds-r-md);
   background: rgba(190, 56, 56, 0.08);
 }
 

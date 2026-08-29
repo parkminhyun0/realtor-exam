@@ -4,16 +4,16 @@
   background: #f4f6f8;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --ink: #172033;
-  --muted: #697386;
-  --line: #dde3ea;
-  --surface: #ffffff;
-  --soft: #f7f8fa;
-  --navy: #14223a;
-  --navy-2: #223a5e;
-  --gold: #b9852b;
-  --gold-soft: #fbf3e4;
-  --green: #1f7a65;
+  --ink: var(--ds-ink);
+  --muted: var(--ds-muted);
+  --line: var(--ds-line);
+  --surface: var(--ds-surface);
+  --soft: var(--ds-soft);
+  --navy: var(--ds-toc-bg);
+  --navy-2: var(--ds-navy-2);
+  --gold: var(--ds-gold);
+  --gold-soft: var(--ds-gold-soft);
+  --green: var(--ds-brand-green);
 }
 
 * { box-sizing: border-box; }

@@ -20,7 +20,7 @@
   height: 18px;
   display: grid;
   place-items: center;
-  border-radius: 6px;
+  border-radius: var(--ds-r-sm);
   color: #91a3b7;
   font-size: 17px;
   font-weight: 900;
@@ -91,7 +91,7 @@
   align-items: center;
   padding: 7px 9px !important;
   border: 0 !important;
-  border-radius: 9px;
+  border-radius: var(--ds-r-sm);
   background: transparent !important;
   color: #59616d !important;
   text-align: left;
@@ -116,7 +116,7 @@
   height: 26px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   background: #eee7d8;
   color: #75613a;
   font-size: 9pt !important;

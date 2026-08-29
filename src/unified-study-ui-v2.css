@@ -1,14 +1,14 @@
 /* 전과목 공통 UI/UX · 11pt 본문 + 12/13/14pt 제목 위계 + 사용자 선택 서식 */
 :root {
-  --study-body-size: 11pt;
-  --study-title-small: 12pt;
-  --study-title-medium: 13pt;
-  --study-title-large: 14pt;
-  --study-text: #273142;
-  --study-muted: #687385;
-  --study-border: #dfe4ea;
-  --study-soft: #f7f8fa;
-  --study-surface: #ffffff;
+  --study-body-size: var(--ds-fs-base);
+  --study-title-small: var(--ds-fs-lg);
+  --study-title-medium: var(--ds-fs-xl);
+  --study-title-large: var(--ds-fs-2xl);
+  --study-text: var(--ds-ink);
+  --study-muted: var(--ds-muted);
+  --study-border: var(--ds-line);
+  --study-soft: var(--ds-soft);
+  --study-surface: var(--ds-surface);
 }
 
 /* 상단 고정 편집 툴바 */
@@ -42,7 +42,7 @@
   height: 31px;
   min-width: 34px;
   border: 1px solid #d9dee5;
-  border-radius: 8px;
+  border-radius: var(--ds-r-sm);
   background: #fff;
   color: #263244;
   display: inline-flex;
@@ -70,7 +70,7 @@
   cursor: pointer;
 }
 .study-text-tool input[type='color']::-webkit-color-swatch-wrapper { padding: 1px; }
-.study-text-tool input[type='color']::-webkit-color-swatch { border: 1px solid #cbd2da; border-radius: 4px; }
+.study-text-tool input[type='color']::-webkit-color-swatch { border: 1px solid #cbd2da; border-radius: var(--ds-r-xs); }
 
 /* 모든 과목 동일 외곽 레이아웃 */
 body .public-law-page {
@@ -93,7 +93,7 @@ body .real-estate-theory-page .public-law-hero {
   min-height: 0 !important;
   padding: 22px 24px !important;
   border: 1px solid var(--study-border) !important;
-  border-radius: 16px !important;
+  border-radius: var(--ds-r-lg) !important;
   background: var(--study-surface) !important;
   color: var(--study-text) !important;
   box-shadow: none !important;
@@ -124,7 +124,7 @@ body .public-law-content {
   min-width: 0 !important;
   padding: 22px 24px 34px !important;
   border: 1px solid var(--study-border) !important;
-  border-radius: 16px !important;
+  border-radius: var(--ds-r-lg) !important;
   background: var(--study-surface) !important;
   color: var(--study-text) !important;
   box-shadow: none !important;
@@ -156,7 +156,7 @@ body .registration-study-block {
   margin-top: 14px !important;
   padding: 17px 18px !important;
   border: 1px solid var(--study-border) !important;
-  border-radius: 12px !important;
+  border-radius: var(--ds-r-md) !important;
   background: #fff !important;
   color: var(--study-text) !important;
   box-shadow: none !important;
@@ -173,7 +173,7 @@ body .theory-basis-card {
   color: var(--study-text) !important;
   box-shadow: none !important;
 }
-body .study-tldr { padding: 15px 17px !important; border-radius: 12px !important; }
+body .study-tldr { padding: 15px 17px !important; border-radius: var(--ds-r-md) !important; }
 body .study-tldr span,
 body .study-tldr strong,
 body .study-tldr p { color: var(--study-text) !important; font-size: var(--study-body-size) !important; }
@@ -219,7 +219,7 @@ body .public-law-content [class*='highlight'],
 body .public-law-content [class*='emphasis'] { border: 0 !important; }
 
 /* 사용자 편집 서식은 기존 제거 규칙보다 우선 */
-.study-user-format { border-radius: 2px; padding: 0 1px; }
+.study-user-format { border-radius: var(--ds-r-xs); padding: 0 1px; }
 
 /* 표도 전과목 동일 */
 body .study-table,
@@ -233,7 +233,7 @@ body .public-law-content table thead th { background: #f2f4f6 !important; color:
 body .study-table tbody th { background: #fafbfc !important; color: var(--study-text) !important; font-weight: 500 !important; }
 
 /* 좌측 목차 공통 폰트 위계 */
-body .public-law-nav { top: 166px !important; max-height: calc(100vh - 184px) !important; border-radius: 14px !important; }
+body .public-law-nav { top: 166px !important; max-height: calc(100vh - 184px) !important; border-radius: var(--ds-r-lg) !important; }
 body .public-law-nav__title strong { font-size: var(--study-title-medium) !important; }
 body .public-law-nav__title span { font-size: 9pt !important; }
 body .public-law-nav > details > summary { font-size: 13pt !important; }
